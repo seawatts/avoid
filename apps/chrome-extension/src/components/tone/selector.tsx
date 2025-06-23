@@ -1,6 +1,3 @@
-import type React from 'react';
-import { useEffect, useState } from 'react';
-
 import { api } from '@acme/api/chrome-extension';
 import { cn } from '@acme/ui';
 import { Icons } from '@acme/ui/icons';
@@ -13,6 +10,8 @@ import {
   SelectValue,
 } from '@acme/ui/select';
 import { Textarea } from '@acme/ui/textarea';
+import type React from 'react';
+import { useEffect, useState } from 'react';
 
 import { useChromePortal } from '~/hooks/use-chrome-portal';
 import { useDebouncedValue } from '~/hooks/use-debounced-value';

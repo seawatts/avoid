@@ -1,13 +1,12 @@
 import ycCfLogo from 'data-base64:~/../assets/yc-cf-logo.png';
-import { SignOutButton, SignedIn, SignedOut } from '@clerk/chrome-extension';
+import { SignedIn, SignedOut, SignOutButton } from '@clerk/chrome-extension';
 
 import '../style.css';
-
-import { MemoryRouter } from 'react-router-dom';
 
 import { Button } from '@acme/ui/button';
 import { Card, CardHeader, CardTitle } from '@acme/ui/card';
 import { Icons } from '@acme/ui/icons';
+import { MemoryRouter } from 'react-router-dom';
 
 import { Footer } from '~/components/footer';
 import { env } from '~/env';

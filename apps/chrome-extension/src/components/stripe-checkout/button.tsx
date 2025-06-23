@@ -1,8 +1,7 @@
 import logoIcon from 'data-base64:~/../assets/icon.png';
+import { Button } from '@acme/ui/button';
 import { SignedIn, useUser } from '@clerk/chrome-extension';
 import { useState } from 'react';
-
-import { Button } from '@acme/ui/button';
 
 // Import the environment variables
 import { env } from '~/env';

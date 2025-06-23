@@ -2,10 +2,7 @@ import { createClient as createSupabaseClient } from '@supabase/supabase-js';
 import { env } from '../env.client';
 import type { Database } from './types';
 
-export function createClient(props: {
-  authToken: string;
-  url?: string;
-}) {
+export function createClient(props: { authToken: string; url?: string }) {
   const { authToken, url } = props;
   if (!authToken) {
     console.warn('Warning: No access token provided to createRealtimeClient');

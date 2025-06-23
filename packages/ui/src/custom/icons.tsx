@@ -1,3 +1,4 @@
+import { cn, twx } from '@acme/ui/lib/utils';
 import {
   SiClerk,
   SiDiscord,
@@ -34,10 +35,10 @@ import {
   ChevronDown,
   ChevronLeft,
   ChevronRight,
-  ChevronUp,
   ChevronsLeft,
   ChevronsLeftRightEllipsis,
   ChevronsRight,
+  ChevronUp,
   Circle,
   CircleDot,
   CirclePlus,
@@ -103,8 +104,6 @@ import {
   X,
 } from 'lucide-react';
 import type { TwcComponentProps } from 'react-twc';
-
-import { cn, twx } from '@acme/ui/lib/utils';
 
 export type Icon = IconNode;
 

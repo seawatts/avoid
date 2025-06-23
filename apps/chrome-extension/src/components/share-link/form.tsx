@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 import { api } from '@acme/api/chrome-extension';
 import { Button } from '@acme/ui/button';
 import { CopyButton } from '@acme/ui/copy-button';
@@ -14,6 +12,7 @@ import {
   SelectValue,
 } from '@acme/ui/select';
 import { toast } from '@acme/ui/sonner';
+import * as React from 'react';
 
 import { useChromePortal } from '~/hooks/use-chrome-portal';
 import { useCompany } from '../company/context';

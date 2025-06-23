@@ -1,5 +1,3 @@
-import { formatDistanceToNow, isValid, parseISO } from 'date-fns';
-
 import {
   Accordion,
   AccordionContent,
@@ -9,6 +7,7 @@ import {
 import { Button } from '@acme/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@acme/ui/card';
 import { Icons } from '@acme/ui/icons';
+import { formatDistanceToNow, isValid, parseISO } from 'date-fns';
 
 import '../style.css';
 

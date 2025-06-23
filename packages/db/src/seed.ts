@@ -1,6 +1,5 @@
-import { seed } from 'drizzle-seed';
-
 import { createId } from '@acme/id';
+import { seed } from 'drizzle-seed';
 
 import { db } from './client';
 import { Orgs, ShortUrls, Users } from './schema';

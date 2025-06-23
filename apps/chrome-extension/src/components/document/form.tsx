@@ -1,14 +1,13 @@
-import { formatDistanceToNow } from 'date-fns';
-import pluralize from 'pluralize';
-import type React from 'react';
-import { useCallback, useState } from 'react';
-
 import { api } from '@acme/api/chrome-extension';
 import { Button } from '@acme/ui/button';
 import { Icons } from '@acme/ui/icons';
 import { Input } from '@acme/ui/input';
 import { Label } from '@acme/ui/label';
 import { Progress } from '@acme/ui/progress';
+import { formatDistanceToNow } from 'date-fns';
+import pluralize from 'pluralize';
+import type React from 'react';
+import { useCallback, useState } from 'react';
 
 import { useCompany } from '../company/context';
 import { Entitled } from '../entitlement/entitled';

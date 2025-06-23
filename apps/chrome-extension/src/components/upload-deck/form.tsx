@@ -1,12 +1,11 @@
-import type React from 'react';
-import { useCallback, useState } from 'react';
-
 import { api } from '@acme/api/chrome-extension';
 import { Alert, AlertDescription, AlertTitle } from '@acme/ui/alert';
 import { Icons } from '@acme/ui/icons';
 import { Input } from '@acme/ui/input';
 import { Label } from '@acme/ui/label';
 import { Progress } from '@acme/ui/progress';
+import type React from 'react';
+import { useCallback, useState } from 'react';
 
 import { useCompany } from '../company/context';
 import { useDocument } from '../document/context';

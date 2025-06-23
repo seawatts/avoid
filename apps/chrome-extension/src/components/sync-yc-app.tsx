@@ -1,11 +1,10 @@
-import { useEffect, useRef } from 'react';
-
 import { api } from '@acme/api/chrome-extension';
+import { useEffect, useRef } from 'react';
 
 import { useYcApp } from '~/hooks/yc/use-yc-app';
 
 export function SyncYcApp() {
-  const { app, isLoading } = useYcApp();
+  const { app } = useYcApp();
   const { mutateAsync: updateApplicationStatus } =
     api.application.updateStatus.useMutation();
   const hasSynced = useRef(false);
@@ -35,7 +34,7 @@ export function SyncYcApp() {
     }
 
     syncYcApp();
-  }, [app, isLoading, updateApplicationStatus, hasSynced]);
+  }, [app, updateApplicationStatus]);
 
   return null;
 }

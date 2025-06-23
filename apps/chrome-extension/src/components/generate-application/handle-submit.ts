@@ -1,6 +1,5 @@
-import type { useUser } from '@clerk/chrome-extension';
-
 import { toast } from '@acme/ui/sonner';
+import type { useUser } from '@clerk/chrome-extension';
 
 import type { Application, Company } from '../company/context';
 import type { Document } from '../document/context';

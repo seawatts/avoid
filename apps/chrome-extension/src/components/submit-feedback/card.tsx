@@ -1,5 +1,3 @@
-import type React from 'react';
-
 import {
   Card,
   CardContent,
@@ -7,6 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@acme/ui/card';
+import type React from 'react';
 
 import { SubmitFeedbackButton } from './button';
 import type { SubmitFeedbackType } from './types';

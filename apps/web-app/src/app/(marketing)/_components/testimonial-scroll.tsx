@@ -34,6 +34,7 @@ export const TestimonialCard = ({
     </div>
 
     <div className="flex w-full select-none items-center justify-start gap-3.5">
+      {/** biome-ignore lint/performance/noImgElement: false positive */}
       <img src={img} alt={name} className="size-8 rounded-full" />
 
       <div>
@@ -67,7 +68,7 @@ export function SocialProofTestimonials({
               .map((_, i) => (
                 <Marquee
                   vertical
-                  // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+                  // biome-ignore lint/suspicious/noArrayIndexKey: index is stable for testimonial columns
                   key={i}
                   className={cn({
                     '[--duration:60s]': i === 1,

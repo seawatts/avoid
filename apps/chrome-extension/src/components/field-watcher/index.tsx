@@ -1,7 +1,6 @@
+import { api } from '@acme/api/chrome-extension';
 import { useUser } from '@clerk/chrome-extension';
 import { useCallback, useEffect, useRef } from 'react';
-
-import { api } from '@acme/api/chrome-extension';
 
 import { useYcApp } from '~/hooks/yc/use-yc-app';
 import { useFormGeneration } from '~/stores/form-generation';

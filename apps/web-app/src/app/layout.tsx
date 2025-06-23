@@ -1,20 +1,17 @@
+import { AnalyticsProviders } from '@acme/analytics';
 import { ReactScan } from '@acme/ui/custom/react-scan';
+import { ThemeProvider } from '@acme/ui/custom/theme';
+import { cn } from '@acme/ui/lib/utils';
+import { Toaster } from '@acme/ui/sonner';
 import { GeistMono } from 'geist/font/mono';
 import { GeistSans } from 'geist/font/sans';
 import type { Metadata, Viewport } from 'next';
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
 
-import { AnalyticsProviders } from '@acme/analytics';
-import { ThemeProvider } from '@acme/ui/custom/theme';
-import { cn } from '@acme/ui/lib/utils';
-import {} from '@acme/ui/sidebar';
-import { Toaster } from '@acme/ui/sonner';
-
 import '@acme/ui/globals.css';
 
-import { ClerkProvider } from '@clerk/nextjs';
-
 import { TRPCReactProvider } from '@acme/api/client';
+import { ClerkProvider } from '@clerk/nextjs';
 import { env } from '~/env.server';
 
 export const metadata: Metadata = {

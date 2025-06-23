@@ -1,5 +1,6 @@
 /* eslint-disable unicorn/prefer-ternary */
 
+import type { AppRouter } from '@acme/api';
 import { useAuth } from '@clerk/chrome-extension';
 import type { QueryClient } from '@tanstack/react-query';
 import { QueryClientProvider } from '@tanstack/react-query';
@@ -8,12 +9,10 @@ import { createTRPCReact } from '@trpc/react-query';
 import { useState } from 'react';
 import SuperJSON from 'superjson';
 
-import type { AppRouter } from '@acme/api';
-
 import { env } from '../env.chrome';
 import { createQueryClient } from './query-client';
 
-let clientQueryClientSingleton: QueryClient | undefined = undefined;
+let clientQueryClientSingleton: QueryClient | undefined;
 const getQueryClient = () => {
   if (typeof window === 'undefined') {
     // Server: always make a new query client

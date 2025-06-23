@@ -8,8 +8,8 @@ import type {
 } from '@supabase/supabase-js';
 import { REALTIME_POSTGRES_CHANGES_LISTEN_EVENT } from '@supabase/supabase-js';
 import {
-  type ReactNode,
   createContext,
+  type ReactNode,
   useCallback,
   useContext,
   useEffect,
@@ -445,18 +445,6 @@ export function useSubscription<T extends TableName>(
 
   const networkStatus = useNetworkStore.use.status();
 
-  // Monitor network status changes
-  useEffect(() => {
-    if (networkStatus === 'online') {
-      // Reset reconnection attempts when network comes back online
-      reconnectAttemptsRef.current = 0;
-      // Attempt to reconnect immediately if not already connected
-      if (getStatus() !== 'connected') {
-        handleReconnect();
-      }
-    }
-  }, [networkStatus, getStatus]);
-
   // Cleanup function for reconnection attempts
   const cleanupReconnect = useCallback(() => {
     if (reconnectTimeoutRef.current) {
@@ -484,6 +472,18 @@ export function useSubscription<T extends TableName>(
       reconnectAttemptsRef.current += 1;
     }, delay);
   }, [subscribe, cleanupReconnect]);
+
+  // Monitor network status changes
+  useEffect(() => {
+    if (networkStatus === 'online') {
+      // Reset reconnection attempts when network comes back online
+      reconnectAttemptsRef.current = 0;
+      // Attempt to reconnect immediately if not already connected
+      if (getStatus() !== 'connected') {
+        handleReconnect();
+      }
+    }
+  }, [networkStatus, getStatus, handleReconnect]);
 
   // Update callbacks ref when they change
   useEffect(() => {

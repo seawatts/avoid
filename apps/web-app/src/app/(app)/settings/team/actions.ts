@@ -3,8 +3,6 @@
 // import { initBaseAuth } from '@clerk/node';
 // import type { UserInOrgMetadata } from '@clerk/node';
 import { createSafeActionClient } from 'next-safe-action';
-// import { env } from '~/env.client';
-import type {} from './types';
 import {
   getOrgMembersSchema,
   inviteMemberSchema,
@@ -24,7 +22,7 @@ export const getOrgMembersAction = actionClient
   .schema(getOrgMembersSchema)
   .action(async ({ parsedInput }) => {
     try {
-      const { orgId } = parsedInput;
+      const { orgId: _orgId } = parsedInput;
       // const result = await clerk.fetchUsersInOrg({
       //   orgId,
       //   includeOrgs: true,
@@ -44,7 +42,7 @@ export const inviteMemberAction = actionClient
   .schema(inviteMemberSchema)
   .action(async ({ parsedInput }) => {
     try {
-      const { email, role, orgId } = parsedInput;
+      const { email: _email, role: _role, orgId: _orgId } = parsedInput;
       // await clerk.inviteUserToOrg({
       //   email,
       //   orgId,
@@ -66,7 +64,7 @@ export const updateMemberRoleAction = actionClient
   .schema(updateMemberRoleSchema)
   .action(async ({ parsedInput }) => {
     try {
-      const { userId, role, orgId } = parsedInput;
+      const { userId: _userId, role: _role, orgId: _orgId } = parsedInput;
       // await clerk.changeUserRoleInOrg({
       //   orgId,
       //   userId,
@@ -84,7 +82,7 @@ export const removeMemberAction = actionClient
   .schema(removeMemberSchema)
   .action(async ({ parsedInput }) => {
     try {
-      const { userId, orgId } = parsedInput;
+      const { userId: _userId, orgId: _orgId } = parsedInput;
       // await clerk.removeUserFromOrg({
       //   orgId,
       //   userId,

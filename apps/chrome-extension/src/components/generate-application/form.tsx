@@ -1,9 +1,8 @@
+import { Label } from '@acme/ui/label';
+import { Progress } from '@acme/ui/progress';
 import { useUser } from '@clerk/chrome-extension';
 import type React from 'react';
 import { useCallback, useState } from 'react';
-
-import { Label } from '@acme/ui/label';
-import { Progress } from '@acme/ui/progress';
 
 import { useFounderName } from '~/hooks/use-founder-name';
 import { useCompany } from '../company/context';

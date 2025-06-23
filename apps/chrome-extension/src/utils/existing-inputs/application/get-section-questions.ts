@@ -7,7 +7,7 @@ export function getSectionQuestions(
   baseUrl: string,
 ): InputWithSection[] {
   const results: InputWithSection[] = [];
-  const { id: sectionId, name: sectionName } = getSectionData(sectionElement);
+  const { name: sectionName } = getSectionData(sectionElement);
 
   // Find all question divs within this section
   const questionDivs = sectionElement.querySelectorAll('.q');

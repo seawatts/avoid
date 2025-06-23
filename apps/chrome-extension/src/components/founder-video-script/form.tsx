@@ -1,9 +1,8 @@
-import { useUser } from '@clerk/chrome-extension';
-import { useCallback, useState } from 'react';
-
 import { Alert, AlertDescription, AlertTitle } from '@acme/ui/alert';
 import { Icons } from '@acme/ui/custom/icons';
 import { toast } from '@acme/ui/sonner';
+import { useUser } from '@clerk/chrome-extension';
+import { useCallback, useState } from 'react';
 
 import { useFounderName } from '~/hooks/use-founder-name';
 import { getExistingInputs } from '~/utils/existing-inputs';

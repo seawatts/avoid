@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { cn } from '@acme/ui/lib/utils';
 import { marked } from 'marked';
-import { type PropsWithChildren, memo, useId, useMemo } from 'react';
+import { memo, type PropsWithChildren, useId, useMemo } from 'react';
 import ReactMarkdown, {
   type Components,
   type ExtraProps,

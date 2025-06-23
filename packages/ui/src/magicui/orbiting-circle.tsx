@@ -2,8 +2,8 @@
 
 import { cn } from '@acme/ui/lib/utils';
 import {
-  type HTMLMotionProps,
   cubicBezier,
+  type HTMLMotionProps,
   motion,
   useInView,
 } from 'motion/react';
@@ -109,7 +109,7 @@ export function OrbitingCircles({
             >
               <motion.div
                 key={`orbit-child-${
-                  // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+                  // biome-ignore lint/suspicious/noArrayIndexKey: index is stable within orbit animation
                   index
                 }`}
                 initial={{ scale: 0, opacity: 0 }}

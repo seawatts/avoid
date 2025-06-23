@@ -1,10 +1,10 @@
 import { useUser } from '@clerk/chrome-extension';
 import {
   BrowserClient,
-  Scope,
   defaultStackParser,
   getDefaultIntegrations,
   makeFetchTransport,
+  Scope,
 } from '@sentry/browser';
 import { useEffect } from 'react';
 

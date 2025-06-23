@@ -1,7 +1,6 @@
 import pdfjsUrl from 'url:~/pdf.worker.min.js';
-import * as pdfJS from 'pdfjs-dist';
-
 import type { api } from '@acme/api/chrome-extension';
+import * as pdfJS from 'pdfjs-dist';
 
 export const createDocumentPages = async (props: {
   evaluationId?: string;

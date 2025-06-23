@@ -15,8 +15,8 @@ import {
 } from '@acme/ui/dialog';
 import { Input } from '@acme/ui/input';
 import { useUser } from '@clerk/nextjs';
-import { useAction } from 'next-safe-action/hooks';
 import { useRouter } from 'next/navigation';
+import { useAction } from 'next-safe-action/hooks';
 import { useState } from 'react';
 import { createOrgAction } from './actions';
 
@@ -36,7 +36,7 @@ export function NewOrgDialog({ open, onOpenChange }: NewOrgDialogProps) {
 
   const router = useRouter();
 
-  const { execute, status } = useAction(createOrgAction, {
+  const { status } = useAction(createOrgAction, {
     onSuccess: async (result) => {
       if (result.data?.success) {
         try {

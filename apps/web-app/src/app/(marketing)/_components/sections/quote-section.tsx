@@ -16,6 +16,7 @@ export function QuoteSection() {
 
         <div className="flex gap-4">
           <div className="size-10 rounded-full bg-primary border border-border">
+            {/** biome-ignore lint/performance/noImgElement: false positive */}
             <img
               src={quoteSection.author.image}
               alt={quoteSection.author.name}

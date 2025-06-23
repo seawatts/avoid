@@ -1,10 +1,9 @@
 import ycCfLogo from 'data-base64:~/../assets/yc-cf-logo.png';
-import { SignedOut } from '@clerk/chrome-extension';
-
 import { Alert, AlertDescription, AlertTitle } from '@acme/ui/alert';
 import { Button } from '@acme/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@acme/ui/card';
 import { Icons } from '@acme/ui/icons';
+import { SignedOut } from '@clerk/chrome-extension';
 
 import { CouponDiscountAlert } from '~/components/coupon-discount-alert';
 import { PoweredByLink } from '~/components/powered-by-link';

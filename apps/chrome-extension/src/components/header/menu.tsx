@@ -1,5 +1,3 @@
-import { sendToBackground } from '@plasmohq/messaging';
-
 import { Button } from '@acme/ui/button';
 import {
   DropdownMenu,
@@ -8,6 +6,7 @@ import {
   DropdownMenuTrigger,
 } from '@acme/ui/dropdown-menu';
 import { Icons } from '@acme/ui/icons';
+import { sendToBackground } from '@plasmohq/messaging';
 
 import { useChromePortal } from '~/hooks/use-chrome-portal';
 

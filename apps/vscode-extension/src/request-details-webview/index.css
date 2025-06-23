@@ -86,14 +86,36 @@ pre {
   margin-top: 20px;
 }
 
+.card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+button {
+  border-radius: 2px;
+  border: 1px solid transparent;
+  padding: 4px 8px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+button:hover {
+  background-color: var(--vscode-button-hoverBackground);
+}
+button:focus,
+button:focus-visible {
+  outline: 1px solid var(--vscode-focusBorder);
+  outline-offset: -1px;
+}
+
 .card button {
   background-color: var(--vscode-button-background);
   color: var(--vscode-button-foreground);
-  border: none;
-  padding: 8px 16px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 14px;
+}
+
+.card button:focus {
+  outline: 1px solid var(--vscode-focusBorder);
 }
 
 .card button:hover {
@@ -130,27 +152,6 @@ h1 {
   font-weight: 600;
   margin-bottom: 1em;
   color: var(--vscode-editor-foreground);
-}
-
-button {
-  border-radius: 2px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: var(--vscode-button-background);
-  color: var(--vscode-button-foreground);
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-button:hover {
-  background-color: var(--vscode-button-hoverBackground);
-}
-button:focus,
-button:focus-visible {
-  outline: 1px solid var(--vscode-focusBorder);
-  outline-offset: -1px;
 }
 
 input,

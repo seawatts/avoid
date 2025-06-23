@@ -1,10 +1,9 @@
+import { debug } from '@acme/logger';
 import * as vscode from 'vscode';
 import type { WebhookEventsProvider } from '../providers/webhook-events.provider';
 import type { RequestDetailsWebviewProvider } from '../request-details-webview/request-details.webview';
 import type { WebhookEventItem } from '../tree-items/webhook-event.item';
 import type { WebhookRequestItem } from '../tree-items/webhook-request.item';
-
-import { debug } from '@acme/logger';
 
 const log = debug('acme:vscode:webhook-events-commands');
 

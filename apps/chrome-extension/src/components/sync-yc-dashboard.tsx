@@ -1,6 +1,5 @@
-import { useEffect, useRef } from 'react';
-
 import { api } from '@acme/api/chrome-extension';
+import { useEffect, useRef } from 'react';
 
 import { useYcDashboard } from '~/hooks/yc/use-yc-dashboard';
 
@@ -39,7 +38,7 @@ export function SyncYcDashboard() {
     }
 
     syncYcApps();
-  }, [apps, isLoading, updateApplicationStatus, hasSynced]);
+  }, [apps, isLoading, updateApplicationStatus]);
 
   return null;
 }

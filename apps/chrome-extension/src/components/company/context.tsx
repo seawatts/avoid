@@ -1,9 +1,8 @@
+import type { RouterOutputs } from '@acme/api';
+import { api } from '@acme/api/chrome-extension';
 import { useUser } from '@clerk/chrome-extension';
 import type { PropsWithChildren } from 'react';
 import { createContext, useContext, useMemo } from 'react';
-
-import type { RouterOutputs } from '@acme/api';
-import { api } from '@acme/api/chrome-extension';
 
 import { useYcApp } from '~/hooks/yc/use-yc-app';
 

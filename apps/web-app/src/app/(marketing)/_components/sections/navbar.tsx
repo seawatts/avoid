@@ -53,11 +53,7 @@ const drawerMenuVariants = {
   visible: { opacity: 1 },
 };
 
-export function Navbar({
-  navs,
-}: {
-  navs?: NavItem[];
-}) {
+export function Navbar({ navs }: { navs?: NavItem[] }) {
   const { scrollY } = useScroll();
   const [hasScrolled, setHasScrolled] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);

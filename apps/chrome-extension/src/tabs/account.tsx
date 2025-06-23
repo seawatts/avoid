@@ -1,9 +1,8 @@
-import { useUser } from '@clerk/chrome-extension';
-import { useEffect, useState } from 'react';
-
 import { Button } from '@acme/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@acme/ui/card';
 import { Icons } from '@acme/ui/icons';
+import { useUser } from '@clerk/chrome-extension';
+import { useEffect, useState } from 'react';
 
 import '../style.css';
 

@@ -1,6 +1,5 @@
-import type React from 'react';
-
 import { Card } from '@acme/ui/card';
+import type React from 'react';
 
 export const CompetitorsCard: React.FC = () => {
   return (

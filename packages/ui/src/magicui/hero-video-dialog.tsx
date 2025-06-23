@@ -1,11 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
 'use client';
 
+import { cn } from '@acme/ui/lib/utils';
 import { Play, XIcon } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { useState } from 'react';
-
-import { cn } from '@acme/ui/lib/utils';
 
 type AnimationStyle =
   | 'from-bottom'
@@ -80,6 +79,7 @@ export function HeroVideoDialog({
 
   return (
     <div className={cn('relative', className)}>
+      {/** biome-ignore lint/a11y/noStaticElementInteractions: false positive */}
       <div
         className="group relative cursor-pointer"
         onClick={() => setIsVideoOpen(true)}
@@ -90,6 +90,7 @@ export function HeroVideoDialog({
         }}
       >
         {thumbnailSrc ? (
+          // biome-ignore lint/performance/noImgElement: false positive
           <img
             src={thumbnailSrc}
             alt={thumbnailAlt}

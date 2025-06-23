@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 export function useVolumeMonitor() {
   const [isLowVolume, setIsLowVolume] = useState(false);
@@ -32,16 +32,18 @@ export function useVolumeMonitor() {
     }, 3000);
   };
 
-  const stopVolumeMonitor = () => {
-    if (volumeCheckIntervalRef.current)
+  const stopVolumeMonitor = useCallback(() => {
+    if (volumeCheckIntervalRef.current) {
       clearInterval(volumeCheckIntervalRef.current);
+      volumeCheckIntervalRef.current = null;
+    }
     if (volumeCheckDelayTimeoutRef.current)
       clearTimeout(volumeCheckDelayTimeoutRef.current);
-  };
+  }, []);
 
   useEffect(() => {
     return () => stopVolumeMonitor();
-  }, []);
+  }, [stopVolumeMonitor]);
 
   return {
     isLowVolume,

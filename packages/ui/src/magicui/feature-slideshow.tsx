@@ -1,11 +1,10 @@
 'use client';
 
+import { cn } from '@acme/ui/lib/utils';
 import * as Accordion from '@radix-ui/react-accordion';
 import { motion, useInView } from 'motion/react';
 import type React from 'react';
-import { type ReactNode, forwardRef, useEffect, useRef, useState } from 'react';
-
-import { cn } from '@acme/ui/lib/utils';
+import { forwardRef, type ReactNode, useEffect, useRef, useState } from 'react';
 
 type AccordionItemProps = {
   children: React.ReactNode;
@@ -137,7 +136,7 @@ export const Feature = ({
   };
 
   // interval for changing images
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  // biome-ignore lint/correctness/useExhaustiveDependencies: dependencies are intentionally managed for interval timing
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentIndex((prevIndex) =>
@@ -148,7 +147,7 @@ export const Feature = ({
     return () => clearInterval(timer);
   }, [collapseDelay, currentIndex, featureItems.length]);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  // biome-ignore lint/correctness/useExhaustiveDependencies: dependencies are intentionally managed for scroll behavior
   useEffect(() => {
     const handleAutoScroll = () => {
       const nextIndex =
@@ -211,6 +210,7 @@ export const Feature = ({
           />
 
           {/* Main Image */}
+          {/** biome-ignore lint/performance/noImgElement: false positive */}
           <motion.img
             key={currentIndex}
             src={currentItem.image}

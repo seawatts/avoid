@@ -1,6 +1,5 @@
-import { redirect } from 'next/navigation';
-
 import { db } from '@acme/db/client';
+import { redirect } from 'next/navigation';
 
 export async function GET(
   _request: Request,

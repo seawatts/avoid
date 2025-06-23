@@ -1,8 +1,7 @@
-import { differenceInDays, fromUnixTime } from 'date-fns';
-
 import { api } from '@acme/api/chrome-extension';
 import { Alert, AlertDescription, AlertTitle } from '@acme/ui/alert';
 import { Icons } from '@acme/ui/icons';
+import { differenceInDays, fromUnixTime } from 'date-fns';
 
 import { CompanyCreated } from './company/company-created';
 import { NotPaying } from './paying/not-paying';

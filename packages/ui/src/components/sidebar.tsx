@@ -1,10 +1,5 @@
 'use client';
 
-import { Slot } from '@radix-ui/react-slot';
-import { type VariantProps, cva } from 'class-variance-authority';
-import { PanelLeftIcon } from 'lucide-react';
-import * as React from 'react';
-
 import { Button } from '@acme/ui/components/button';
 import { Input } from '@acme/ui/components/input';
 import { Separator } from '@acme/ui/components/separator';
@@ -24,6 +19,10 @@ import {
 } from '@acme/ui/components/tooltip';
 import { useIsMobile } from '@acme/ui/hooks/use-mobile';
 import { cn } from '@acme/ui/lib/utils';
+import { Slot } from '@radix-ui/react-slot';
+import { cva, type VariantProps } from 'class-variance-authority';
+import { PanelLeftIcon } from 'lucide-react';
+import * as React from 'react';
 
 const SIDEBAR_COOKIE_NAME = 'sidebar_state';
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
@@ -83,6 +82,7 @@ function SidebarProvider({
       }
 
       // This sets the cookie to keep the sidebar state.
+      // biome-ignore lint/suspicious/noDocumentCookie: false positive
       document.cookie = `${SIDEBAR_COOKIE_NAME}=${openState}; path=/; max-age=${SIDEBAR_COOKIE_MAX_AGE}`;
     },
     [setOpenProp, open],

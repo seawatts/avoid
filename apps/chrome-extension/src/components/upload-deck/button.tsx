@@ -1,12 +1,11 @@
 import logoIcon from 'data-base64:~/../assets/icon.png';
-import { formatDistanceToNow } from 'date-fns';
-import pluralize from 'pluralize';
-import { useState } from 'react';
-
 import { cn } from '@acme/ui';
 import { Button } from '@acme/ui/button';
 import { Icons } from '@acme/ui/icons';
 import { Label } from '@acme/ui/label';
+import { formatDistanceToNow } from 'date-fns';
+import pluralize from 'pluralize';
+import { useState } from 'react';
 
 import { useDocument } from '../document/context';
 import { DocumentUploaded } from '../document/document-uploaded';

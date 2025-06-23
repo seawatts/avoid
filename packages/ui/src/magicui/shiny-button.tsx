@@ -1,10 +1,9 @@
 'use client';
 
+import { cn } from '@acme/ui/lib/utils';
 import type { AnimationProps } from 'motion/react';
 import { motion } from 'motion/react';
 import type React from 'react';
-
-import { cn } from '@acme/ui/lib/utils';
 
 const animationProps = {
   animate: { '--x': '-100%', scale: 1 },

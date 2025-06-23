@@ -1,5 +1,3 @@
-import { useEffect } from 'react';
-
 import {
   AlertDialog,
   AlertDialogContent,
@@ -7,6 +5,7 @@ import {
 } from '@acme/ui/alert-dialog';
 import { Button } from '@acme/ui/button';
 import { Icons } from '@acme/ui/icons';
+import { useEffect } from 'react';
 
 import { useChromePortal } from '~/hooks/use-chrome-portal';
 import { Entitled } from '../entitlement/entitled';

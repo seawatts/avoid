@@ -1,8 +1,7 @@
-import type { PropsWithChildren } from 'react';
-import { createContext, useContext, useMemo } from 'react';
-
 import type { RouterOutputs } from '@acme/api';
 import { api } from '@acme/api/chrome-extension';
+import type { PropsWithChildren } from 'react';
+import { createContext, useContext, useMemo } from 'react';
 
 import { useCompany } from '../company/context';
 

@@ -1,6 +1,5 @@
-import type { useUser } from '@clerk/chrome-extension';
-
 import type { RouterInputs, RouterOutputs } from '@acme/api';
+import type { useUser } from '@clerk/chrome-extension';
 
 import type { YCGraphqlAppResponse } from '~/hooks/yc/use-yc-app';
 import type { Application, Company } from '../company/context';

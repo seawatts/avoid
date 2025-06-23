@@ -12,7 +12,6 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from '@acme/ui/sidebar';
-import { useUser } from '@clerk/nextjs';
 import { ChevronDown } from 'lucide-react';
 import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -22,7 +21,6 @@ import { useState } from 'react';
 export function ProjectDropdownMenu() {
   const router = useRouter();
   const pathname = usePathname();
-  const { user } = useUser();
   const { isMobile } = useSidebar();
   const [_newProjectDialogOpen, setNewProjectDialogOpen] = useState(false);
   // const projects = api.listProjects.useSuspenseQuery({

@@ -58,7 +58,7 @@ function CodeBlockCode({
   return highlightedHtml ? (
     <div
       className={classNames}
-      // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
+      // biome-ignore lint/security/noDangerouslySetInnerHtml: pre-processed code highlighting
       dangerouslySetInnerHTML={{ __html: highlightedHtml }}
       {...props}
     />

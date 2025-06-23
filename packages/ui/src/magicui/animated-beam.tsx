@@ -1,10 +1,9 @@
 'use client';
 
+import { cn } from '@acme/ui/lib/utils';
 import { motion } from 'motion/react';
 import type { RefObject } from 'react';
 import { useEffect, useId, useState } from 'react';
-
-import { cn } from '@acme/ui/lib/utils';
 
 export interface AnimatedBeamProps {
   className?: string;

@@ -168,20 +168,15 @@ function WelcomePage() {
                           <Icons.Spinner className="h-6 w-6 animate-spin" />
                         </div>
                       ) : (
-                        <>
-                          {currentFeatures.map((feature) => (
-                            <li
-                              key={feature}
-                              className="flex items-center gap-2"
-                            >
-                              <span>{feature.emoji}</span>
-                              <span className="font-semibold">
-                                {feature.name}:
-                              </span>
-                              {feature.description}
-                            </li>
-                          ))}
-                        </>
+                        currentFeatures.map((feature) => (
+                          <li key={feature} className="flex items-center gap-2">
+                            <span>{feature.emoji}</span>
+                            <span className="font-semibold">
+                              {feature.name}:
+                            </span>
+                            {feature.description}
+                          </li>
+                        ))
                       )}
                     </ul>
 

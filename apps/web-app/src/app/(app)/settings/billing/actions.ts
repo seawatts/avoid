@@ -23,7 +23,7 @@ export const getStripePortalLink = action
   )
   .action(async ({ parsedInput }) => {
     try {
-      const { orgId, returnUrl } = parsedInput;
+      const { orgId: _orgId, returnUrl: _returnUrl } = parsedInput;
       const _api = await getApi();
       // const organization = await api.getOrganization.fetch({
       //   org_id: orgId,
@@ -207,7 +207,7 @@ export const getStripeInvoices = action
   )
   .action(async ({ parsedInput }) => {
     try {
-      const { orgId, limit } = parsedInput;
+      const { orgId: _orgId, limit: _limit } = parsedInput;
 
       const _api = await getApi();
       // const organization = await api.getOrganization.fetch({

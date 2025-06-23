@@ -1,8 +1,7 @@
 import logoIcon from 'data-base64:~/../assets/icon.png';
+import { Button } from '@acme/ui/button';
 import { SignedIn } from '@clerk/chrome-extension';
 import { useState } from 'react';
-
-import { Button } from '@acme/ui/button';
 
 import { SubmitFeedbackDialog } from './dialog';
 import type { SubmitFeedbackType } from './types';

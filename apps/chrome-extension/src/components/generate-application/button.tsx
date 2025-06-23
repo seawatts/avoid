@@ -1,7 +1,6 @@
 import logoIcon from 'data-base64:~/../assets/icon.png';
-import { useState } from 'react';
-
 import { Button } from '@acme/ui/button';
+import { useState } from 'react';
 
 import { useCompany } from '../company/context';
 import { GenerateApplicationDialog } from './dialog';

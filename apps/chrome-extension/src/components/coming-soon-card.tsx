@@ -1,4 +1,3 @@
-import {} from '@acme/ui/accordion';
 import {
   Card,
   CardContent,

@@ -17,15 +17,15 @@ import { Input } from '@acme/ui/input';
 import { Label } from '@acme/ui/label';
 import { toast } from '@acme/ui/sonner';
 import { useUser } from '@clerk/nextjs';
-import { useAction } from 'next-safe-action/hooks';
 import { useRouter } from 'next/navigation';
+import { useAction } from 'next-safe-action/hooks';
 import { useState } from 'react';
 import { createApiKey } from './actions';
 
 interface NewProjectDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  orgId: string;
+  _orgId: string;
 }
 
 interface SuccessState {
@@ -37,7 +37,7 @@ interface SuccessState {
 export function NewProjectDialog({
   open,
   onOpenChange,
-  orgId,
+  _orgId,
 }: NewProjectDialogProps) {
   const [name, setName] = useState('');
   const [errors, setErrors] = useState<string[]>([]);
@@ -55,7 +55,7 @@ export function NewProjectDialog({
   //   },
   // });
 
-  const { execute: executeCreateKey, status: createKeyStatus } = useAction(
+  const { execute: _executeCreateKey, status: createKeyStatus } = useAction(
     createApiKey,
     {
       onSuccess: async (result) => {

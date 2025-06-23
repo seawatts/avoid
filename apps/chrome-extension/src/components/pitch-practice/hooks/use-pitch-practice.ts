@@ -1,7 +1,6 @@
+import { toast } from '@acme/ui/sonner';
 import { useUser } from '@clerk/chrome-extension';
 import { useCallback, useState } from 'react';
-
-import { toast } from '@acme/ui/sonner';
 
 import { useCompany } from '~/components/company/context';
 import { useDocument } from '~/components/document/context';

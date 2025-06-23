@@ -31,7 +31,11 @@
         "useExhaustiveDependencies": "warn",
         "useHookAtTopLevel": "error"
       },
-      "nursery": {},
+      "nursery": {
+        "useIndexOf": "error",
+        "useUniqueElementIds": "off",
+        "noNestedComponentDefinitions": "off"
+      },
       "style": {
         "noNegationElse": "off",
         "useNodejsImportProtocol": "error",

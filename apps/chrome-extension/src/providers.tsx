@@ -1,11 +1,10 @@
-import { ClerkProvider } from '@clerk/chrome-extension';
-import type { PropsWithChildren } from 'react';
-
 import {
   PostHogIdentifyUser,
   PostHogPageView,
 } from '@acme/analytics/posthog/chrome-extension';
 import { TRPCReactProvider } from '@acme/api/chrome-extension';
+import { ClerkProvider } from '@clerk/chrome-extension';
+import type { PropsWithChildren } from 'react';
 
 import { SentryIdentifyUser } from '~/utils/sentry';
 import { CompanyProvider } from './components/company/context';

@@ -103,6 +103,7 @@ export function FourthBentoAnimation({
   }, []);
 
   return (
+    // biome-ignore lint/a11y/noStaticElementInteractions: false positive
     <div
       className="w-full h-full flex flex-col relative"
       onMouseMove={handleMouseMove}

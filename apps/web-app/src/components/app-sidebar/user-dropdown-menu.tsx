@@ -22,8 +22,8 @@ import {
   MoonIcon,
   SunIcon,
 } from 'lucide-react';
-import { useTheme } from 'next-themes';
 import { useRouter } from 'next/navigation';
+import { useTheme } from 'next-themes';
 export function UserDropdownMenu() {
   const { setTheme } = useTheme();
   const router = useRouter();

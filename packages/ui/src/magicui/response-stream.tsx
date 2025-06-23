@@ -255,7 +255,7 @@ function useTextStream({
     }
   }, [textStream, isComplete, processStringTypewriter]);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  // biome-ignore lint/correctness/useExhaustiveDependencies: false positive - dependencies are intentionally managed
   useEffect(() => {
     startStreaming();
 

@@ -1,5 +1,3 @@
-import { useEffect, useState } from 'react';
-
 import { api } from '@acme/api/chrome-extension';
 import { cn } from '@acme/ui';
 import { Alert, AlertDescription, AlertTitle } from '@acme/ui/alert';
@@ -13,6 +11,7 @@ import {
   SelectValue,
 } from '@acme/ui/select';
 import { Textarea } from '@acme/ui/textarea';
+import { useEffect, useState } from 'react';
 
 import { useChromePortal } from '~/hooks/use-chrome-portal';
 import { useCompany } from './company/context';

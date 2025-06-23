@@ -57,7 +57,7 @@ export function Marquee({
         .fill(0)
         .map((_, i) => (
           <div
-            // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+            // biome-ignore lint/suspicious/noArrayIndexKey: index is stable for marquee animation
             key={i}
             className={cn('flex shrink-0 justify-around [gap:var(--gap)]', {
               'animate-marquee flex-row': !vertical,

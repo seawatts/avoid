@@ -1,6 +1,6 @@
 'use server';
-import { createSafeActionClient } from 'next-safe-action';
 import { revalidatePath } from 'next/cache';
+import { createSafeActionClient } from 'next-safe-action';
 import { z } from 'zod';
 
 const action = createSafeActionClient();
@@ -22,7 +22,7 @@ export const createApiKey = action
   .schema(createApiKeySchema)
   .action(async ({ parsedInput }) => {
     try {
-      const { orgId, metadata } = parsedInput;
+      const { orgId: _orgId, metadata: _metadata } = parsedInput;
       // const response = await clerk.createApiKey({
       //   orgId,
       //   metadata,

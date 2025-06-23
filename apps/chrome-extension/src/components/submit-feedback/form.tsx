@@ -1,8 +1,7 @@
-import * as React from 'react';
-
 import { api } from '@acme/api/chrome-extension';
 import { Label } from '@acme/ui/label';
 import { Textarea } from '@acme/ui/textarea';
+import * as React from 'react';
 
 import { useCompany } from '../company/context';
 import type { SubmitFeedbackType } from './types';
