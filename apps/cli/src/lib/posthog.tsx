@@ -1,4 +1,4 @@
-import { debug } from '@unhook/logger';
+import { debug } from '@acme/logger';
 import { PostHog } from 'posthog-node';
 import type { PropsWithChildren } from 'react';
 import { useEffect } from 'react';
@@ -7,7 +7,7 @@ import { useAuthStore } from '~/stores/auth-store';
 import { useCliStore } from '~/stores/cli-store';
 import { useRouterStore } from '~/stores/router-store';
 
-const log = debug('unhook:cli:posthog');
+const log = debug('acme:cli:posthog');
 const nodeEnv = env.NEXT_PUBLIC_APP_ENV;
 const isProduction = nodeEnv === 'production';
 

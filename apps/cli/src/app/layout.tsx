@@ -1,22 +1,14 @@
-import { TRPCReactProvider } from '@unhook/api/react';
+import { TRPCReactProvider } from '@acme/api/react';
 
-import { debug } from '@unhook/logger';
+import { debug } from '@acme/logger';
 import { Box, Text } from 'ink';
 import { type FC, useEffect, useRef } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { Ascii } from '~/components/ascii';
-import { ConnectToWebhook } from '~/components/connect-to-webhook';
-import { EventSubscription } from '~/components/event-subscription';
 import { Router } from '~/components/router';
 import { AuthProvider } from '~/context/auth-context';
 import { RouterProvider } from '~/context/router-context';
-import { WebhookProvider } from '~/context/webhook-context';
-import {
-  SignedIn,
-  WebhookAuthorized,
-  WebhookChecking,
-  WebhookUnauthorized,
-} from '~/guards';
+import { SignedIn } from '~/guards';
 import { useDimensions } from '~/hooks/use-dimensions';
 import {
   capture,
@@ -27,10 +19,9 @@ import {
 } from '~/lib/posthog';
 import { useAuthStore } from '~/stores/auth-store';
 import { useCliStore } from '~/stores/cli-store';
-import { useConfigStore } from '~/stores/config-store';
 import { useRouterStore } from '~/stores/router-store';
 
-const log = debug('unhook:cli:layout');
+const log = debug('acme:cli:layout');
 
 function ErrorFallback({ error }: { error: Error }) {
   // Call resetErrorBoundary() to reset the error boundary and retry the render.
@@ -47,9 +38,7 @@ function ErrorFallback({ error }: { error: Error }) {
 
 function AppContent() {
   const dimensions = useDimensions();
-  const token = useAuthStore.use.authToken();
   const isValidating = useAuthStore.use.isValidatingSession();
-  const webhookId = useConfigStore.use.webhookId();
   const navigate = useRouterStore.use.navigate();
   const command = useCliStore.use.command?.();
   const currentPath = useRouterStore.use.currentPath();
@@ -70,7 +59,7 @@ function AppContent() {
       <Box flexDirection="column" padding={1}>
         <Box marginBottom={1}>
           <Ascii
-            text="Unhook"
+            text="Acme"
             width={dimensions.width}
             font="ANSI Shadow"
             color="gray"
@@ -81,10 +70,7 @@ function AppContent() {
     );
   }
 
-  if (!webhookId && currentPath !== '/init' && currentPath !== '/login') {
-    log('No webhook ID, navigating to /init');
-    navigate('/init', { resetHistory: true });
-  } else if (
+  if (
     command &&
     currentPath !== command &&
     currentPath !== '/login' &&
@@ -103,20 +89,7 @@ function AppContent() {
       minHeight={dimensions.height}
     >
       <SignedIn>
-        <WebhookAuthorized>
-          <ConnectToWebhook />
-          {token && (
-            <Box flexDirection="column" gap={1}>
-              <EventSubscription />
-            </Box>
-          )}
-        </WebhookAuthorized>
-        <WebhookUnauthorized>
-          <Text>You are not authorized to use this webhook.</Text>
-        </WebhookUnauthorized>
-        <WebhookChecking>
-          <Text>Verifying webhook...</Text>
-        </WebhookChecking>
+        <Text>You are not authorized to use this webhook.</Text>
       </SignedIn>
       <Router />
     </Box>
@@ -124,21 +97,16 @@ function AppContent() {
 }
 
 export const Layout: FC = () => {
-  const telemetry = useConfigStore.use.telemetry?.() ?? true;
-  const webhookId = useConfigStore.use.webhookId();
-
   return (
-    <PostHogOptIn enableTelemetry={telemetry}>
+    <PostHogOptIn enableTelemetry={true}>
       <ErrorBoundary FallbackComponent={ErrorFallback}>
         <AuthProvider>
           <RouterProvider>
             <PostHogPageView />
             <PostHogIdentifyUser />
-            <WebhookProvider initialWebhookId={webhookId}>
-              <TRPCReactProvider sourceHeader="cli">
-                <AppContent />
-              </TRPCReactProvider>
-            </WebhookProvider>
+            <TRPCReactProvider sourceHeader="cli">
+              <AppContent />
+            </TRPCReactProvider>
           </RouterProvider>
         </AuthProvider>
       </ErrorBoundary>

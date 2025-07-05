@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 import { homedir } from 'node:os';
 import { join } from 'node:path';
-import { debug, defaultLogger } from '@unhook/logger';
-import { RollingFileDestination } from '@unhook/logger/destinations/rolling-file';
+import { debug, defaultLogger } from '@acme/logger';
+import { RollingFileDestination } from '@acme/logger/destinations/rolling-file';
 
-const logDir = join(homedir(), '.unhook');
+const logDir = join(homedir(), '.acme');
 defaultLogger.addDestination(
   new RollingFileDestination({
-    filepath: join(logDir, 'unhook.log'),
+    filepath: join(logDir, 'acme.log'),
     createDirectory: true,
     maxSize: 10 * 1024 * 1024, // 10MB
     maxFiles: 5,
@@ -22,9 +22,8 @@ import { setupDebug } from './lib/cli/debug';
 import { setupProcessHandlers } from './lib/cli/process';
 import { capture, captureException, shutdown } from './lib/posthog';
 import { useCliStore } from './stores/cli-store';
-import { useConfigStore } from './stores/config-store';
 
-const log = debug('unhook:cli');
+const log = debug('acme:cli');
 
 async function main() {
   try {
@@ -32,19 +31,9 @@ async function main() {
     await setupDebug({ isDebugEnabled: args.verbose });
     useCliStore.setState(args);
 
-    const config = await useConfigStore.getState().loadConfig();
-    void useConfigStore.getState().watchConfig();
-
-    if (config.debug) {
-      // TODO: this is causing logging to not work for some reason
-      // await setupDebug({ isDebugEnabled: config.debug });
-    }
-
     capture({
       event: 'cli_loaded',
       properties: {
-        webhookId: config.webhookId,
-        clientId: config.clientId,
         debug: args.verbose,
         version: args.version,
         command: args.command,
@@ -54,7 +43,6 @@ async function main() {
     setupProcessHandlers();
 
     log('Starting CLI', {
-      webhookId: config.webhookId,
       debug: args.verbose,
       version: args.version,
       command: args.command,

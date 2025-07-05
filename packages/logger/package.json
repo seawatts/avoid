@@ -1,0 +1,46 @@
+{
+  "dependencies": {
+    "bun": "1.2.18",
+    "debug": "4.4.1",
+    "node-inspect-extracted": "3.1.0"
+  },
+  "devDependencies": {
+    "@types/bun": "1.2.18",
+    "@types/debug": "4.1.12",
+    "@types/vscode": "1.101.0",
+    "typescript": "5.8.3"
+  },
+  "exports": {
+    ".": {
+      "default": "./src/index.ts",
+      "types": "./dist/index.d.ts"
+    },
+    "./destinations/rolling-file": {
+      "default": "./src/destinations/rolling-file.ts",
+      "types": "./dist/destinations/rolling-file.d.ts"
+    },
+    "./destinations/console": {
+      "default": "./src/destinations/console.ts",
+      "types": "./dist/destinations/console.d.ts"
+    },
+    "./destinations/vscode-output": {
+      "default": "./src/destinations/vscode-output.ts",
+      "types": "./dist/destinations/vscode-output.d.ts"
+    },
+    "./destinations/stdout": {
+      "default": "./src/destinations/stdout.ts",
+      "types": "./dist/destinations/stdout.d.ts"
+    }
+  },
+  "license": "MIT",
+  "name": "@acme/logger",
+  "private": true,
+  "scripts": {
+    "build": "tsc",
+    "clean": "git clean -xdf .turbo node_modules dist",
+    "dev": "tsc --watch",
+    "typecheck": "tsc --noEmit --emitDeclarationOnly false"
+  },
+  "type": "module",
+  "version": "0.1.0"
+}

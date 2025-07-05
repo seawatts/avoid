@@ -1,10 +1,8 @@
-import { debug, defaultLogger } from '@unhook/logger';
+import { debug, defaultLogger } from '@acme/logger';
 import { useCliStore } from '../../stores/cli-store';
-import { useConnectionStore } from '../../stores/connection-store';
-import { useEventStore } from '../../stores/events-store';
 import { capture, captureException, shutdown } from '../posthog';
 
-const log = debug('unhook:cli:process');
+const log = debug('acme:cli:process');
 
 let webhookClientCleanup: (() => void) | null = null;
 let requestSubscriptionCleanup: (() => void) | undefined;
@@ -86,9 +84,7 @@ export async function cleanup() {
   }
 
   log('Resetting stores...');
-  useConnectionStore.getState().reset();
   useCliStore.getState().reset();
-  useEventStore.getState().reset();
 
   log('Shutting down posthog...');
   await shutdown();

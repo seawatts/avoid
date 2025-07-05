@@ -2,15 +2,8 @@ import { useMemo } from 'react';
 import { useAuthStore } from '~/stores/auth-store';
 import { useCliStore } from '~/stores/cli-store';
 import type { Route } from '~/stores/router-store';
-import { useWebhookStore } from '~/stores/webhook-store';
 import { DebugPage } from './debug/page';
-import { EventRequestLayout } from './events/[id]/[requestId]/layout';
-import { EventLayout } from './events/[id]/layout';
-import { CreateMockEventLayout } from './events/create-mock/layout';
-import { EventsLayout } from './events/layout';
-import { HelpPage } from './help/page';
 import { HotkeysPage } from './hotkeys/page';
-import { InitLayout } from './init/layout';
 import { LoginLayout } from './login/layout';
 import { LogoutPage } from './logout/page';
 import { MenuLayout } from './menu/layout';
@@ -28,10 +21,6 @@ export type AppRoutePath =
   | '/report-issue'
   | '/quit'
   | '/settings'
-  | '/events'
-  | '/events/:id'
-  | '/events/:id/:requestId'
-  | '/events/create-mock'
   | '/status'
   | '/metrics'
   | '/debug'
@@ -48,39 +37,9 @@ export type AppRoute = Route<AppRoutePath>;
 export function useRoutes() {
   const isSignedIn = useAuthStore.use.isSignedIn();
   const isDebug = useCliStore.use.verbose?.();
-  const isAuthorizedForWebhook = useWebhookStore.use.isAuthorizedForWebhook();
-  const isCheckingWebhook = useWebhookStore.use.isCheckingWebhook();
 
   return useMemo(() => {
     const authenticatedRoutes: AppRoute[] = [
-      {
-        path: '/events',
-        component: EventsLayout,
-        label: 'Events',
-        hotkey: 'e',
-        showInMenu: isSignedIn && isAuthorizedForWebhook && !isCheckingWebhook,
-      },
-      {
-        path: '/events/:id',
-        component: EventLayout,
-        label: 'Event Details',
-        pattern: /^\/events\/(?<id>[^/]+)$/,
-        showInMenu: isSignedIn && isAuthorizedForWebhook && !isCheckingWebhook,
-      },
-      {
-        path: '/events/:id/:requestId',
-        component: EventRequestLayout,
-        label: 'Event Request Details',
-        showInMenu: false,
-        pattern: /^\/events\/(?<id>[^/]+)\/(?<requestId>[^/]+)$/,
-      },
-      {
-        path: '/events/create-mock',
-        component: CreateMockEventLayout,
-        label: 'Mock Event',
-        hotkey: 'm',
-        showInMenu: false,
-      },
       {
         path: '/logout',
         component: LogoutPage,
@@ -89,9 +48,8 @@ export function useRoutes() {
       },
       {
         path: '/listen',
-        component: InitLayout,
+        component: () => null,
         label: 'Listen for Changes',
-        showInMenu: false,
       },
     ];
 
@@ -120,9 +78,8 @@ export function useRoutes() {
       },
       {
         path: '/init',
-        component: InitLayout,
+        component: () => null,
         label: 'Initialize Project',
-        showInMenu: false,
       },
       {
         path: '/hotkeys',
@@ -133,9 +90,8 @@ export function useRoutes() {
       },
       {
         path: '/help',
-        component: HelpPage,
+        component: () => null,
         label: 'Help',
-        showInMenu: false,
         hotkey: 'h',
       },
       {
@@ -143,14 +99,14 @@ export function useRoutes() {
         component: () => null,
         label: 'Report Issue',
         hotkey: 'i',
-        url: 'https://github.com/unhook-sh/unhook/issues/new?template=bug_report.yml',
+        url: 'https://github.com/acme-sh/acme/issues/new?template=bug_report.yml',
       },
       {
         path: '/docs',
         component: () => null,
         label: 'Docs',
         hotkey: 'd',
-        url: 'https://docs.unhook.sh',
+        url: 'https://docs.acme.sh',
       },
       {
         path: '/quit',
@@ -177,5 +133,5 @@ export function useRoutes() {
       ...(isSignedIn && isDebug ? [debugRoute] : []),
       ...commonRoutes,
     ];
-  }, [isSignedIn, isDebug, isAuthorizedForWebhook, isCheckingWebhook]);
+  }, [isSignedIn, isDebug]);
 }

@@ -1,6 +1,6 @@
-import { debug, defaultLogger } from '@unhook/logger';
+import { debug, defaultLogger } from '@acme/logger';
 
-const log = debug('unhook:cli');
+const log = debug('acme:cli');
 
 // Static import that can be tree-shaken in production builds
 let connectToDevTools: ((options?: unknown) => void) | null = null;
@@ -32,7 +32,7 @@ export async function setupDebug({
 }): Promise<void> {
   if (!isDebugEnabled) return;
 
-  defaultLogger.enableNamespace('unhook:*');
+  defaultLogger.enableNamespace('acme:*');
   log('Debug logging enabled');
 
   // Only attempt to connect to devtools if we have it available and we're not in a compiled binary

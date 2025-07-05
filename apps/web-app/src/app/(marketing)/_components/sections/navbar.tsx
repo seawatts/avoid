@@ -21,7 +21,7 @@ const overlayVariants = {
   hidden: { opacity: 0 },
   visible: { opacity: 1 },
   exit: { opacity: 0 },
-};
+} as const;
 
 const drawerVariants = {
   hidden: { opacity: 0, y: 100 },
@@ -41,17 +41,17 @@ const drawerVariants = {
     y: 100,
     transition: { duration: 0.1 },
   },
-};
+} as const;
 
 const drawerMenuContainerVariants = {
   hidden: { opacity: 0 },
   visible: { opacity: 1 },
-};
+} as const;
 
 const drawerMenuVariants = {
   hidden: { opacity: 0 },
   visible: { opacity: 1 },
-};
+} as const;
 
 export function Navbar({ navs }: { navs?: NavItem[] }) {
   const { scrollY } = useScroll();

@@ -49,7 +49,7 @@ export function AnimatedListItem({ children }: { children: React.ReactNode }) {
     animate: { scale: 1, opacity: 1, originY: 0 },
     exit: { scale: 0, opacity: 0 },
     transition: { type: 'spring', stiffness: 350, damping: 40 },
-  };
+  } as const;
 
   return (
     <motion.div {...animations} layout className="mx-auto w-full">

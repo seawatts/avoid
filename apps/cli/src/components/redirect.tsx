@@ -9,6 +9,6 @@ interface RedirectProps<T extends AppRoutePath> {
 
 export const Redirect: FC<RedirectProps<AppRoutePath>> = ({ to, params }) => {
   const navigate = useRouterStore.use.navigate();
-  navigate(to, params as PathParams<typeof to>);
+  navigate(to, params as unknown as PathParams<typeof to>);
   return null;
 };

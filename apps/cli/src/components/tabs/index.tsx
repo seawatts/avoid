@@ -1,12 +1,12 @@
-import { debug } from '@unhook/logger';
-import { createSelectors } from '@unhook/zustand';
+import { debug } from '@acme/logger';
+import { createSelectors } from '@acme/zustand';
 import { Box, Text, type TextProps, useInput } from 'ink';
 import type React from 'react';
 import { useEffect, useRef } from 'react';
 import { createStore } from 'zustand';
 import { useDimensions } from '~/hooks/use-dimensions';
 
-const log = debug('unhook:cli:tabs');
+const log = debug('acme:cli:tabs');
 
 export type TabsTriggerProps = {
   value: string;

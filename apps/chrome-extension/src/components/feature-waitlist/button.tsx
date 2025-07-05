@@ -66,31 +66,29 @@ export function FeatureWaitlistButton({
   // };
 
   return (
-    <>
-      <Button
-        // onClick={handleJoinWaitlist}
-        type="button"
-        className={className}
-        variant="outline"
-        disabled={isPending || isSubscribed}
-      >
-        {isSubscribed && (
-          <>
-            <Icons.Check className="mr-2" />
-            Subscribed
-          </>
-        )}
-        {!isSubscribed && (
-          <>
-            {isPending ? (
-              <Icons.Spinner className="mr-2" />
-            ) : (
-              <img src={logoIcon} alt="Acme" className="mb-0.5 mr-2 size-5" />
-            )}
-            {isPending ? 'Joining...' : children || 'Join Waitlist'}
-          </>
-        )}
-      </Button>
-    </>
+    <Button
+      // onClick={handleJoinWaitlist}
+      type="button"
+      className={className}
+      variant="outline"
+      disabled={isPending || isSubscribed}
+    >
+      {isSubscribed && (
+        <>
+          <Icons.Check className="mr-2" />
+          Subscribed
+        </>
+      )}
+      {!isSubscribed && (
+        <>
+          {isPending ? (
+            <Icons.Spinner className="mr-2" />
+          ) : (
+            <img src={logoIcon} alt="Acme" className="mb-0.5 mr-2 size-5" />
+          )}
+          {isPending ? 'Joining...' : children || 'Join Waitlist'}
+        </>
+      )}
+    </Button>
   );
 }

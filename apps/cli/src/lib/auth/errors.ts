@@ -1,7 +1,7 @@
-import { debug } from '@unhook/logger';
+import { debug } from '@acme/logger';
 import { capture, captureException } from '../posthog';
 
-const log = debug('unhook:cli:auth-errors');
+const log = debug('acme:cli:auth-errors');
 
 export class AuthError extends Error {
   constructor(

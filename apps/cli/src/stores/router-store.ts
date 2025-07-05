@@ -1,12 +1,12 @@
-import { debug } from '@unhook/logger';
-import { createSelectors } from '@unhook/zustand';
+import { debug } from '@acme/logger';
+import { createSelectors } from '@acme/zustand';
 import open from 'open';
 import type { FC } from 'react';
 import { createStore } from 'zustand';
 import type { AppRoutePath } from '~/app/routes';
 import { capture } from '../lib/posthog';
 
-const log = debug('unhook:cli:router-store');
+const log = debug('acme:cli:router-store');
 
 // Route configuration type
 export interface RouteProps {

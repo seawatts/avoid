@@ -1,8 +1,8 @@
-import type { RouterOutputs } from '@unhook/api';
-import { createClient } from '@unhook/api/client';
-import { createId } from '@unhook/id';
-import { debug } from '@unhook/logger';
-import { createSelectors } from '@unhook/zustand';
+import type { RouterOutputs } from '@acme/api';
+import { createClient } from '@acme/api/cli';
+import { createId } from '@acme/id';
+import { debug } from '@acme/logger';
+import { createSelectors } from '@acme/zustand';
 import clipboard from 'clipboardy';
 import { createStore } from 'zustand';
 import { env } from '../env';
@@ -15,7 +15,7 @@ import type { StorageInterface } from '../lib/storage/storage-interface';
 import { findAvailablePort } from '../utils/port';
 import { useApiStore } from './api-store';
 
-const log = debug('unhook:cli:auth-store');
+const log = debug('acme:cli:auth-store');
 
 export interface AuthState {
   isSignedIn: boolean;

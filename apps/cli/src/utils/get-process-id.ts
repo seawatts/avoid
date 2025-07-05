@@ -1,8 +1,8 @@
 import os from 'node:os';
-import { debug } from '@unhook/logger';
+import { debug } from '@acme/logger';
 import { $ } from 'zx';
 
-const log = debug('unhook:cli:get-process-id');
+const log = debug('acme:cli:get-process-id');
 
 interface ProcessInfo {
   pid: number;

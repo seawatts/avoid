@@ -7,9 +7,9 @@ class ImprovementSuggestions {
 }
 
 function SuggestImprovements(
-  seo: SEOMetadata,
-  accessibility: AccessibilityReport,
-  structure: ContentStructure
+  seo: string,
+  accessibility: string,
+  structure: string
 ) -> ImprovementSuggestions {
   client "openai/gpt-4o"
   prompt #"

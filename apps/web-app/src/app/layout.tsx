@@ -10,7 +10,7 @@ import { NuqsAdapter } from 'nuqs/adapters/next/app';
 
 import '@acme/ui/globals.css';
 
-import { TRPCReactProvider } from '@acme/api/client';
+import { TRPCReactProvider } from '@acme/api/react';
 import { ClerkProvider } from '@clerk/nextjs';
 import { env } from '~/env.server';
 

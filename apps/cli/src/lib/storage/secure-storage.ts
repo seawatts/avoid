@@ -1,9 +1,9 @@
-import { debug } from '@unhook/logger';
+import { debug } from '@acme/logger';
 import keytar from 'keytar';
 import type { StorageInterface } from './storage-interface';
 
-const log = debug('unhook:cli:secure-storage');
-const SERVICE_NAME = 'unhook-cli';
+const log = debug('acme:cli:secure-storage');
+const SERVICE_NAME = 'acme-cli';
 
 interface StorageData {
   [key: string]: string | null;

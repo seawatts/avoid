@@ -1,11 +1,11 @@
 import fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
-import { debug } from '@unhook/logger';
+import { debug } from '@acme/logger';
 import type { StorageInterface } from './storage-interface';
 
-const log = debug('unhook:cli:file-storage');
-const STORAGE_DIR = path.join(os.homedir(), '.unhook');
+const log = debug('acme:cli:file-storage');
+const STORAGE_DIR = path.join(os.homedir(), '.acme');
 
 interface StorageData {
   [key: string]: string;

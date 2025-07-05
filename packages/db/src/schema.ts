@@ -43,12 +43,7 @@ export const UsersRelations = relations(Users, ({ many }) => ({
 
 export type UserType = typeof Users.$inferSelect;
 
-export const CreateUserSchema = createInsertSchema(Users, {
-  email: z.string(),
-  firstName: z.string(),
-  lastName: z.string(),
-  online: z.boolean(),
-}).omit({
+export const CreateUserSchema = createInsertSchema(Users).omit({
   createdAt: true,
   id: true,
   updatedAt: true,

@@ -11,7 +11,6 @@ export async function parseArgs(): Promise<CliState> {
   // Map command to route path
   const commandToPath: Record<string, AppRoutePath> = {
     init: '/init',
-    listen: '/events',
     login: '/login',
   };
 
@@ -26,7 +25,7 @@ export async function parseArgs(): Promise<CliState> {
     })
     .command(
       'init',
-      'Authenticate with Unhook and set up your project. Creates an unhook.yaml config and guides you through connecting your webhook provider.',
+      'Authenticate with Acme and set up your project. Creates an acme.yaml config and guides you through connecting your webhook provider.',
       {
         code: {
           alias: 'c',
@@ -59,7 +58,7 @@ export async function parseArgs(): Promise<CliState> {
     )
     .command(
       'listen',
-      'Start the Unhook relay to receive and forward webhooks to your local server. Keeps the CLI running and displays incoming requests.',
+      'Start the Acme relay to receive and forward webhooks to your local server. Keeps the CLI running and displays incoming requests.',
       {
         path: {
           type: 'string',
@@ -69,7 +68,7 @@ export async function parseArgs(): Promise<CliState> {
         config: {
           alias: 'c',
           type: 'string',
-          description: 'Path to a custom unhook.yaml configuration file.',
+          description: 'Path to a custom acme.yaml configuration file.',
         },
       },
       () => {
@@ -78,7 +77,7 @@ export async function parseArgs(): Promise<CliState> {
     )
     .command(
       'login',
-      'Authenticate your CLI with your Unhook account. Opens a browser for login.',
+      'Authenticate your CLI with your Acme account. Opens a browser for login.',
       {
         code: {
           alias: 'c',
@@ -93,7 +92,7 @@ export async function parseArgs(): Promise<CliState> {
     )
     .help()
     .alias('help', 'h')
-    .scriptName('unhook')
+    .scriptName('acme')
     .parseAsync();
 
   // biome-ignore lint/suspicious/noExplicitAny: args doesn't have a type

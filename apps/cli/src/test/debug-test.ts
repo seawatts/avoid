@@ -9,13 +9,7 @@ import { spawn } from 'node:child_process';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
 
-const CLI_BIN_PATH = path.join(
-  import.meta.dir,
-  '..',
-  '..',
-  'bin',
-  'unhook-test',
-);
+const CLI_BIN_PATH = path.join(import.meta.dir, '..', '..', 'bin', 'acme-test');
 
 async function testCliBinary() {
   console.log('🧪 Testing CLI binary compilation...');

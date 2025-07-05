@@ -8,7 +8,7 @@ import { siteConfig } from '~/app/(marketing)/_lib/config';
 const fadeInUpVariants = {
   hidden: { opacity: 0, y: 20 },
   visible: { opacity: 1, y: 0 },
-};
+} as const;
 
 const terminalVariants = {
   hidden: { opacity: 0, y: 40 },
@@ -21,7 +21,7 @@ const terminalVariants = {
       ease: [0.22, 1, 0.36, 1],
     },
   },
-};
+} as const;
 
 const staggerContainer = {
   hidden: { opacity: 0 },
@@ -31,7 +31,7 @@ const staggerContainer = {
       staggerChildren: 0.15,
     },
   },
-};
+} as const;
 
 export function HeroSection() {
   const { hero } = siteConfig;

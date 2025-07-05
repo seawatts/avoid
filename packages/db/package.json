@@ -1,10 +1,24 @@
 {
   "dependencies": {
     "@acme/id": "workspace:*",
+    "@acme/logger": "workspace:*",
     "@acme/zustand": "workspace:*",
-    "@clerk/nextjs": "6.22.0",
-    "zod": "3.25.67",
-    "zustand": "5.0.5"
+    "@clerk/nextjs": "6.23.3",
+    "@supabase/ssr": "0.6.1",
+    "@supabase/supabase-js": "2.50.3",
+    "@t3-oss/env-core": "0.13.8",
+    "@vercel/postgres": "0.10.0",
+    "date-fns": "4.1.0",
+    "drizzle-orm": "0.44.2",
+    "drizzle-seed": "0.3.1",
+    "drizzle-zod": "0.8.2",
+    "lodash-es": "4.17.21",
+    "next": "15.3.5",
+    "pg": "8.16.3",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "zod": "3.25.74",
+    "zustand": "5.0.6"
   },
   "devDependencies": {
     "@acme/tsconfig": "workspace:*",
@@ -16,10 +30,10 @@
     "@types/react-dom": "19.1.6",
     "chokidar": "4.0.3",
     "drizzle-kit": "0.31.1",
-    "supabase": "2.26.9",
+    "supabase": "2.30.4",
     "tsx": "4.20.3",
     "typescript": "5.8.3",
-    "zx": "8.5.5"
+    "zx": "8.6.1"
   },
   "exports": {
     ".": {
@@ -53,6 +67,10 @@
     "./supabase/server": {
       "default": "./src/supabase/server-exports.ts",
       "types": "./dist/supabase/server-exports.d.ts"
+    },
+    "./supabase/types": {
+      "default": "./src/supabase/types.generated.ts",
+      "types": "./dist/supabase/types.generated.d.ts"
     }
   },
   "license": "MIT",

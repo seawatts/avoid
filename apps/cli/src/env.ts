@@ -35,7 +35,7 @@ export const env = createEnv({
       .string()
       .optional()
       .default('https://app.posthog.com'),
-    NEXT_PUBLIC_API_URL: z.string().optional().default('https://api.unhook.sh'),
+    NEXT_PUBLIC_API_URL: z.string().optional().default('https://api.acme.sh'),
     NEXT_PUBLIC_APP_ENV: z
       .enum(['development', 'production'])
       .default('development'),

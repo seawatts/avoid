@@ -6,7 +6,6 @@ import { Ascii } from '~/components/ascii';
 import { SelectInput } from '~/components/select-input';
 import { env } from '~/env';
 import { useCliStore } from '~/stores/cli-store';
-import { useConfigStore } from '~/stores/config-store';
 import type { RouteProps } from '~/stores/router-store';
 import { type StaticRoutePath, useRouterStore } from '~/stores/router-store';
 import type { AppRoutePath } from '../routes';
@@ -30,17 +29,14 @@ export const MenuPage: FC<RouteProps> = () => {
     showInMenu: boolean;
   }>;
 
-  const clientId = useConfigStore.use.clientId?.();
   const version = useCliStore.use.version();
-  const webhookId = useConfigStore.use.webhookId();
   const debug = useCliStore.use.verbose();
 
-  const webhookUrl = `${env.NEXT_PUBLIC_API_URL}/${webhookId}`;
   const [copiedToClipboard, setCopiedToClipboard] = useState(false);
 
   useInput((input) => {
     if (input === 'c') {
-      clipboard.writeSync(webhookUrl);
+      clipboard.writeSync(env.NEXT_PUBLIC_API_URL);
       setCopiedToClipboard(true);
       setTimeout(() => {
         setCopiedToClipboard(false);
@@ -51,10 +47,10 @@ export const MenuPage: FC<RouteProps> = () => {
   return (
     <Box flexDirection="column">
       <Box marginBottom={1}>
-        <Ascii text="Unhook" font="ANSI Shadow" color="gray" />
+        <Ascii text="Acme" font="ANSI Shadow" color="gray" />
       </Box>
       <Box marginBottom={1} flexDirection="column">
-        <Text bold>{webhookUrl}</Text>
+        <Text bold>{env.NEXT_PUBLIC_API_URL}</Text>
         {!copiedToClipboard && (
           <Text dimColor>Press 'c' to copy to clipboard</Text>
         )}
@@ -63,8 +59,6 @@ export const MenuPage: FC<RouteProps> = () => {
       {debug && (
         <Box marginBottom={1} flexDirection="column">
           <Text dimColor>Version: {version}</Text>
-          <Text dimColor>Client: {clientId}</Text>
-          <Text dimColor>Webhook: {webhookId}</Text>
           <Text dimColor>
             Platform: {platform()} {release()}
           </Text>

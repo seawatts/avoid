@@ -1,4 +1,4 @@
-import { createSelectors } from '@unhook/zustand';
+import { createSelectors } from '@acme/zustand';
 import { createStore } from 'zustand';
 import type { AppRoutePath } from '~/app/routes';
 

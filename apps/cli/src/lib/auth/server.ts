@@ -4,12 +4,12 @@ import {
   type Server,
   type ServerResponse,
 } from 'node:http';
-import { debug } from '@unhook/logger';
+import { debug } from '@acme/logger';
 import { env } from '~/env';
 import { capture } from '../posthog';
 import { InvalidAuthResponseError } from './errors';
 
-const log = debug('unhook:cli:auth-server');
+const log = debug('acme:cli:auth-server');
 
 interface AuthCallbackParams {
   csrfToken: string | null;

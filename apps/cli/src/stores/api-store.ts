@@ -1,5 +1,5 @@
-import { createClient } from '@unhook/api/client';
-import { createSelectors } from '@unhook/zustand';
+import { createClient } from '@acme/api/cli';
+import { createSelectors } from '@acme/zustand';
 import { createStore } from 'zustand';
 // Combine base and exclusive properties into the final state type
 export type ApiState = {

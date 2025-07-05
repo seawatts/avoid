@@ -22,7 +22,7 @@ const envDefines = {
     process.env.NEXT_PUBLIC_POSTHOG_HOST || 'https://us.i.posthog.com',
   ),
   'process.env.NEXT_PUBLIC_API_URL': JSON.stringify(
-    process.env.NEXT_PUBLIC_API_URL || 'https://api.unhook.sh',
+    process.env.NEXT_PUBLIC_API_URL || 'https://api.acme.sh',
   ),
   'process.env.NEXT_PUBLIC_APP_ENV': JSON.stringify(
     process.env.NEXT_PUBLIC_APP_ENV || 'production',
@@ -56,13 +56,11 @@ export default defineConfig({
     'posthog-js',
   ],
   noExternal: [
-    '@unhook/api',
-    '@unhook/client',
-    '@unhook/db',
-    '@unhook/id',
-    '@unhook/logger',
-    '@unhook/utils',
-    '@unhook/zustand',
+    '@acme/api',
+    '@acme/db',
+    '@acme/id',
+    '@acme/logger',
+    '@acme/zustand',
   ],
   define: envDefines,
   esbuildOptions(options) {

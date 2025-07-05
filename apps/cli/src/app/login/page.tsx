@@ -1,4 +1,4 @@
-import { debug } from '@unhook/logger';
+import { debug } from '@acme/logger';
 import { Box, Text, useInput } from 'ink';
 import open from 'open';
 import type { FC } from 'react';
@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import { useAuthStore } from '~/stores/auth-store';
 import { type RouteProps, useRouterStore } from '~/stores/router-store';
 
-const log = debug('unhook:cli:login-page');
+const log = debug('acme:cli:login-page');
 
 export const LoginPage: FC<RouteProps> = () => {
   // State management
@@ -59,7 +59,7 @@ export const LoginPage: FC<RouteProps> = () => {
         {authUrl && (
           <Box flexDirection="column" gap={1}>
             <Box flexDirection="column" gap={1}>
-              <Text>Please go to the link to authenticate the Unhook CLI.</Text>
+              <Text>Please go to the link to authenticate the Acme CLI.</Text>
               <Text>
                 If the browser doesn't open automatically, click here:
               </Text>

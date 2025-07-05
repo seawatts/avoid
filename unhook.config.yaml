@@ -1,5 +1,5 @@
-# Unhook Webhook Configuration
-# For more information, visit: https://docs.unhook.sh/configuration
+# Acme Webhook Configuration
+# For more information, visit: https://docs.acme.sh/configuration
 #
 # Schema:
 #   webhookId: string                    # Unique identifier for your webhook

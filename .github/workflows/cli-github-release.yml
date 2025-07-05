@@ -111,8 +111,8 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: unhook-${{ matrix.platform }}-${{ matrix.target }}
-          path: apps/cli/bin/unhook-${{ matrix.platform }}-${{ matrix.target }}${{ matrix.binary_ext }}
+          name: acme-${{ matrix.platform }}-${{ matrix.target }}
+          path: apps/cli/bin/acme-${{ matrix.platform }}-${{ matrix.target }}${{ matrix.binary_ext }}
 
   release:
     name: Release CLI
@@ -137,7 +137,7 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v4
         with:
-          pattern: unhook-*
+          pattern: acme-*
           path: dist
           run-id: ${{ github.run_id }}
           repository: ${{ github.repository }}

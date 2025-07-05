@@ -6,7 +6,7 @@ export async function GET(
   props: { params: Promise<{ code: string }> },
 ) {
   const params = await props.params;
-  const shortUrl = await db.query.ShortUrl.findFirst({
+  const shortUrl = await db.query.ShortUrls.findFirst({
     where: (shortUrls, { eq }) => eq(shortUrls.code, params.code),
     with: {
       script: true,
