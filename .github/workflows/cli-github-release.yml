@@ -39,6 +39,7 @@ env:
 jobs:
   check-version:
     runs-on: ubuntu-latest
+    if: false  # Skip this workflow
     outputs:
       is_version_bump: ${{ steps.check.outputs.is_version_bump }}
     steps:

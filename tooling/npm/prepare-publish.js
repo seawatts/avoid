@@ -6,10 +6,7 @@ import { join } from 'node:path';
 const workspaceRoot = process.cwd();
 const packageJsonPath = join(workspaceRoot, 'package.json');
 const cliPath = join(workspaceRoot, '../../apps/cli');
-const clientPackageJsonPath = join(
-  workspaceRoot,
-  '../../packages/client/package.json',
-);
+const uiPackageJsonPath = join(workspaceRoot, '../../packages/ui/package.json');
 const installScriptPath = join(cliPath, 'scripts', 'install.cjs');
 
 // Copy README and LICENSE
@@ -30,9 +27,7 @@ try {
 
 // Read both package.json files
 const packageJson = JSON.parse(readFileSync(packageJsonPath, 'utf8'));
-const clientPackageJson = JSON.parse(
-  readFileSync(clientPackageJsonPath, 'utf8'),
-);
+const uiPackageJson = JSON.parse(readFileSync(uiPackageJsonPath, 'utf8'));
 
 // Update install script with package version
 try {
@@ -51,10 +46,10 @@ try {
 // Get all @acme/* dependencies from both dependencies and devDependencies
 const acmeDeps = [
   ...Object.keys(packageJson.dependencies || {}).filter(
-    (dep) => dep.startsWith('@acme/') && dep !== '@acme/client',
+    (dep) => dep.startsWith('@acme/') && dep !== '@acme/ui',
   ),
   ...Object.keys(packageJson.devDependencies || {}).filter(
-    (dep) => dep.startsWith('@acme/') && dep !== '@acme/client',
+    (dep) => dep.startsWith('@acme/') && dep !== '@acme/ui',
   ),
 ];
 
@@ -65,17 +60,17 @@ for (const dep of acmeDeps) {
 }
 
 // Replace @acme/client workspace dependency with actual version
-if (packageJson.dependencies?.['@acme/client'] === 'workspace:*') {
-  packageJson.dependencies['@acme/client'] = clientPackageJson.version;
+if (packageJson.dependencies?.['@acme/ui'] === 'workspace:*') {
+  packageJson.dependencies['@acme/ui'] = uiPackageJson.version;
   console.log(
-    `✅ Updated @acme/client dependency to version ${clientPackageJson.version}`,
+    `✅ Updated @acme/ui dependency to version ${uiPackageJson.version}`,
   );
 }
 
-if (packageJson.devDependencies?.['@acme/client'] === 'workspace:*') {
-  packageJson.devDependencies['@acme/client'] = clientPackageJson.version;
+if (packageJson.devDependencies?.['@acme/ui'] === 'workspace:*') {
+  packageJson.devDependencies['@acme/ui'] = uiPackageJson.version;
   console.log(
-    `✅ Updated @acme/client devDependency to version ${clientPackageJson.version}`,
+    `✅ Updated @acme/ui devDependency to version ${uiPackageJson.version}`,
   );
 }
 
