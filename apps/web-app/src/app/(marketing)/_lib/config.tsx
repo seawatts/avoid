@@ -1,3 +1,4 @@
+'use client';
 import { cn } from '@acme/ui/lib/utils';
 import { FlickeringGrid } from '@acme/ui/magicui/flickering-grid';
 import { Globe } from '@acme/ui/magicui/globe';
