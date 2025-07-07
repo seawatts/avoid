@@ -9,7 +9,13 @@ import baseConfig from '@acme/next-config/base';
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   ...baseConfig,
-  transpilePackages: ['@acme/api', '@acme/db', '@acme/ui', '@acme/ai'],
+  transpilePackages: [
+    '@acme/api',
+    '@acme/db',
+    '@acme/ui',
+    '@acme/ai',
+    '@acme/analytics',
+  ],
 };
 
 export default nextConfig;

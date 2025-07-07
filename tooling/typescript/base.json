@@ -9,7 +9,6 @@
     "module": "Preserve",
     "moduleDetection": "force",
     "moduleResolution": "Bundler",
-    "noEmit": true,
     "noUncheckedIndexedAccess": true,
     "disableSourceOfProjectReferenceRedirect": true,
     "checkJs": true,

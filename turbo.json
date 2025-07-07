@@ -1,63 +1,14 @@
 {
   "$schema": "https://turborepo.org/schema.json",
-  "globalEnv": [
-    "DATABASE_URL",
-    "PORT",
-    "CLERK_SECRET_KEY",
-    "POSTGRES_URL",
-    "POSTGRES_PRISMA_URL",
-    "POSTGRES_URL_NON_POOLING",
-    "POSTGRES_USER",
-    "POSTGRES_HOST",
-    "POSTGRES_PASSWORD",
-    "POSTGRES_DATABASE",
-    "SUPABASE_ANON_KEY",
-    "SUPABASE_URL",
-    "SUPABASE_SERVICE_ROLE_KEY",
-    "SUPABASE_JWT_SECRET",
-    "CLERK_WEBHOOK_SECRET",
-    "CLERK_ISSUER_URL",
-    "OPENAI_API_KEY",
-    "POSTHOG_KEY",
-    "POSTHOG_HOST",
-    "KV_URL",
-    "KV_REST_API_READ_ONLY_TOKEN",
-    "REDIS_URL",
-    "KV_REST_API_TOKEN",
-    "KV_REST_API_URL",
-    "NEXT_PUBLIC_API_URL",
-    "STRIPE_SECRET_KEY",
-    "STRIPE_PUBLISHABLE_KEY",
-    "STRIPE_WEBHOOK_SECRET",
-    "NEXT_PUBLIC_SUPABASE_URL",
-    "NEXT_PUBLIC_SUPABASE_ANON_KEY",
-    "SUPABASE_PROJECT_ID",
-    "NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY",
-    "NEXT_PUBLIC_POSTHOG_KEY",
-    "NEXT_PUBLIC_POSTHOG_HOST",
-    "NEXT_PUBLIC_APP_ENV",
-    "SENTRY_ORG",
-    "SENTRY_PROJECT",
-    "SENTRY_AUTH_TOKEN",
-    "COMMITTER_TOKEN",
-    "APPLE_TEAM_ID",
-    "APPLE_ID",
-    "APPLE_PASSWORD",
-    "MACOS_CERTIFICATE",
-    "MACOS_CERTIFICATE_PWD",
-    "MACOS_IDENTITY",
-    "POSTHOG_PERSONAL_API_KEY",
-    "NPM_TOKEN",
-    "TURBO_TOKEN",
-    "TURBO_TEAM"
-  ],
   "globalPassThroughEnv": [
     "NODE_ENV",
     "CI",
     "VERCEL",
     "VERCEL_ENV",
     "VERCEL_URL",
-    "npm_lifecycle_event"
+    "npm_lifecycle_event",
+    "TURBO_TOKEN",
+    "TURBO_TEAM"
   ],
   "tasks": {
     "//#clean": {
@@ -73,43 +24,93 @@
         ".output/**",
         ".vercel/output/**",
         "dist/**"
+      ],
+      "env": [
+        "NEXT_PUBLIC_*",
+        "DATABASE_URL",
+        "POSTGRES_URL",
+        "CLERK_SECRET_KEY",
+        "POSTHOG_KEY",
+        "OPENAI_API_KEY",
+        "STRIPE_SECRET_KEY"
+      ],
+      "passThroughEnv": ["NPM_TOKEN"]
+    },
+    "@acme/web-app#build": {
+      "env": [
+        "NEXT_PUBLIC_*",
+        "CLERK_SECRET_KEY",
+        "CLERK_WEBHOOK_SECRET",
+        "POSTGRES_URL",
+        "POSTHOG_KEY",
+        "OPENAI_API_KEY",
+        "STRIPE_*"
       ]
+    },
+    "@acme/cli#build": {
+      "env": ["NEXT_PUBLIC_*"],
+      "passThroughEnv": ["APPLE_*", "MACOS_*", "NPM_TOKEN"]
+    },
+    "@acme/db#build": {
+      "env": [
+        "DATABASE_URL",
+        "POSTGRES_*",
+        "NEXT_PUBLIC_SUPABASE_*",
+        "SUPABASE_PROJECT_ID"
+      ],
+      "passThroughEnv": ["SUPABASE_SERVICE_ROLE_KEY", "SUPABASE_JWT_SECRET"]
     },
     "clean": {
       "cache": false
     },
     "dev": {
       "cache": false,
-      "persistent": true
+      "persistent": true,
+      "env": ["PORT"],
+      "passThroughEnv": [
+        "DATABASE_URL",
+        "POSTGRES_*",
+        "CLERK_*",
+        "SUPABASE_*",
+        "NEXT_PUBLIC_*",
+        "OPENAI_API_KEY",
+        "POSTHOG_*",
+        "STRIPE_*",
+        "KV_*",
+        "REDIS_URL"
+      ]
     },
     "format": {
-      "dependsOn": ["^topo", "^build"]
+      "dependsOn": ["^build"]
     },
     "gen-migration": {
       "cache": false,
-      "interactive": true
+      "interactive": true,
+      "env": ["DATABASE_URL", "POSTGRES_URL"]
     },
     "migrate": {
       "cache": false,
-      "interactive": true
+      "interactive": true,
+      "env": ["DATABASE_URL", "POSTGRES_URL"]
     },
     "push": {
       "cache": false,
-      "interactive": true
+      "interactive": true,
+      "env": ["DATABASE_URL", "POSTGRES_URL"]
     },
     "seed": {
       "cache": false,
-      "interactive": true
+      "interactive": true,
+      "env": ["DATABASE_URL", "POSTGRES_URL"],
+      "passThroughEnv": ["CLERK_*", "SUPABASE_*"]
     },
     "studio": {
       "cache": false,
-      "persistent": true
-    },
-    "topo": {
-      "dependsOn": ["^topo"]
+      "persistent": true,
+      "passThroughEnv": ["DATABASE_URL", "POSTGRES_URL"]
     },
     "typecheck": {
-      "dependsOn": ["^topo", "^build"],
+      "dependsOn": ["^build"],
       "outputs": ["node_modules/.cache/tsbuildinfo.json"]
     },
     "ui-add": {

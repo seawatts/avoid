@@ -5,12 +5,8 @@ import { registerAuthCommands } from './auth/commands';
 import { registerOutputCommands } from './commands/output.commands';
 import { registerQuickPickCommand } from './commands/quick-pick.commands';
 import { registerSettingsCommands } from './commands/settings.commands';
-import { registerWebhookEventCommands } from './commands/webhook-events.commands';
 import { env } from './env';
 import { SettingsProvider } from './providers/settings.provider';
-import { WebhookEventsProvider } from './providers/webhook-events.provider';
-import { WebhookEventQuickPick } from './quickPick';
-import { RequestDetailsWebviewProvider } from './request-details-webview/request-details.webview';
 import { SettingsService } from './services/settings.service';
 import { AuthStore } from './stores/auth-store';
 
@@ -86,22 +82,6 @@ export async function activate(context: vscode.ExtensionContext) {
     statusBarItem,
   );
 
-  // Initialize webhook events provider
-  const webhookEventsProvider = new WebhookEventsProvider(context);
-  webhookEventsProvider.setAuthStore(authStore);
-
-  // Initialize webview provider
-  const webviewProvider = new RequestDetailsWebviewProvider(
-    context.extensionUri,
-  );
-
-  // Register webhook event commands
-  registerWebhookEventCommands(context, webhookEventsProvider, webviewProvider);
-
-  // Set up quick pick
-  const quickPick = WebhookEventQuickPick.getInstance();
-  quickPick.setAuthStore(authStore);
-
   const settingsProvider = new SettingsProvider();
   vscode.window.registerTreeDataProvider('acme.settings', settingsProvider);
 
@@ -131,31 +111,11 @@ export async function activate(context: vscode.ExtensionContext) {
     }),
   );
 
-  // Create the webview provider
-  context.subscriptions.push(
-    vscode.window.registerWebviewViewProvider(
-      RequestDetailsWebviewProvider.viewType,
-      webviewProvider,
-    ),
-  );
-
   // Register commands
   registerOutputCommands(context, outputDestination);
   registerQuickPickCommand(context);
 
   registerSettingsCommands(context);
-
-  // Register the webhook events provider
-  const treeView = vscode.window.createTreeView('acme.webhookEvents', {
-    treeDataProvider: webhookEventsProvider,
-    showCollapseAll: true,
-  });
-
-  treeView.onDidChangeVisibility(() => {
-    webhookEventsProvider.refresh();
-  });
-
-  context.subscriptions.push(treeView);
 
   log('Acme extension activation complete');
 }

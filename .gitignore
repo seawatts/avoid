@@ -54,3 +54,5 @@ dist/
 
 apps/cli/bin
 apps/cli/certificates
+
+.plasmo

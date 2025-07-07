@@ -2,7 +2,6 @@
   "extends": "@acme/tsconfig/react-library.json",
   "compilerOptions": {
     // "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
-    "noEmit": false,
     // "composite": true,
     // "declaration": true,
     // "declarationDir": "dist",

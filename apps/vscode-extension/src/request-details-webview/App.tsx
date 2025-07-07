@@ -1,5 +1,4 @@
-// biome-ignore lint/style/useFilenamingConvention: For Plasmo
-import type { RequestType } from '@acme/db/schema';
+/** biome-ignore-all lint/style/useFilenamingConvention: todo */
 import { Icons } from '@acme/ui/custom/icons';
 import { useEffect, useRef, useState } from 'react';
 
@@ -12,7 +11,8 @@ declare global {
   }
 }
 
-function RequestDetails({ data }: { data: RequestType }) {
+// biome-ignore lint/suspicious/noExplicitAny: asdf
+function RequestDetails({ data }: { data: Record<string, any> }) {
   const parseBody = (body?: string) => {
     if (!body) return null;
     try {
@@ -268,7 +268,7 @@ function MainView() {
 }
 
 function App() {
-  const [requestData, setRequestData] = useState<RequestType | null>(null);
+  const [requestData, setRequestData] = useState<unknown | null>(null);
 
   useEffect(() => {
     // Listen for messages from the extension

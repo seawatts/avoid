@@ -296,7 +296,7 @@
     "package": "bun run typecheck && bun run build",
     "pretest": "bun run build:base",
     "test": "vscode-test",
-    "typecheck.skip": "tsc --noEmit --emitDeclarationOnly false",
+    "typecheck": "tsc --noEmit --emitDeclarationOnly false",
     "vsce": "bunx vsce package",
     "vscode:prepublish": "bun run package"
   },
