@@ -1,28 +1,28 @@
 'use client';
 
-import { Button } from '@acme/ui/components/button';
-import { Input } from '@acme/ui/components/input';
-import { Separator } from '@acme/ui/components/separator';
+import { Slot } from '@radix-ui/react-slot';
+import { cva, type VariantProps } from 'class-variance-authority';
+import { PanelLeftIcon } from 'lucide-react';
+import * as React from 'react';
+import { useIsMobile } from '../hooks/use-mobile';
+import { cn } from '../lib/utils';
+import { Button } from './button';
+import { Input } from './input';
+import { Separator } from './separator';
 import {
   Sheet,
   SheetContent,
   SheetDescription,
   SheetHeader,
   SheetTitle,
-} from '@acme/ui/components/sheet';
-import { Skeleton } from '@acme/ui/components/skeleton';
+} from './sheet';
+import { Skeleton } from './skeleton';
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from '@acme/ui/components/tooltip';
-import { useIsMobile } from '@acme/ui/hooks/use-mobile';
-import { cn } from '@acme/ui/lib/utils';
-import { Slot } from '@radix-ui/react-slot';
-import { cva, type VariantProps } from 'class-variance-authority';
-import { PanelLeftIcon } from 'lucide-react';
-import * as React from 'react';
+} from './tooltip';
 
 const SIDEBAR_COOKIE_NAME = 'sidebar_state';
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
@@ -82,7 +82,7 @@ function SidebarProvider({
       }
 
       // This sets the cookie to keep the sidebar state.
-      // biome-ignore lint/suspicious/noDocumentCookie: false positive
+      // biome-ignore lint/suspicious/noDocumentCookie: we need to set a cookie
       document.cookie = `${SIDEBAR_COOKIE_NAME}=${openState}; path=/; max-age=${SIDEBAR_COOKIE_MAX_AGE}`;
     },
     [setOpenProp, open],

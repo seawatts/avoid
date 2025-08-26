@@ -1,8 +1,7 @@
-import { cn } from '@acme/ui/lib/utils';
 import { ArrowRightIcon } from '@radix-ui/react-icons';
 import type { ElementType, ReactNode } from 'react';
-
 import { Button } from '../components/button';
+import { cn } from '../lib/utils';
 
 const BentoGrid = ({
   children,

@@ -1,5 +1,8 @@
 import { lookup } from 'node:dns/promises';
 import { networkInterfaces } from 'node:os';
+import { debug } from '@acme/logger';
+
+const log = debug('acme:lib:network-monitor');
 
 export type NetworkStatus = 'online' | 'offline' | 'checking';
 export type NetworkStatusCallback = (status: NetworkStatus) => void;
@@ -25,7 +28,7 @@ export class NetworkMonitor {
       );
 
       if (!hasActiveInterface) {
-        console.log('No active network interfaces found');
+        log('No active network interfaces found');
         return false;
       }
 
@@ -33,7 +36,7 @@ export class NetworkMonitor {
       await lookup(this.host);
       return true;
     } catch (error) {
-      console.log('Network check failed:', error);
+      log('Network check failed:', error);
       return false;
     }
   }
@@ -46,7 +49,7 @@ export class NetworkMonitor {
     this.status = isOnline ? 'online' : 'offline';
 
     if (this.status !== previousStatus) {
-      console.log('Network status changed:', {
+      log('Network status changed:', {
         current: this.status,
         previous: previousStatus,
       });
@@ -59,7 +62,7 @@ export class NetworkMonitor {
       try {
         callback(this.status);
       } catch (error) {
-        console.log('Error in network status callback:', error);
+        log('Error in network status callback:', error);
       }
     }
   }
@@ -75,14 +78,14 @@ export class NetworkMonitor {
       void this.updateStatus();
     }, this.checkInterval);
 
-    console.log('Network monitoring started');
+    log('Network monitoring started');
   }
 
   public stop(): void {
     if (this.intervalId) {
       clearInterval(this.intervalId);
       this.intervalId = null;
-      console.log('Network monitoring stopped');
+      log('Network monitoring stopped');
     }
   }
 

@@ -1,7 +1,5 @@
 'use client';
 
-import { Label } from '@acme/ui/components/label';
-import { cn } from '@acme/ui/lib/utils';
 import type * as LabelPrimitive from '@radix-ui/react-label';
 import { Slot } from '@radix-ui/react-slot';
 import * as React from 'react';
@@ -14,6 +12,8 @@ import {
   useFormContext,
   useFormState,
 } from 'react-hook-form';
+import { cn } from '../lib/utils';
+import { Label } from './label';
 
 const Form = FormProvider;
 
@@ -94,7 +94,7 @@ function FormLabel({
 
   return (
     <Label
-      className={cn('data-[error=true]:text-destructive-foreground', className)}
+      className={cn('data-[error=true]:text-destructive', className)}
       data-error={!!error}
       data-slot="form-label"
       htmlFor={formItemId}
@@ -145,7 +145,7 @@ function FormMessage({ className, ...props }: React.ComponentProps<'p'>) {
 
   return (
     <p
-      className={cn('text-destructive-foreground text-sm', className)}
+      className={cn('text-destructive text-sm', className)}
       data-slot="form-message"
       id={formMessageId}
       {...props}

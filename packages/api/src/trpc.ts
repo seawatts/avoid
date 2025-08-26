@@ -6,11 +6,14 @@
  * tl;dr - this is where all the tRPC server stuff is created and plugged in.
  * The pieces you will need to use are documented accordingly near the end
  */
+
+import { debug } from '@acme/logger';
 import { initTRPC, TRPCError } from '@trpc/server';
 import superjson from 'superjson';
 import { ZodError } from 'zod';
-
 import type { Context } from './context';
+
+const log = debug('acme:trpc');
 
 /**
  * 2. INITIALIZATION
@@ -56,21 +59,23 @@ export const createTRPCRouter = t.router;
  */
 const timingMiddleware = t.middleware(async ({ next, path }) => {
   const start = Date.now();
-
-  if (t._config.isDev) {
-    // artificial delay in dev 100-500ms
-    const waitMs = Math.floor(Math.random() * 400) + 100;
-    await new Promise((resolve) => setTimeout(resolve, waitMs));
-  }
-
   const result = await next();
 
   const end = Date.now();
-  console.log(`[TRPC] ${path} took ${end - start}ms to execute`);
+  log(`[TRPC] ${path} took ${end - start}ms to execute`);
 
   return result;
 });
 
+const analyticsMiddleware = t.middleware(async ({ next, path }) => {
+  const start = Date.now();
+  const result = await next();
+
+  const end = Date.now();
+  log(`[TRPC] ${path} took ${end - start}ms to execute`);
+
+  return result;
+});
 /**
  * Public (unauthed) procedure
  *
@@ -81,9 +86,10 @@ const timingMiddleware = t.middleware(async ({ next, path }) => {
 export const publicProcedure = t.procedure.use(timingMiddleware);
 
 const isAuthed = t.middleware(({ next, ctx }) => {
-  if (!ctx.auth.userId) {
+  if (!ctx.auth?.userId) {
     throw new TRPCError({ code: 'UNAUTHORIZED' });
   }
+
   return next({
     ctx: {
       auth: ctx.auth,
@@ -100,5 +106,6 @@ const isAuthed = t.middleware(({ next, ctx }) => {
  * @see https://trpc.io/docs/procedures
  */
 export const protectedProcedure = t.procedure
+  .use(analyticsMiddleware)
   .use(timingMiddleware)
   .use(isAuthed);

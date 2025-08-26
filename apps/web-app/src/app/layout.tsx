@@ -1,4 +1,3 @@
-import { AnalyticsProviders } from '@acme/analytics';
 import { ReactScan } from '@acme/ui/custom/react-scan';
 import { ThemeProvider } from '@acme/ui/custom/theme';
 import { cn } from '@acme/ui/lib/utils';
@@ -10,8 +9,11 @@ import { NuqsAdapter } from 'nuqs/adapters/next/app';
 
 import '@acme/ui/globals.css';
 
+import { AnalyticsProviders } from '@acme/analytics/providers';
 import { TRPCReactProvider } from '@acme/api/react';
+import { StripeProvider } from '@acme/stripe/guards/client';
 import { ClerkProvider } from '@clerk/nextjs';
+import { Suspense } from 'react';
 import { env } from '~/env.server';
 
 export const metadata: Metadata = {
@@ -44,7 +46,7 @@ export const viewport: Viewport = {
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 
-export default async function RootLayout(props: { children: React.ReactNode }) {
+export default function RootLayout(props: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body
@@ -57,18 +59,22 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
         {isDevelopment && <ReactScan />}
         <NuqsAdapter>
           <TRPCReactProvider>
-            <ClerkProvider>
-              <AnalyticsProviders identifyUser>
-                <ThemeProvider
-                  attribute="class"
-                  defaultTheme="dark"
-                  enableSystem
-                >
-                  {props.children}
-                  <Toaster />
-                </ThemeProvider>
-              </AnalyticsProviders>
-            </ClerkProvider>
+            <Suspense>
+              <ClerkProvider>
+                <AnalyticsProviders identifyUser>
+                  <ThemeProvider
+                    attribute="class"
+                    defaultTheme="dark"
+                    enableSystem
+                  >
+                    <StripeProvider>
+                      {props.children}
+                      <Toaster />
+                    </StripeProvider>
+                  </ThemeProvider>
+                </AnalyticsProviders>
+              </ClerkProvider>
+            </Suspense>
           </TRPCReactProvider>
         </NuqsAdapter>
       </body>

@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 
-export function ReactScan() {
+export function ReactScan(): null {
   const pathParams = useSearchParams();
   const enabled = pathParams.get('react-scan') === 'true';
 

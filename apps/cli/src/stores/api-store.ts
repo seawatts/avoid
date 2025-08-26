@@ -1,4 +1,4 @@
-import { createClient } from '@acme/api/cli';
+import { createClient } from '@acme/api/client';
 import { createSelectors } from '@acme/zustand';
 import { createStore } from 'zustand';
 // Combine base and exclusive properties into the final state type

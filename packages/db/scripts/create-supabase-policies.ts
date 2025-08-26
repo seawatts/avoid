@@ -15,53 +15,84 @@ interface PolicyConfig {
   policies: Policy[];
 }
 
-// Common policy conditions
+// Create the requesting_user_id function as per Clerk docs
+const createRequestingUserIdFunction = async () => {
+  console.log('Creating requesting_user_id function...');
+  await db.execute(sql`
+    CREATE OR REPLACE FUNCTION requesting_user_id()
+    RETURNS text
+    LANGUAGE sql
+    STABLE
+    SECURITY DEFINER
+    SET search_path = ''
+    AS $$
+      SELECT NULLIF(
+        current_setting('request.jwt.claims', true)::json->>'sub',
+        ''
+      )::text;
+    $$;
+  `);
+  console.log('requesting_user_id function created successfully');
+};
+
+// Create the requesting_org_id function for consistency
+const createRequestingOrgIdFunction = async () => {
+  console.log('Creating requesting_org_id function...');
+  await db.execute(sql`
+    CREATE OR REPLACE FUNCTION requesting_org_id()
+    RETURNS text
+    LANGUAGE sql
+    STABLE
+    SECURITY DEFINER
+    SET search_path = ''
+    AS $$
+      SELECT NULLIF(
+        current_setting('request.jwt.claims', true)::json->>'org_id',
+        ''
+      )::text;
+    $$;
+  `);
+  console.log('requesting_org_id function created successfully');
+};
+
+// Common policy conditions using the requesting_user_id function
 const policyConditions = {
-  eventOwnership: `EXISTS (
-    SELECT 1 FROM events
-    WHERE events.id = requests."eventId"
-    AND events."userId" = (SELECT auth.jwt()->>'sub')
+  orgOwnership: (columnName = 'orgId') =>
+    `(SELECT requesting_org_id()) = ("${columnName}")::text`,
+  userOwnership: (columnName = 'userId') =>
+    `(SELECT requesting_user_id()) = ("${columnName}")::text`,
+  webhookOwnership: `EXISTS (
+    SELECT 1 FROM webhooks
+    WHERE webhooks.id = requests."webhookId"
+    AND webhooks."orgId" = (SELECT requesting_org_id())
   )`,
-  orgOwnership: '(SELECT auth.jwt()->>\'org_id\') = ("orgId")::text',
-  orgOwnershipById: '(SELECT auth.jwt()->>\'org_id\') = ("id")::text',
-  userOwnership: '(SELECT auth.jwt()->>\'sub\') = ("userId")::text',
-  userOwnershipById: '(SELECT auth.jwt()->>\'sub\') = ("id")::text',
 } as const;
 
 // Helper to create a policy for user ownership
 const createUserOwnershipPolicy = (
   operation: PolicyOperation,
-  useId = false,
+  columnName: string,
 ): Policy => ({
   name: `User can ${operation.toLowerCase()} their own records`,
   operation,
   using:
     operation === 'INSERT'
       ? undefined
-      : useId
-        ? policyConditions.userOwnershipById
-        : policyConditions.userOwnership,
+      : policyConditions.userOwnership(columnName),
   withCheck:
     operation === 'INSERT'
-      ? useId
-        ? policyConditions.userOwnershipById
-        : policyConditions.userOwnership
+      ? policyConditions.userOwnership(columnName)
       : undefined,
 });
 
-const createOrgOwnershipByIdPolicy = (operation: PolicyOperation): Policy => ({
-  name: `Users can ${operation.toLowerCase()} their orgs`,
-  operation,
-  using: operation === 'INSERT' ? undefined : policyConditions.orgOwnershipById,
-  withCheck:
-    operation === 'INSERT' ? policyConditions.orgOwnershipById : undefined,
-});
-
 // Helper to create a policy for org ownership
-const createOrgOwnershipPolicy = (operation: PolicyOperation): Policy => ({
+const createOrgOwnershipPolicy = (
+  operation: PolicyOperation,
+  columnName: string,
+): Policy => ({
   name: `Users can ${operation.toLowerCase()} their organization's records`,
   operation,
-  using: policyConditions.orgOwnership,
+  using: policyConditions.orgOwnership(columnName),
 });
 
 const createPolicy = async (tableName: string, policy: Policy) => {
@@ -100,75 +131,155 @@ const enableRLS = async (tableName: string) => {
 };
 
 const policyConfigs: Record<string, PolicyConfig> = {
+  apiKeys: {
+    policies: [
+      createUserOwnershipPolicy('ALL', 'userId'),
+      createOrgOwnershipPolicy('ALL', 'orgId'),
+    ],
+    tableName: 'apiKeys',
+  },
+  apiKeyUsage: {
+    policies: [
+      createUserOwnershipPolicy('ALL', 'userId'),
+      createOrgOwnershipPolicy('ALL', 'orgId'),
+    ],
+    tableName: 'apiKeyUsage',
+  },
   authCodes: {
     policies: [
-      createUserOwnershipPolicy('SELECT'),
-      createUserOwnershipPolicy('INSERT'),
-      createUserOwnershipPolicy('UPDATE'),
-      createOrgOwnershipPolicy('ALL'),
+      createUserOwnershipPolicy('ALL', 'userId'),
+      createOrgOwnershipPolicy('ALL', 'orgId'),
     ],
     tableName: 'authCodes',
   },
   connections: {
     policies: [
-      createUserOwnershipPolicy('SELECT'),
-      createUserOwnershipPolicy('INSERT'),
-      createUserOwnershipPolicy('UPDATE'),
-      createOrgOwnershipPolicy('ALL'),
+      createUserOwnershipPolicy('ALL', 'userId'),
+      createOrgOwnershipPolicy('ALL', 'orgId'),
     ],
     tableName: 'connections',
   },
   events: {
     policies: [
-      createUserOwnershipPolicy('SELECT'),
-      createUserOwnershipPolicy('INSERT'),
-      createOrgOwnershipPolicy('ALL'),
+      createUserOwnershipPolicy('ALL', 'userId'),
+      createOrgOwnershipPolicy('ALL', 'orgId'),
     ],
     tableName: 'events',
   },
+  forwardingDestinations: {
+    policies: [
+      createUserOwnershipPolicy('ALL', 'userId'),
+      createUserOwnershipPolicy('DELETE', 'userId'),
+      createOrgOwnershipPolicy('ALL', 'orgId'),
+    ],
+    tableName: 'forwardingDestinations',
+  },
+  forwardingExecutions: {
+    policies: [
+      createUserOwnershipPolicy('ALL', 'userId'),
+      createOrgOwnershipPolicy('ALL', 'orgId'),
+    ],
+    tableName: 'forwardingExecutions',
+  },
+  forwardingRules: {
+    policies: [
+      createUserOwnershipPolicy('ALL', 'userId'),
+      createOrgOwnershipPolicy('ALL', 'orgId'),
+    ],
+    tableName: 'forwardingRules',
+  },
   orgMembers: {
     policies: [
-      createUserOwnershipPolicy('SELECT'),
-      createUserOwnershipPolicy('INSERT'),
-      createUserOwnershipPolicy('UPDATE'),
-      createOrgOwnershipPolicy('ALL'),
+      createUserOwnershipPolicy('ALL', 'userId'),
+      createOrgOwnershipPolicy('ALL', 'orgId'),
     ],
     tableName: 'orgMembers',
   },
   orgs: {
     policies: [
-      createOrgOwnershipByIdPolicy('SELECT'),
-      createOrgOwnershipByIdPolicy('INSERT'),
-      createOrgOwnershipByIdPolicy('UPDATE'),
+      // Users can access orgs they created
+      {
+        name: 'Users can select orgs they created',
+        operation: 'SELECT',
+        using: policyConditions.userOwnership('createdByUserId'),
+      },
+      {
+        name: 'Users can insert orgs',
+        operation: 'INSERT',
+        withCheck: policyConditions.userOwnership('createdByUserId'),
+      },
+      {
+        name: 'Users can update orgs they created',
+        operation: 'UPDATE',
+        using: policyConditions.userOwnership('createdByUserId'),
+        withCheck: policyConditions.userOwnership('createdByUserId'),
+      },
     ],
     tableName: 'orgs',
   },
   requests: {
     policies: [
-      createUserOwnershipPolicy('SELECT'),
-      createUserOwnershipPolicy('INSERT'),
-      createOrgOwnershipPolicy('ALL'),
+      createUserOwnershipPolicy('ALL', 'userId'),
+      createOrgOwnershipPolicy('ALL', 'orgId'),
       {
-        name: 'Users can access requests for their events',
+        name: 'Users can access requests for their webhooks',
         operation: 'SELECT',
-        using: policyConditions.eventOwnership,
+        using: policyConditions.webhookOwnership,
+      },
+      {
+        name: 'Users can delete requests for their webhooks',
+        operation: 'DELETE',
+        using: policyConditions.webhookOwnership,
+      },
+      {
+        name: 'Users can update requests for their webhooks',
+        operation: 'UPDATE',
+        using: policyConditions.webhookOwnership,
       },
     ],
     tableName: 'requests',
   },
   user: {
     policies: [
-      createUserOwnershipPolicy('SELECT', true),
-      createUserOwnershipPolicy('UPDATE', true),
+      createUserOwnershipPolicy('SELECT', 'id'),
+      createUserOwnershipPolicy('UPDATE', 'id'),
     ],
     tableName: 'user',
   },
+  webhookAccessRequests: {
+    policies: [
+      // Users can access requests they made (as requester)
+      {
+        name: 'Users can select their own access requests',
+        operation: 'SELECT',
+        using: policyConditions.userOwnership('requesterId'),
+      },
+      {
+        name: 'Users can insert their own access requests',
+        operation: 'INSERT',
+        withCheck: policyConditions.userOwnership('requesterId'),
+      },
+      {
+        name: 'Users can update their own access requests',
+        operation: 'UPDATE',
+        using: policyConditions.userOwnership('requesterId'),
+        withCheck: policyConditions.userOwnership('requesterId'),
+      },
+      // Users can respond to requests (as responder)
+      {
+        name: 'Users can update requests they are responding to',
+        operation: 'UPDATE',
+        using: policyConditions.userOwnership('responderId'),
+        withCheck: policyConditions.userOwnership('responderId'),
+      },
+      createOrgOwnershipPolicy('ALL', 'orgId'),
+    ],
+    tableName: 'webhookAccessRequests',
+  },
   webhooks: {
     policies: [
-      createUserOwnershipPolicy('SELECT'),
-      createUserOwnershipPolicy('INSERT'),
-      createUserOwnershipPolicy('UPDATE'),
-      createOrgOwnershipPolicy('ALL'),
+      createUserOwnershipPolicy('ALL', 'userId'),
+      createOrgOwnershipPolicy('ALL', 'orgId'),
     ],
     tableName: 'webhooks',
   },
@@ -219,6 +330,10 @@ async function dropTablePolicies(config: PolicyConfig) {
 async function setupAllPolicies() {
   return withErrorHandling(
     async () => {
+      // First create the requesting_user_id and requesting_org_id functions
+      await createRequestingUserIdFunction();
+      await createRequestingOrgIdFunction();
+
       // Process tables sequentially to avoid deadlocks
       for (const config of Object.values(policyConfigs)) {
         await setupTablePolicies(config);
@@ -239,6 +354,15 @@ async function _dropAllPolicies() {
   );
 }
 
+// _dropAllPolicies()
+//   .then(() => {
+//     console.log('Policy setup completed');
+//     process.exit(0);
+//   })
+//   .catch((error) => {
+//     console.error('Policy setup failed:', error);
+//     process.exit(1);
+//   });
 setupAllPolicies()
   .then(() => {
     console.log('Policy setup completed');

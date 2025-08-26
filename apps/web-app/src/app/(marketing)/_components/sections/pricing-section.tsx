@@ -64,35 +64,37 @@ function PricingTabs({ activeTab, setActiveTab, className }: TabsProps) {
   );
 }
 
+// Move PriceDisplay component outside of PricingSection
+const PriceDisplay = ({
+  tier,
+  billingCycle,
+}: {
+  tier: (typeof siteConfig.pricing.pricingItems)[0];
+  billingCycle: 'monthly' | 'yearly';
+}) => {
+  const price = billingCycle === 'yearly' ? tier.yearlyPrice : tier.price;
+
+  return (
+    <motion.span
+      animate={{ filter: 'blur(0px)', opacity: 1, x: 0 }}
+      className="text-4xl font-semibold"
+      initial={{
+        filter: 'blur(5px)',
+        opacity: 0,
+        x: billingCycle === 'yearly' ? -10 : 10,
+      }}
+      key={price}
+      transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
+    >
+      {price}
+    </motion.span>
+  );
+};
+
 export function PricingSection() {
   const [billingCycle, setBillingCycle] = useState<'monthly' | 'yearly'>(
     'monthly',
   );
-
-  // Update price animation
-  const PriceDisplay = ({
-    tier,
-  }: {
-    tier: (typeof siteConfig.pricing.pricingItems)[0];
-  }) => {
-    const price = billingCycle === 'yearly' ? tier.yearlyPrice : tier.price;
-
-    return (
-      <motion.span
-        animate={{ filter: 'blur(0px)', opacity: 1, x: 0 }}
-        className="text-4xl font-semibold"
-        initial={{
-          filter: 'blur(5px)',
-          opacity: 0,
-          x: billingCycle === 'yearly' ? -10 : 10,
-        }}
-        key={price}
-        transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
-      >
-        {price}
-      </motion.span>
-    );
-  };
 
   return (
     <section
@@ -137,7 +139,7 @@ export function PricingSection() {
                   )}
                 </p>
                 <div className="flex items-baseline mt-2">
-                  <PriceDisplay tier={tier} />
+                  <PriceDisplay billingCycle={billingCycle} tier={tier} />
                   <span className="ml-2">
                     /{billingCycle === 'yearly' ? 'year' : 'month'}
                   </span>

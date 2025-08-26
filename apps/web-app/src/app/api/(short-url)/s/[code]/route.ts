@@ -8,9 +8,6 @@ export async function GET(
   const params = await props.params;
   const shortUrl = await db.query.ShortUrls.findFirst({
     where: (shortUrls, { eq }) => eq(shortUrls.code, params.code),
-    with: {
-      script: true,
-    },
   });
 
   if (!shortUrl) {

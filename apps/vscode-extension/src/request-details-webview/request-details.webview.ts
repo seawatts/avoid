@@ -16,7 +16,6 @@ export class RequestDetailsWebviewProvider
   private _view?: vscode.WebviewView;
   private _disposables: vscode.Disposable[] = [];
   private _lastHtml?: string;
-  private _devServerUrl?: string;
   private _currentRequestData: RequestData | null = null;
 
   constructor(private readonly _extensionUri: vscode.Uri) {
@@ -24,8 +23,6 @@ export class RequestDetailsWebviewProvider
 
     // In development mode, set up file watching
     if (process.env.NODE_ENV === 'development') {
-      this._devServerUrl = 'http://localhost:5173';
-
       // Set up file watcher for the webview directory
       const webviewPath = vscode.Uri.joinPath(
         this._extensionUri,

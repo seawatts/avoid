@@ -13,15 +13,23 @@
   "files": {
     "ignoreUnknown": false,
     "includes": [
-      "!dist/**",
       "**",
-      "!**/dist/**",
-      "!node_modules/**",
-      "!**/node_modules/**",
-      "!**/baml_client/**",
-      "!biome.json",
-      "!**/debug-output/**",
-      "!**/*.min.*"
+      "!dist",
+      "!**/dist",
+      "!node_modules",
+      "!**/node_modules",
+      "!**/.next",
+      "!**/.react-email",
+      "!**/baml_client",
+      "!**/.turbo",
+      "!**/*.min.*",
+      "!bun.lock",
+      "!**/.vscode-test",
+      "!**/build",
+      "!**/.git",
+      "!**/coverage",
+      "!**/.nyc_output",
+      "!**/packages/ai"
     ]
   },
   "formatter": {
@@ -45,14 +53,16 @@
       "correctness": {
         "noInvalidUseBeforeDeclaration": "off",
         "noUnusedImports": "error",
-        "noUnusedVariables": "warn",
+        "noUnusedVariables": {
+          "fix": "none",
+          "level": "warn"
+        },
         "useExhaustiveDependencies": "warn",
-        "useHookAtTopLevel": "error"
+        "useHookAtTopLevel": "error",
+        "useUniqueElementIds": "off"
       },
       "nursery": {
-        "noNestedComponentDefinitions": "off",
-        "useIndexOf": "error",
-        "useUniqueElementIds": "off"
+        "recommended": true
       },
       "recommended": true,
       "style": {
@@ -81,7 +91,8 @@
         "useSingleVarDeclarator": "error"
       },
       "suspicious": {
-        "noExplicitAny": "error"
+        "noExplicitAny": "error",
+        "noUnknownAtRules": "off"
       }
     }
   },

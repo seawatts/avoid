@@ -1,10 +1,10 @@
 'use client';
 
-import { cn } from '@acme/ui/lib/utils';
 import * as Accordion from '@radix-ui/react-accordion';
 import { motion, useInView } from 'motion/react';
 import type React from 'react';
 import { forwardRef, type ReactNode, useEffect, useRef, useState } from 'react';
+import { cn } from '../lib/utils';
 
 type AccordionItemProps = {
   children: React.ReactNode;
@@ -77,6 +77,7 @@ type FeatureItem = {
   content: string;
   image?: string;
   video?: string;
+  component?: React.ReactNode;
 };
 type FeatureProps = {
   collapseDelay?: number;
@@ -90,7 +91,7 @@ export const Feature = ({
   collapseDelay = 5000,
   ltr = false,
   linePosition = 'left',
-  lineColor = 'bg-neutral-500 dark:bg-white',
+  lineColor = 'bg-primary',
   featureItems,
 }: FeatureProps) => {
   const [currentIndex, setCurrentIndex] = useState<number>(-1);
@@ -135,9 +136,13 @@ export const Feature = ({
     }
   };
 
-  // interval for changing images
-  // biome-ignore lint/correctness/useExhaustiveDependencies: dependencies are intentionally managed for interval timing
+  // interval for changing images (desktop only)
+  // biome-ignore lint/correctness/useExhaustiveDependencies: we only need to set the interval once
   useEffect(() => {
+    // Only run auto-rotation on desktop (lg and up)
+    const isDesktop = window.innerWidth >= 1024;
+    if (!isDesktop) return;
+
     const timer = setInterval(() => {
       setCurrentIndex((prevIndex) =>
         prevIndex !== undefined ? (prevIndex + 1) % featureItems.length : 0,
@@ -147,8 +152,12 @@ export const Feature = ({
     return () => clearInterval(timer);
   }, [collapseDelay, currentIndex, featureItems.length]);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: dependencies are intentionally managed for scroll behavior
+  // biome-ignore lint/correctness/useExhaustiveDependencies: we only need to set the interval once
   useEffect(() => {
+    // Only run auto-scroll on desktop (lg and up)
+    const isDesktop = window.innerWidth >= 1024;
+    if (!isDesktop) return;
+
     const handleAutoScroll = () => {
       const nextIndex =
         (currentIndex !== undefined ? currentIndex + 1 : 0) %
@@ -162,6 +171,10 @@ export const Feature = ({
   }, [collapseDelay, currentIndex, featureItems.length]);
 
   useEffect(() => {
+    // Only run scroll handling on desktop (lg and up)
+    const isDesktop = window.innerWidth >= 1024;
+    if (!isDesktop) return;
+
     const carousel = carouselRef.current;
     if (carousel) {
       const handleScroll = () => {
@@ -193,7 +206,34 @@ export const Feature = ({
 
     if (!currentItem) {
       return (
-        <div className="aspect-auto h-full w-full rounded-xl border border-neutral-300/50 bg-gray-200 p-1 animate-pulse" />
+        <div className="aspect-auto h-full w-full rounded-xl border border-border bg-muted p-1 animate-pulse" />
+      );
+    }
+
+    // Priority: component > image > video > fallback
+    if (currentItem.component) {
+      return (
+        <div className="relative h-full w-full overflow-hidden">
+          <motion.div
+            animate={{
+              opacity: 1,
+            }}
+            className={cn(
+              'aspect-auto h-full w-full rounded-xl border border-border p-1',
+              'transition-all duration-300',
+            )}
+            initial={{
+              opacity: 0,
+            }}
+            key={currentIndex}
+            transition={{
+              duration: 0.3,
+              ease: [0.4, 0, 0.2, 1],
+            }}
+          >
+            {currentItem.component}
+          </motion.div>
+        </div>
       );
     }
 
@@ -203,14 +243,14 @@ export const Feature = ({
           {/* Placeholder/Fallback */}
           <div
             className={cn(
-              'absolute inset-0 bg-gray-200 rounded-xl border border-neutral-300/50',
+              'absolute inset-0 bg-muted rounded-xl border border-border',
               'transition-all duration-150',
               imageLoaded ? 'opacity-0' : 'opacity-100',
             )}
           />
 
           {/* Main Image */}
-          {/** biome-ignore lint/performance/noImgElement: false positive */}
+          {/** biome-ignore lint/performance/noImgElement: we need to use img for the image */}
           <motion.img
             alt={currentItem.title}
             animate={{
@@ -218,7 +258,7 @@ export const Feature = ({
               opacity: imageLoaded ? 1 : 0,
             }}
             className={cn(
-              'aspect-auto h-full w-full rounded-xl border border-neutral-300/50 object-cover p-1',
+              'aspect-auto h-full w-full rounded-xl border border-border object-cover p-1',
               'transition-all duration-300',
               imageLoaded ? 'opacity-100 blur-0' : 'opacity-0 blur-xl',
             )}
@@ -255,7 +295,7 @@ export const Feature = ({
     }
 
     return (
-      <div className="aspect-auto h-full w-full rounded-xl border border-neutral-300/50 bg-gray-200 p-1" />
+      <div className="aspect-auto h-full w-full rounded-xl border border-border bg-muted p-1" />
     );
   };
 
@@ -280,8 +320,8 @@ export const Feature = ({
               {featureItems.map((item, index) => (
                 <AccordionItem
                   className={cn(
-                    'relative data-[state=open]:bg-white dark:data-[state=open]:bg-[#27272A] rounded-lg data-[state=closed]:rounded-none data-[state=closed]:border-0',
-                    'dark:data-[state=open]:shadow-[0px_0px_0px_1px_rgba(249,250,251,0.06),0px_0px_0px_1px_var(--color-zinc-800,#27272A),0px_1px_2px_-0.5px_rgba(0,0,0,0.24),0px_2px_4px_-1px_rgba(0,0,0,0.24)]',
+                    'relative data-[state=open]:bg-primary-foreground rounded-lg data-[state=closed]:rounded-none data-[state=closed]:border-0',
+                    // 'dark:data-[state=open]:shadow-[0px_0px_0px_1px_rgba(249,250,251,0.06),0px_0px_0px_1px_var(--color-zinc-800,#27272A),0px_1px_2px_-0.5px_rgba(0,0,0,0.24),0px_2px_4px_-1px_rgba(0,0,0,0.24)]',
                     'data-[state=open]:shadow-[0px_0px_1px_0px_rgba(0,0,0,0.16),0px_1px_2px_-0.5px_rgba(0,0,0,0.16)]',
                   )}
                   key={item.id}
@@ -291,7 +331,7 @@ export const Feature = ({
                     className={cn(
                       'absolute overflow-hidden rounded-lg transition-opacity',
                       'data-[state=closed]:opacity-0 data-[state=open]:opacity-100',
-                      'bg-neutral-300/50 dark:bg-neutral-300/30',
+                      'bg-muted',
                       {
                         'bottom-0 top-0 h-full w-0.5 left-0':
                           linePosition === 'left',
@@ -342,83 +382,56 @@ export const Feature = ({
             </Accordion.Root>
           </div>
           <div
-            className={`col-span-5 h-[350px] min-h-[200px] w-auto lg:col-span-3 ${
+            className={`col-span-5 h-[350px] min-h-[200px] w-auto lg:col-span-3 hidden lg:block ${
               ltr && 'md:order-1'
             }`}
           >
             {renderMedia()}
           </div>
 
-          <ul
-            className="col-span-5 flex snap-x flex-nowrap overflow-x-auto [-ms-overflow-style:none] [-webkit-mask-image:linear-gradient(90deg,transparent,black_10%,white_90%,transparent)] [mask-image:linear-gradient(90deg,transparent,black_10%,white_90%,transparent)] [scrollbar-width:none] lg:hidden [&::-webkit-scrollbar]:hidden snap-mandatory"
-            ref={carouselRef}
-            style={{
-              padding: '50px calc(50%)',
-            }}
-          >
-            {featureItems.map((item, index) => (
-              <button
-                className="card relative grid h-full max-w-64 shrink-0 items-start justify-center p-3 bg-background border-l last:border-r border-t border-b first:rounded-tl-xl last:rounded-tr-xl"
+          <div className="col-span-5 flex flex-col gap-4 lg:hidden">
+            {featureItems.map((item, _index) => (
+              <div
+                className="flex flex-col gap-4 p-4 bg-background border rounded-lg"
                 key={item.id}
-                onClick={() => setCurrentIndex(index)}
-                style={{
-                  scrollSnapAlign: 'center',
-                }}
-                type="button"
               >
-                <div
-                  className={cn(
-                    'absolute overflow-hidden rounded-lg transition-opacity',
-                    'data-[state=closed]:opacity-0 data-[state=open]:opacity-100',
-                    'bg-neutral-300/50 dark:bg-neutral-300/30',
-                    {
-                      'bottom-0 top-0 h-full w-0.5 left-0':
-                        linePosition === 'left',
-                      'bottom-0 top-0 h-full w-0.5 right-0':
-                        linePosition === 'right',
-                      'left-0 right-0 bottom-0 h-0.5 w-full':
-                        linePosition === 'bottom',
-                      'left-0 right-0 top-0 h-0.5 w-full':
-                        linePosition === 'top',
-                    },
-                  )}
-                  data-state={currentIndex === index ? 'open' : 'closed'}
-                >
-                  <div
-                    className={cn(
-                      'absolute transition-all ease-linear',
-                      lineColor,
-                      {
-                        'left-0 top-0 h-full': ['top', 'bottom'].includes(
-                          linePosition,
-                        ),
-                        'left-0 top-0 w-full': ['left', 'right'].includes(
-                          linePosition,
-                        ),
-                      },
-                      currentIndex === index
-                        ? ['left', 'right'].includes(linePosition)
-                          ? 'h-full'
-                          : 'w-full'
-                        : ['left', 'right'].includes(linePosition)
-                          ? 'h-0'
-                          : 'w-0',
-                    )}
-                    style={{
-                      transitionDuration:
-                        currentIndex === index ? `${collapseDelay}ms` : '0s',
-                    }}
-                  />
-                </div>
                 <div className="flex flex-col gap-2">
                   <h2 className="text-lg font-bold">{item.title}</h2>
-                  <p className="mx-0 max-w-sm text-balance text-sm font-medium leading-relaxed">
+                  <p className="text-sm font-medium leading-relaxed">
                     {item.content}
                   </p>
                 </div>
-              </button>
+                {item.component && (
+                  <div className="w-full h-48 rounded-lg border border-border overflow-hidden">
+                    {item.component}
+                  </div>
+                )}
+                {item.image && (
+                  <div className="w-full h-48 rounded-lg border border-border overflow-hidden">
+                    {/** biome-ignore lint/performance/noImgElement: we need to use img for the image */}
+                    <img
+                      alt={item.title}
+                      className="w-full h-full object-cover"
+                      src={item.image}
+                    />
+                  </div>
+                )}
+                {item.video && (
+                  <div className="w-full h-48 rounded-lg border border-border overflow-hidden">
+                    <video
+                      autoPlay
+                      className="w-full h-full object-cover"
+                      loop
+                      muted
+                      playsInline
+                      preload="auto"
+                      src={item.video}
+                    />
+                  </div>
+                )}
+              </div>
             ))}
-          </ul>
+          </div>
         </div>
       </div>
     </div>

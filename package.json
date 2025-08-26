@@ -6,51 +6,67 @@
   },
   "devDependencies": {
     "@acme/commitlint-config": "workspace:*",
-    "@biomejs/biome": "2.1.1",
+    "@biomejs/biome": "2.2.2",
     "@changesets/changelog-github": "0.5.1",
-    "@changesets/cli": "2.29.5",
+    "@changesets/cli": "2.29.6",
     "@commitlint/cli": "19.8.1",
     "@testing-library/react": "16.3.0",
-    "@turbo/gen": "2.5.4",
-    "@types/bun": "1.2.18",
-    "bun": "1.2.18",
-    "checkly": "6.1.0",
-    "knip": "5.61.3",
-    "lefthook": "1.12.1",
-    "mintlify": "4.2.7",
-    "turbo": "2.5.4",
-    "typescript": "5.8.3",
+    "@turbo/gen": "2.5.6",
+    "@types/bun": "1.2.21",
+    "bun": "1.2.21",
+    "checkly": "6.4.0",
+    "knip": "5.63.0",
+    "lefthook": "1.12.3",
+    "turbo": "2.5.6",
+    "typescript": "5.9.2",
     "vitest": "3.2.4"
   },
   "engines": {
     "node": ">=20.12.0"
   },
   "name": "@acme/root",
-  "packageManager": "bun@1.2.18",
+  "overrides": {
+    "@types/vscode": "1.96.0"
+  },
+  "packageManager": "bun@1.2.20",
   "private": true,
   "scripts": {
     "build": "turbo run build",
     "bump-versions": "changeset version && bun install",
-    "clean": "git clean -xdf node_modules",
+    "clean": "git clean -xdf node_modules .turbo",
     "clean:ws": "turbo run clean",
+    "cleanup:all": "bun run scripts/cleanup-all-resources.ts",
+    "cleanup:all:dry-run": "bun run scripts/cleanup-all-resources.ts --dry-run",
+    "cleanup:orgs": "bun run scripts/cleanup-orgs.ts",
+    "cleanup:orgs:dry-run": "bun run scripts/cleanup-orgs.ts --dry-run",
+    "cleanup:webhooks": "bun run scripts/cleanup-webhooks.ts",
+    "cleanup:webhooks:dry-run": "bun run scripts/cleanup-webhooks.ts --dry-run",
     "db:gen-migration": "turbo -F @acme/db gen-migration",
     "db:migrate": "turbo -F @acme/db migrate",
     "db:push": "turbo -F @acme/db push",
     "db:seed": "turbo -F @acme/db seed",
     "db:studio": "turbo -F @acme/db studio",
-    "dev": "turbo watch dev --concurrency 20",
+    "dev": "turbo watch dev dev:extension dev:webview",
     "dev:next": "turbo watch dev -F @acme/web-app...",
-    "docs": "cd docs && mintlify dev",
+    "dev:vscode": "turbo watch dev dev:extension dev:webview -F acme-vscode... -F @acme/web-app...",
+    "docs": "turbo run dev --filter=@acme/docs...",
+    "ensure:user-resources": "bun run scripts/ensure-user-resources.ts",
+    "ensure:user-resources:dry-run": "bun run scripts/ensure-user-resources.ts --dry-run",
     "format": "biome check",
     "format:ci": "biome ci",
     "format:fix": "biome check --write",
     "knip": "knip --include files,dependencies",
     "lint:ws": "bunx sherif@latest",
     "postinstall": "bun lint:ws",
-    "publish": "turbo run build --filter=./apps/cli... && changeset publish",
+    "publish": "turbo run build --filter=./apps/cli... --filter=./packages/client... --filter=./apps/vscode-extension... && changeset publish",
     "test": "bun test",
+    "test:integ": "turbo run test --filter=@acme/integ-test",
+    "test:integ:ci": "turbo run test:ci --filter=@acme/integ-test",
+    "test:integ:watch": "turbo run test:watch --filter=@acme/integ-test",
     "typecheck": "turbo run typecheck",
+    "typecheck:ci": "turbo run build --filter @acme/stripe && turbo run typecheck",
     "ui-add": "turbo run ui-add",
+    "version": "changeset version && bun biome check --write",
     "with-env": "infisical run --"
   },
   "trustedDependencies": [
@@ -73,9 +89,12 @@
     "supabase",
     "yarn"
   ],
-  "workspaces": [
-    "packages/*",
-    "apps/*",
-    "tooling/*"
-  ]
+  "workspaces": {
+    "packages": [
+      "packages/*",
+      "apps/*",
+      "tooling/*",
+      "docs"
+    ]
+  }
 }

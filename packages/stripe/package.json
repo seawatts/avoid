@@ -1,20 +1,28 @@
 {
   "dependencies": {
-    "stripe": "18.3.0"
+    "@acme/analytics": "workspace:*",
+    "next": "15.5.1",
+    "stripe": "18.4.0"
   },
   "devDependencies": {
     "@acme/tsconfig": "workspace:*",
-    "typescript": "5.8.3"
+    "typescript": "5.9.2"
   },
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./guards/client": "./src/guards/client.tsx",
+    "./guards/server": "./src/guards/server.ts"
   },
   "license": "MIT",
   "name": "@acme/stripe",
   "private": true,
   "scripts": {
-    "clean": "rm -rf .turbo node_modules dist",
-    "dev": "tsc --watch",
+    "build": "bun run populate-ids",
+    "clean": "git clean -xdf .turbo node_modules dist",
+    "delete-subscriptions": "bun run ./scripts/delete-customer-subscriptions.ts",
+    "dev": "bun run build && tsc --watch",
+    "populate-ids": "bun run ./scripts/populate-ids.ts",
+    "push": "bun run ./scripts/create-stripe-entities.ts",
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "type": "module",

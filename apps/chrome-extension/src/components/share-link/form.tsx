@@ -91,14 +91,18 @@ export function ShareLinkForm(props: {
           (email) => email.trim() !== '',
         );
         let contactIds: string[] = [];
-        const contactPromises = validEmails.map((email) => {
-          if (company.id) {
-            return createContact.mutateAsync({
-              companyId: company.id,
-              email,
-            });
-          }
-        });
+        const contactPromises = validEmails
+          .map((email) => {
+            if (company.id) {
+              return createContact.mutateAsync({
+                companyId: company.id,
+                email,
+              });
+            }
+            return null;
+          })
+          .filter(Boolean);
+
         const contacts = await Promise.all(contactPromises);
         contactIds = contacts
           .map((contact) => contact?.contactId)

@@ -1,5 +1,5 @@
-import { cn } from '@acme/ui/lib/utils';
 import type { ComponentPropsWithoutRef } from 'react';
+import { cn } from '../lib/utils';
 
 interface MarqueeProps extends ComponentPropsWithoutRef<'div'> {
   /**
@@ -63,7 +63,7 @@ export function Marquee({
               'animate-marquee-vertical flex-col': vertical,
               'group-hover:[animation-play-state:paused]': pauseOnHover,
             })}
-            // biome-ignore lint/suspicious/noArrayIndexKey: index is stable for marquee animation
+            // biome-ignore lint/suspicious/noArrayIndexKey: we're mapping over a fixed slice of children
             key={i}
           >
             {children}

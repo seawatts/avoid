@@ -8,7 +8,7 @@ export const env = createEnv({
    * For them to be exposed to the client, prefix them with `NEXT_PUBLIC_`.
    */
   client: {
-    NEXT_PUBLIC_API_URL: z.string(),
+    NEXT_PUBLIC_API_URL: z.string().url().optional(),
   },
 
   extends: [vercel()],

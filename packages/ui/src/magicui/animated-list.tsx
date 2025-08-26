@@ -48,8 +48,8 @@ export function AnimatedListItem({ children }: { children: React.ReactNode }) {
     animate: { opacity: 1, originY: 0, scale: 1 },
     exit: { opacity: 0, scale: 0 },
     initial: { opacity: 0, scale: 0 },
-    transition: { damping: 40, stiffness: 350, type: 'spring' },
-  } as const;
+    transition: { damping: 40, stiffness: 350, type: 'spring' as const },
+  };
 
   return (
     <motion.div {...animations} className="mx-auto w-full" layout>

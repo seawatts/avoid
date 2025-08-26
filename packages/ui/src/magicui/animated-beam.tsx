@@ -1,9 +1,9 @@
 'use client';
 
-import { cn } from '@acme/ui/lib/utils';
 import { motion } from 'motion/react';
 import type { RefObject } from 'react';
 import { useEffect, useId, useState } from 'react';
+import { cn } from '../lib/utils';
 
 export interface AnimatedBeamProps {
   className?: string;
@@ -32,7 +32,7 @@ export const AnimatedBeam: React.FC<AnimatedBeamProps> = ({
   toRef,
   curvature = 0,
   reverse = false, // Include the reverse prop
-  duration = Math.random() * 3 + 4,
+  duration = 5.5,
   delay = 0,
   pathColor = 'gray',
   pathWidth = 2,

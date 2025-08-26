@@ -3,7 +3,6 @@
     "jsx": "preserve",
     "lib": ["dom", "dom.iterable", "ES2022"],
     "outDir": "dist",
-    "rootDir": "src",
     "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json"
   },
   "exclude": ["node_modules"],

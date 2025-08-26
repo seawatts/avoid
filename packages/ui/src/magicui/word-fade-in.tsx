@@ -1,7 +1,7 @@
 'use client';
 
-import { cn } from '@acme/ui/lib/utils';
 import { motion, type Variants } from 'motion/react';
+import { cn } from '../lib/utils';
 
 interface WordFadeInProps {
   words: string;
@@ -39,7 +39,7 @@ export function WordFadeIn({
         <motion.span
           custom={i}
           key={`word-${
-            // biome-ignore lint/suspicious/noArrayIndexKey: index is stable for word positions
+            // biome-ignore lint/suspicious/noArrayIndexKey: Array index is stable here since we're mapping over a fixed slice of children
             i
           }`}
           variants={variants}

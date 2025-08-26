@@ -1,12 +1,12 @@
 'use client';
 
-import { Button } from '@acme/ui/components/button';
-import { cn } from '@acme/ui/lib/utils';
 import useEmblaCarousel, {
   type UseEmblaCarouselType,
 } from 'embla-carousel-react';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import * as React from 'react';
+import { cn } from '../lib/utils';
+import { Button } from './button';
 
 type CarouselApi = UseEmblaCarouselType[1];
 type UseCarouselParameters = Parameters<typeof useEmblaCarousel>;
@@ -155,14 +155,13 @@ function CarouselItem({ className, ...props }: React.ComponentProps<'div'>) {
 
   return (
     <div
-      aria-roledescription="slide"
+      aria-description="carousel item"
       className={cn(
         'min-w-0 shrink-0 grow-0 basis-full',
         orientation === 'horizontal' ? 'pl-4' : 'pt-4',
         className,
       )}
       data-slot="carousel-item"
-      role="group"
       {...props}
     />
   );

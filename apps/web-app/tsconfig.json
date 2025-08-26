@@ -1,14 +1,22 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
+    "incremental": true,
     "paths": {
+      "@acme/analytics/*": ["../../packages/analytics/src/*"],
+      "@acme/stripe/*": ["../../packages/stripe/src/*"],
       "@acme/ui/*": ["../../packages/ui/src/*"],
+      "@acme/zustand/*": ["../../packages/zustand/src/*"],
       "~/*": ["./src/*"]
     },
-    "plugins": [{ "name": "next" }],
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
     "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json"
   },
-  "exclude": ["node_modules", "dist", ".next"],
+  "exclude": ["node_modules", ".next"],
   "extends": "@acme/tsconfig/nextjs.json",
   "include": [
     "next-env.d.ts",

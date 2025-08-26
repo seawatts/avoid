@@ -49,9 +49,9 @@ await emailClient.send({
     webhookName="Production Webhook"
     webhookId="wh_123"
     message="I need access for testing"
-    approveUrl="https://acme.sh/approve/123"
-    rejectUrl="https://acme.sh/reject/123"
-    dashboardUrl="https://acme.sh/dashboard"
+    approveUrl="https://acme.sh/app/approve/123"
+    rejectUrl="https://acme.sh/app/reject/123"
+    dashboardUrl="https://acme.sh/app/dashboard"
   />,
 });
 ```

@@ -1,4 +1,3 @@
-import * as http from 'node:http';
 import * as vscode from 'vscode';
 import { env } from '../env';
 import type { AuthStore } from '../stores/auth-store';
@@ -19,7 +18,7 @@ export class AcmeAuthProvider implements AuthenticationProvider {
   readonly onDidChangeSessions = this._onDidChangeSessions.event;
 
   constructor(
-    private readonly context: vscode.ExtensionContext,
+    readonly _context: vscode.ExtensionContext,
     private readonly authStore: AuthStore,
   ) {
     // Listen for auth store changes and emit session changes
@@ -146,61 +145,5 @@ export class AcmeAuthProvider implements AuthenticationProvider {
         removed: [session],
       });
     }
-  }
-
-  private async startAuthServer(port: number, csrfToken: string) {
-    const server = new AuthServer();
-    await server.start({ csrfToken, port });
-    return server;
-  }
-}
-
-class AuthServer {
-  private server: http.Server | undefined;
-  private resolveAuth: ((result: { code: string }) => void) | undefined;
-  private rejectAuth: ((error: Error) => void) | undefined;
-
-  async start({ port, csrfToken }: { port: number; csrfToken: string }) {
-    return new Promise<void>((resolve, _reject) => {
-      this.server = http.createServer(
-        (req: http.IncomingMessage, res: http.ServerResponse) => {
-          if (req.url?.startsWith('/auth/callback')) {
-            const params = new URLSearchParams(req.url.split('?')[1]);
-            const code = params.get('code');
-            const receivedCsrf = params.get('csrf');
-
-            if (code && receivedCsrf === csrfToken) {
-              this.resolveAuth?.({ code });
-              res.writeHead(200, { 'Content-Type': 'text/html' });
-              res.end(
-                '<h1>Authentication successful! You can close this window.</h1>',
-              );
-            } else {
-              this.rejectAuth?.(new Error('Invalid auth response'));
-              res.writeHead(400, { 'Content-Type': 'text/html' });
-              res.end('<h1>Authentication failed. Please try again.</h1>');
-            }
-          } else {
-            res.writeHead(404);
-            res.end();
-          }
-        },
-      );
-
-      this.server.listen(port, () => {
-        resolve();
-      });
-    });
-  }
-
-  waitForAuth() {
-    return new Promise<{ code: string }>((resolve, reject) => {
-      this.resolveAuth = resolve;
-      this.rejectAuth = reject;
-    });
-  }
-
-  stop() {
-    this.server?.close();
   }
 }

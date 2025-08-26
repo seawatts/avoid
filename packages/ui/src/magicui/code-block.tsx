@@ -1,16 +1,23 @@
 'use client';
 
-import { cn } from '@acme/ui/lib/utils';
+import { FileIcon } from 'lucide-react';
 import type React from 'react';
 import { useEffect, useState } from 'react';
 import { codeToHtml } from 'shiki';
+import { cn } from '../lib/utils';
 
 export type CodeBlockProps = {
   children?: React.ReactNode;
   className?: string;
+  filename?: string;
 } & React.HTMLProps<HTMLDivElement>;
 
-function CodeBlock({ children, className, ...props }: CodeBlockProps) {
+function CodeBlock({
+  children,
+  className,
+  filename,
+  ...props
+}: CodeBlockProps) {
   return (
     <div
       className={cn(
@@ -20,6 +27,12 @@ function CodeBlock({ children, className, ...props }: CodeBlockProps) {
       )}
       {...props}
     >
+      {filename && (
+        <div className="flex items-center border-b border-border bg-accent p-2 text-sm text-foreground">
+          <FileIcon className="mr-2 size-4" />
+          {filename}
+        </div>
+      )}
       {children}
     </div>
   );

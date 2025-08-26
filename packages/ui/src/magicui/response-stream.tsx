@@ -1,8 +1,8 @@
 'use client';
 
-import { cn } from '@acme/ui/lib/utils';
 import type React from 'react';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { cn } from '../lib/utils';
 
 export type Mode = 'typewriter' | 'fade';
 
@@ -255,7 +255,7 @@ function useTextStream({
     }
   }, [textStream, isComplete, processStringTypewriter]);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: false positive - dependencies are intentionally managed
+  // biome-ignore lint/correctness/useExhaustiveDependencies: we only need to start the streaming once
   useEffect(() => {
     startStreaming();
 

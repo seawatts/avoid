@@ -1,5 +1,3 @@
-import 'server-only';
-
 import {
   Body,
   Button,
@@ -65,13 +63,17 @@ export const WebhookAccessRequestEmail = ({
             <Text style={webhookIdStyle}>ID: {webhookId}</Text>
           </Section>
 
-          {message && (
+          {message ? (
             <>
               <Text style={messageLabel}>Message from requester:</Text>
               <Section style={messageSection}>
                 <Text style={messageText}>{message}</Text>
               </Section>
             </>
+          ) : (
+            <Text style={text}>
+              No additional message was provided with this request.
+            </Text>
           )}
 
           <Section style={buttonContainer}>
@@ -87,10 +89,7 @@ export const WebhookAccessRequestEmail = ({
 
           <Text style={footerText}>
             You can also manage all access requests in your{' '}
-            <Link href={dashboardUrl} style={link}>
-              Acme dashboard
-            </Link>
-            .
+            <Link href={dashboardUrl}>Acme dashboard</Link>.
           </Text>
 
           <Text style={footerText}>
@@ -222,9 +221,4 @@ const footerText = {
   lineHeight: '20px',
   marginBottom: '8px',
   padding: '0 48px',
-};
-
-const link = {
-  color: '#3b82f6',
-  textDecoration: 'underline',
 };

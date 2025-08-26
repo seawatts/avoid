@@ -1,6 +1,5 @@
 'use client';
 
-import { cn } from '@acme/ui/lib/utils';
 import {
   cubicBezier,
   type HTMLMotionProps,
@@ -8,6 +7,7 @@ import {
   useInView,
 } from 'motion/react';
 import React, { useEffect, useRef, useState } from 'react';
+import { cn } from '../lib/utils';
 
 export interface OrbitingCirclesProps extends HTMLMotionProps<'div'> {
   className?: string;
@@ -111,7 +111,7 @@ export function OrbitingCircles({
                 animate={{ opacity: 1, scale: 1 }}
                 initial={{ opacity: 0, scale: 0 }}
                 key={`orbit-child-${
-                  // biome-ignore lint/suspicious/noArrayIndexKey: index is stable within orbit animation
+                  // biome-ignore lint/suspicious/noArrayIndexKey: Array index is stable here since we're mapping over a fixed slice of children
                   index
                 }`}
                 transition={{

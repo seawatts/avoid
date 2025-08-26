@@ -1,5 +1,6 @@
 'use client';
 
+import { debug } from '@acme/logger';
 import type {
   REALTIME_SUBSCRIBE_STATES,
   RealtimeChannel,
@@ -66,6 +67,8 @@ const SubscriptionContext = createContext<SubscriptionContextValue | null>(
   null,
 );
 
+const log = debug(':lib:subscription');
+
 function determineEvents<T extends TableName>(
   props: SubscriptionProps<T>,
 ): `${REALTIME_POSTGRES_CHANGES_LISTEN_EVENT}` {
@@ -120,8 +123,8 @@ async function handleSubscriptionEvent<T extends TableName>(
 
 interface SubscriptionProviderProps {
   children: ReactNode;
-  authToken: string;
-  url: string;
+  authToken?: string;
+  url?: string;
 }
 
 export function SubscriptionProvider({
@@ -160,11 +163,11 @@ export function SubscriptionProvider({
 
   // Create a new client when the token changes
   const createNewClient = useCallback(
-    (props: { authToken: string; url: string }) => {
+    (props: { authToken?: string; url?: string }) => {
       const { authToken, url } = props;
-      console.log('Creating new Supabase client');
+      log('Creating new Supabase client');
       if (clientRef.current) {
-        console.log('Removing existing channels');
+        log('Removing existing channels');
         void clientRef.current.removeAllChannels();
         clientRef.current.realtime.disconnect();
       }
@@ -179,7 +182,7 @@ export function SubscriptionProvider({
         // Set up reconnection timer
         reconnectIntervalRef.current = setInterval(() => {
           if (!client.realtime.isConnected()) {
-            console.log('Realtime disconnected, attempting to reconnect...');
+            log('Realtime disconnected, attempting to reconnect...');
             client.realtime.connect();
           }
         }, 5000);
@@ -187,7 +190,7 @@ export function SubscriptionProvider({
         // Wait for connection to be established
         const waitForConnection = () => {
           if (client.realtime.isConnected()) {
-            console.log('Realtime connection established');
+            log('Realtime connection established');
             setIsInitialized(true);
             return;
           }
@@ -197,10 +200,10 @@ export function SubscriptionProvider({
 
         waitForConnection();
 
-        console.log('New Supabase client created');
+        log('New Supabase client created');
         return client;
       } catch (error) {
-        console.log('Error creating Supabase client:', error);
+        log('Error creating Supabase client:', error);
         throw error;
       }
     },
@@ -209,13 +212,10 @@ export function SubscriptionProvider({
 
   // Initialize or update client when token changes
   useEffect(() => {
-    console.log('Token changed:', {
-      authToken,
-      previousToken: tokenRef.current,
-    });
+    log('Token changed:', { authToken, previousToken: tokenRef.current });
     if (authToken !== tokenRef.current) {
       tokenRef.current = authToken;
-      console.log('Creating new client with token');
+      log('Creating new client with token');
       createNewClient({ authToken, url: urlRef.current });
     }
   }, [authToken, createNewClient]);
@@ -223,13 +223,13 @@ export function SubscriptionProvider({
   // Initialize client on mount if we have a token
   useEffect(() => {
     if (authToken && !clientRef.current) {
-      console.log('Initializing client on mount');
+      log('Initializing client on mount');
       createNewClient({ authToken, url: urlRef.current });
     }
 
     // Cleanup on unmount
     return () => {
-      console.log('Provider unmounting, cleaning up');
+      log('Provider unmounting, cleaning up');
       isUnmountingRef.current = true;
       cleanup();
     };
@@ -237,7 +237,7 @@ export function SubscriptionProvider({
 
   const handleStatusChange = useCallback(
     async (status: SubscriptionStatus, error?: Error) => {
-      console.log('Subscription status changed:', {
+      log('Subscription status changed:', {
         error,
         hasSubscription: !!subscriptionRef.current,
         isUnmounting: isUnmountingRef.current,
@@ -247,7 +247,7 @@ export function SubscriptionProvider({
 
       // Don't update status if we're unmounting
       if (isUnmountingRef.current) {
-        console.log('Ignoring status change during unmount');
+        log('Ignoring status change during unmount');
         return;
       }
 
@@ -258,9 +258,7 @@ export function SubscriptionProvider({
           await callback.onStatusChange?.(status, error);
         }
       } else {
-        console.log(
-          'Warning: No subscription instance found when status changed',
-        );
+        log('Warning: No subscription instance found when status changed');
       }
     },
     [],
@@ -268,17 +266,17 @@ export function SubscriptionProvider({
 
   const subscribe = useCallback(
     <T extends TableName>(config: SubscriptionProps<T>) => {
-      console.log('Subscribing to:', { table: config.table });
+      log('Subscribing to:', { table: config.table });
       const existing =
         subscriptionRef.current as SubscriptionInstance<T> | null;
       if (existing) {
-        console.log('Adding callback to existing subscription');
+        log('Adding callback to existing subscription');
         existing.callbacks.add(config);
         return;
       }
 
       if (!clientRef.current) {
-        console.log('Error: Supabase client not initialized');
+        log('Error: Supabase client not initialized');
         void handleStatusChange(
           'error',
           new Error('Supabase client not initialized'),
@@ -287,7 +285,7 @@ export function SubscriptionProvider({
       }
 
       if (!isInitialized) {
-        console.log('Error: Supabase client not yet connected');
+        log('Error: Supabase client not yet connected');
         void handleStatusChange(
           'error',
           new Error('Supabase client not yet connected'),
@@ -297,7 +295,7 @@ export function SubscriptionProvider({
 
       try {
         const event = determineEvents(config);
-        console.log('Creating channel for:', { event, table: config.table });
+        log('Creating channel for:', { event, table: config.table });
         const channel = clientRef.current
           .channel(config.channelName ?? `${String(config.table)}-changes`)
           .on<Tables<T>>(
@@ -309,7 +307,7 @@ export function SubscriptionProvider({
               table: String(config.table),
             },
             (payload) => {
-              console.log('Received payload:', {
+              log('Received payload:', {
                 table: config.table,
                 type: payload.eventType,
               });
@@ -322,7 +320,7 @@ export function SubscriptionProvider({
           )
           .subscribe(
             (status: keyof typeof REALTIME_SUBSCRIBE_STATES, error?: Error) => {
-              console.log('Channel status changed:', { error, status });
+              log('Channel status changed:', { error, status });
               let newStatus: SubscriptionStatus;
               switch (status) {
                 case 'SUBSCRIBED':
@@ -343,7 +341,7 @@ export function SubscriptionProvider({
             config.timeout,
           );
 
-        console.log('Setting up new subscription instance');
+        log('Setting up new subscription instance');
         subscriptionRef.current = {
           callbacks: new Set([config]),
           channel,
@@ -354,12 +352,12 @@ export function SubscriptionProvider({
         connectionTimeoutRef.current = setTimeout(() => {
           const instance = subscriptionRef.current;
           if (instance && instance.status === 'connecting') {
-            console.log('Connection timeout reached, forcing status update');
+            log('Connection timeout reached, forcing status update');
             void handleStatusChange('connected');
           }
         }, 2000);
       } catch (error) {
-        console.log('Error setting up subscription:', error);
+        log('Error setting up subscription:', error);
         throw error;
       }
     },
@@ -368,7 +366,7 @@ export function SubscriptionProvider({
 
   const unsubscribe = useCallback(
     <T extends TableName>(callbacks: SubscriptionCallbacks<T>) => {
-      console.log('Unsubscribing');
+      log('Unsubscribing');
       const instance =
         subscriptionRef.current as SubscriptionInstance<T> | null;
       if (!instance) return;
@@ -376,7 +374,7 @@ export function SubscriptionProvider({
       instance.callbacks.delete(callbacks);
 
       if (instance.callbacks.size === 0) {
-        console.log('Removing channel');
+        log('Removing channel');
         // Add a small delay before removing the channel to prevent race conditions
         setTimeout(() => {
           if (
@@ -394,7 +392,7 @@ export function SubscriptionProvider({
 
   const getStatus = useCallback(() => {
     const status = subscriptionRef.current?.status ?? 'disconnected';
-    console.log('Getting subscription status:', {
+    log('Getting subscription status:', {
       hasSubscription: !!subscriptionRef.current,
       isUnmounting: isUnmountingRef.current,
       status,
@@ -455,17 +453,17 @@ export function useSubscription<T extends TableName>(
 
   // Handle reconnection logic
   const handleReconnect = useCallback(() => {
-    console.log('Attempting to reconnect...');
+    log('Attempting to reconnect...');
     cleanupReconnect();
 
     if (reconnectAttemptsRef.current >= MAX_RECONNECT_ATTEMPTS) {
-      console.log('Max reconnection attempts reached');
+      log('Max reconnection attempts reached');
       return;
     }
 
     const delay = INITIAL_RETRY_DELAY * 2 ** reconnectAttemptsRef.current;
     reconnectTimeoutRef.current = setTimeout(() => {
-      console.log(
+      log(
         `Reconnecting attempt ${reconnectAttemptsRef.current + 1}/${MAX_RECONNECT_ATTEMPTS}`,
       );
       subscribe(callbacksRef.current);
@@ -495,16 +493,16 @@ export function useSubscription<T extends TableName>(
     const currentStatus = getStatus();
     const previousStatus = previousStatusRef.current;
 
-    console.log('Status changed:', {
+    log('Status changed:', {
       current: currentStatus,
       previous: previousStatus,
     });
 
     if (previousStatus === 'connected' && currentStatus === 'disconnected') {
-      console.log('Connection lost, initiating reconnection...');
+      log('Connection lost, initiating reconnection...');
       handleReconnect();
     } else if (currentStatus === 'connected') {
-      console.log('Connection established, resetting reconnection attempts');
+      log('Connection established, resetting reconnection attempts');
       reconnectAttemptsRef.current = 0;
       cleanupReconnect();
     }
@@ -515,11 +513,11 @@ export function useSubscription<T extends TableName>(
   // Subscribe when initialized
   useEffect(() => {
     if (!isInitialized) {
-      console.log('Waiting for client initialization...');
+      log('Waiting for client initialization...');
       return;
     }
 
-    console.log('Client initialized, attempting to subscribe');
+    log('Client initialized, attempting to subscribe');
     subscribe(callbacksRef.current);
     return () => {
       unsubscribe(callbacksRef.current);

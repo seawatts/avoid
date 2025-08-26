@@ -1,5 +1,5 @@
 import type { RouterOutputs } from '@acme/api';
-import { createClient } from '@acme/api/cli';
+import { createClient } from '@acme/api/client';
 import { createId } from '@acme/id';
 import { debug } from '@acme/logger';
 import { createSelectors } from '@acme/zustand';

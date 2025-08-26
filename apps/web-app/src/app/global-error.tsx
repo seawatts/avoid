@@ -1,38 +1,24 @@
-'use client';
+'use client'; // Error boundaries must be Client Components
 
-import { Button } from '@acme/ui/button';
-import { H2, P } from '@acme/ui/custom/typography';
+import NextError from 'next/error';
+import posthog from 'posthog-js';
 import { useEffect } from 'react';
 
 export default function GlobalError({
   error,
-  reset,
 }: {
   error: Error & { digest?: string };
-  reset: () => void;
 }) {
   useEffect(() => {
-    // Log the error to an error reporting service
-    console.error(error);
+    posthog.captureException(error);
   }, [error]);
 
   return (
+    // global-error must include html and body tags
     <html lang="en">
       <body>
-        <div className="flex min-h-screen flex-col items-center justify-center gap-4">
-          <H2>Something went wrong!</H2>
-          <P className="text-muted-foreground">
-            {error.message || 'An unexpected error occurred'}
-          </P>
-          <Button
-            onClick={
-              // Attempt to recover by trying to re-render the segment
-              () => reset()
-            }
-          >
-            Try again
-          </Button>
-        </div>
+        {/* `NextError` is the default Next.js error page component */}
+        <NextError statusCode={0} />
       </body>
     </html>
   );

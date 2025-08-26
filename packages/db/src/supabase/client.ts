@@ -1,8 +1,11 @@
+import { debug } from '@acme/logger';
 import { useSession } from '@clerk/nextjs';
 import { createBrowserClient } from '@supabase/ssr';
 import { useEffect, useMemo } from 'react';
 import { env } from '../env.client';
 import type { Database } from './types';
+
+const log = debug('acme:lib:supabase:client');
 
 export const useClient = () => {
   const { session } = useSession();
@@ -14,7 +17,7 @@ export const useClient = () => {
         env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
         {
           async accessToken() {
-            return session?.getToken() ?? null;
+            return session?.getToken({ template: 'supabase' }) ?? null;
           },
           realtime: {
             params: {
@@ -27,11 +30,11 @@ export const useClient = () => {
   );
 
   useEffect(() => {
-    console.log('Connecting to realtime...');
+    log('Connecting to realtime...');
     client.realtime.connect();
 
     return () => {
-      console.log('Disconnecting from realtime...');
+      log('Disconnecting from realtime...');
       client.realtime.disconnect();
     };
   }, [client]);
@@ -39,15 +42,15 @@ export const useClient = () => {
   return client;
 };
 
-export function createClient(props: { authToken: string; url?: string }) {
+export function createClient(props: { authToken?: string; url?: string }) {
   const { authToken, url } = props;
   if (!authToken) {
-    console.warn('Warning: No access token provided to createClient');
+    log('Warning: No access token provided to createClient');
   }
 
   const supabaseUrl = url ?? env.NEXT_PUBLIC_SUPABASE_URL;
 
-  console.log('Creating Supabase client with config:', {
+  log('Creating Supabase client with config:', {
     hasToken: !!authToken,
     url: supabaseUrl,
   });
@@ -57,7 +60,7 @@ export function createClient(props: { authToken: string; url?: string }) {
     env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
     {
       async accessToken() {
-        return authToken;
+        return authToken ?? null;
       },
       realtime: {
         params: {
@@ -67,7 +70,7 @@ export function createClient(props: { authToken: string; url?: string }) {
     },
   );
 
-  console.log('Connecting to realtime...');
+  log('Connecting to realtime...');
   client.realtime.connect();
 
   return client;
