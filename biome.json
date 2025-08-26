@@ -29,7 +29,8 @@
       "!**/.git",
       "!**/coverage",
       "!**/.nyc_output",
-      "!**/packages/ai"
+      "!**/packages/ai",
+      "!**/apps/chrome-extension/scripts/detect-obfuscation"
     ]
   },
   "formatter": {
