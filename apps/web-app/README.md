@@ -1,6 +1,6 @@
-# Cove Web App
+# SeaWatts Web App
 
-This is the main web application for the Cove startup template, built with Next.js 15 and the App Router.
+This is the main web application for the SeaWatts startup template, built with Next.js 15 and the App Router.
 
 ## Features
 

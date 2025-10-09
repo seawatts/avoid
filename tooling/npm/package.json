@@ -5,7 +5,7 @@
   "exports": {
     ".": "./prepare-publish.js"
   },
-  "name": "@cove/npm",
+  "name": "@seawatts/npm",
   "private": true,
   "publishConfig": {
     "access": "public"

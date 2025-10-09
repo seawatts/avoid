@@ -6,7 +6,7 @@
   "exports": {
     ".": "./commitlint.config.js"
   },
-  "name": "@cove/commitlint-config",
+  "name": "@seawatts/commitlint-config",
   "private": true,
   "scripts": {
     "clean": "git clean -xdf .turbo node_modules",

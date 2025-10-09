@@ -1,4 +1,4 @@
-# Cove - AI-Powered Full-Stack Startup Template
+# SeaWatts - AI-Powered Full-Stack Startup Template
 
 > A production-ready monorepo template optimized for AI code generation workflows
 

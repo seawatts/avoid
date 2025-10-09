@@ -4,14 +4,14 @@
     "acme": "./bin/cli.js"
   },
   "bugs": {
-    "url": "https://github.com/cove-sh/cove/issues"
+    "url": "https://github.com/seawatts/seawatts/issues"
   },
   "dependencies": {
-    "@cove/api": "workspace:*",
-    "@cove/db": "workspace:*",
-    "@cove/id": "workspace:*",
-    "@cove/logger": "workspace:*",
-    "@cove/zustand": "workspace:*",
+    "@seawatts/api": "workspace:*",
+    "@seawatts/db": "workspace:*",
+    "@seawatts/id": "workspace:*",
+    "@seawatts/logger": "workspace:*",
+    "@seawatts/zustand": "workspace:*",
     "@clerk/backend": "2.10.0",
     "@clerk/clerk-js": "5.89.0",
     "@clerk/express": "1.7.25",
@@ -46,8 +46,8 @@
   },
   "description": "A CLI tool for testing webhooks locally with team collaboration features.",
   "devDependencies": {
-    "@cove/npm": "workspace:*",
-    "@cove/tsconfig": "workspace:*",
+    "@seawatts/npm": "workspace:*",
+    "@seawatts/tsconfig": "workspace:*",
     "@happy-dom/global-registrator": "18.0.1",
     "@playwright/test": "1.55.0",
     "@types/bun": "1.2.21",
@@ -81,7 +81,7 @@
     "README.md",
     "LICENSE"
   ],
-  "homepage": "https://github.com/cove-sh/cove#readme",
+  "homepage": "https://github.com/seawatts/seawatts#readme",
   "keywords": [
     "webhook",
     "development",
@@ -103,7 +103,7 @@
     "svix"
   ],
   "license": "MIT",
-  "name": "@cove/cli",
+  "name": "@seawatts/cli",
   "private": false,
   "publishConfig": {
     "access": "public"

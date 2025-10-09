@@ -2,7 +2,7 @@
   "files": [
     "*.json"
   ],
-  "name": "@cove/tsconfig",
+  "name": "@seawatts/tsconfig",
   "private": true,
   "type": "module",
   "version": "0.1.0"

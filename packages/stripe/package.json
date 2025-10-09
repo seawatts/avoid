@@ -1,11 +1,11 @@
 {
   "dependencies": {
-    "@cove/analytics": "workspace:*",
+    "@seawatts/analytics": "workspace:*",
     "next": "15.5.1",
     "stripe": "18.4.0"
   },
   "devDependencies": {
-    "@cove/tsconfig": "workspace:*",
+    "@seawatts/tsconfig": "workspace:*",
     "typescript": "5.9.2"
   },
   "exports": {
@@ -14,7 +14,7 @@
     "./guards/server": "./src/guards/server.ts"
   },
   "license": "MIT",
-  "name": "@cove/stripe",
+  "name": "@seawatts/stripe",
   "private": true,
   "scripts": {
     "build": "bun run populate-ids",
