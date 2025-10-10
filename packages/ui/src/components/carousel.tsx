@@ -1,12 +1,12 @@
 'use client';
 
+import { Button } from '@seawatts/ui/components/button';
+import { cn } from '@seawatts/ui/lib/utils';
 import useEmblaCarousel, {
   type UseEmblaCarouselType,
 } from 'embla-carousel-react';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import * as React from 'react';
-import { cn } from '../lib/utils';
-import { Button } from './button';
 
 type CarouselApi = UseEmblaCarouselType[1];
 type UseCarouselParameters = Parameters<typeof useEmblaCarousel>;
@@ -117,14 +117,17 @@ function Carousel({
         scrollPrev,
       }}
     >
-      <section
+      {/* biome-ignore lint/a11y/useSemanticElements: shadcn/ui component pattern */}
+      <div
+        aria-roledescription="carousel"
         className={cn('relative', className)}
         data-slot="carousel"
         onKeyDownCapture={handleKeyDown}
+        role="region"
         {...props}
       >
         {children}
-      </section>
+      </div>
     </CarouselContext.Provider>
   );
 }
@@ -154,14 +157,16 @@ function CarouselItem({ className, ...props }: React.ComponentProps<'div'>) {
   const { orientation } = useCarousel();
 
   return (
+    // biome-ignore lint/a11y/useSemanticElements: shadcn/ui component pattern
     <div
-      aria-description="carousel item"
+      aria-roledescription="slide"
       className={cn(
         'min-w-0 shrink-0 grow-0 basis-full',
         orientation === 'horizontal' ? 'pl-4' : 'pt-4',
         className,
       )}
       data-slot="carousel-item"
+      role="group"
       {...props}
     />
   );
@@ -180,8 +185,8 @@ function CarouselPrevious({
       className={cn(
         'absolute size-8 rounded-full',
         orientation === 'horizontal'
-          ? '-left-12 -translate-y-1/2 top-1/2'
-          : '-top-12 -translate-x-1/2 left-1/2 rotate-90',
+          ? 'top-1/2 -left-12 -translate-y-1/2'
+          : '-top-12 left-1/2 -translate-x-1/2 rotate-90',
         className,
       )}
       data-slot="carousel-previous"
@@ -210,8 +215,8 @@ function CarouselNext({
       className={cn(
         'absolute size-8 rounded-full',
         orientation === 'horizontal'
-          ? '-right-12 -translate-y-1/2 top-1/2'
-          : '-bottom-12 -translate-x-1/2 left-1/2 rotate-90',
+          ? 'top-1/2 -right-12 -translate-y-1/2'
+          : '-bottom-12 left-1/2 -translate-x-1/2 rotate-90',
         className,
       )}
       data-slot="carousel-next"
