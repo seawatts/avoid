@@ -2,7 +2,7 @@ import { lookup } from 'node:dns/promises';
 import { networkInterfaces } from 'node:os';
 import { debug } from '@seawatts/logger';
 
-const log = debug('acme:lib:network-monitor');
+const log = debug('seawatts:lib:network-monitor');
 
 export type NetworkStatus = 'online' | 'offline' | 'checking';
 export type NetworkStatusCallback = (status: NetworkStatus) => void;
@@ -16,7 +16,7 @@ export class NetworkMonitor {
 
   constructor(options?: { checkInterval?: number; host?: string }) {
     this.checkInterval = options?.checkInterval ?? 5000; // Default 5 seconds
-    this.host = options?.host ?? 'acme.sh'; // Default to our domain
+    this.host = options?.host ?? 'seawatts.sh'; // Default to our domain
   }
 
   private async checkConnection(): Promise<boolean> {

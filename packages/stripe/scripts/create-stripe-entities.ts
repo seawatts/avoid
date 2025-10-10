@@ -43,7 +43,7 @@ interface PlanConfig {
   entitlements?: Entitlement[];
 }
 
-// Plan configurations based on Acme's pricing
+// Plan configurations based on Seawatts's pricing
 const PLANS: PlanConfig[] = [
   {
     baseFeeCents: 0,
@@ -92,7 +92,7 @@ const PLANS: PlanConfig[] = [
     id: 'free',
     includedWebhookEvents: 50,
     lookup_keys: {
-      monthly: 'acme_free_2025_01_monthly',
+      monthly: 'seawatts_free_2025_01_monthly',
     },
     name: 'Free Plan',
     pricingModel: 'flat',
@@ -167,8 +167,8 @@ const PLANS: PlanConfig[] = [
     id: 'team',
     includedWebhookEvents: -1,
     lookup_keys: {
-      monthly: 'acme_team_2025_01_monthly',
-      yearly: 'acme_team_2025_01_yearly',
+      monthly: 'seawatts_team_2025_01_monthly',
+      yearly: 'seawatts_team_2025_01_yearly',
     },
     name: 'Team Plan',
     pricePerUserCents: 10 * CONSTANTS.CENTS_MULTIPLIER,
@@ -208,8 +208,8 @@ const ADDONS: AddonConfig[] = [
     ],
     id: 'dedicated_support',
     lookup_keys: {
-      monthly: 'acme_dedicated_support_2025_01_monthly',
-      yearly: 'acme_dedicated_support_2025_01_yearly',
+      monthly: 'seawatts_dedicated_support_2025_01_monthly',
+      yearly: 'seawatts_dedicated_support_2025_01_yearly',
     },
     name: 'Dedicated Support',
   },
@@ -427,7 +427,7 @@ async function findOrCreateProduct(
   });
 
   const existingProduct = existingProducts.data.find(
-    (p) => p.name === `Acme ${plan.name}`,
+    (p) => p.name === `Seawatts ${plan.name}`,
   );
 
   if (existingProduct) {
@@ -459,7 +459,7 @@ async function findOrCreateProduct(
     marketing_features: plan.features.map((feature) => ({
       name: feature,
     })),
-    name: `Acme ${plan.name}`,
+    name: `Seawatts ${plan.name}`,
   });
 
   // Attach entitlements to new product
@@ -487,7 +487,7 @@ async function findOrCreateAddonProduct(
   });
 
   const existingProduct = existingProducts.data.find(
-    (p) => p.name === `Acme ${addon.name}`,
+    (p) => p.name === `Seawatts ${addon.name}`,
   );
 
   if (existingProduct) {
@@ -519,7 +519,7 @@ async function findOrCreateAddonProduct(
     metadata: {
       features: JSON.stringify(addon.features),
     },
-    name: `Acme ${addon.name}`,
+    name: `Seawatts ${addon.name}`,
   });
 
   // Attach entitlements to new product
@@ -677,7 +677,7 @@ async function main() {
     }
 
     console.log(
-      'Successfully created or updated all Acme products, prices, and addons!',
+      'Successfully created or updated all Seawatts products, prices, and addons!',
     );
   } catch (error) {
     console.error('Error creating or updating products and prices:', error);

@@ -99,14 +99,14 @@ export function useRoutes() {
         hotkey: 'i',
         label: 'Report Issue',
         path: '/report-issue',
-        url: 'https://github.com/acme-sh/acme/issues/new?template=bug_report.yml',
+        url: 'https://github.com/seawatts-sh/seawatts/issues/new?template=bug_report.yml',
       },
       {
         component: () => null,
         hotkey: 'd',
         label: 'Docs',
         path: '/docs',
-        url: 'https://docs.acme.sh',
+        url: 'https://docs.seawatts.sh',
       },
       {
         component: QuitPage,

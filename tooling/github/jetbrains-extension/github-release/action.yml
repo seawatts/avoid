@@ -80,7 +80,7 @@ runs:
         gradle buildPlugin
 
         # Verify the expected file was created
-        EXPECTED_FILE="build/distributions/acme-jetbrains-${{ inputs.version }}.zip"
+        EXPECTED_FILE="build/distributions/seawatts-jetbrains-${{ inputs.version }}.zip"
         if [ ! -f "$EXPECTED_FILE" ]; then
           echo "Expected distribution file not found at: $EXPECTED_FILE"
           echo "Listing available files in build/distributions/:"
@@ -160,7 +160,7 @@ runs:
         draft: false
         prerelease: false
         files: |
-          apps/jetbrains-extension/build/distributions/acme-jetbrains-${{ inputs.version }}.zip
+          apps/jetbrains-extension/build/distributions/seawatts-jetbrains-${{ inputs.version }}.zip
       env:
         GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
 
@@ -169,6 +169,6 @@ runs:
       with:
         name: jetbrains-plugin-${{ inputs.version }}
         path: |
-          apps/jetbrains-extension/build/distributions/acme-jetbrains-${{ inputs.version }}.zip
+          apps/jetbrains-extension/build/distributions/seawatts-jetbrains-${{ inputs.version }}.zip
           apps/jetbrains-extension/build/reports/
         retention-days: 30

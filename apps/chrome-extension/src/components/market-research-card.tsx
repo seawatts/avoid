@@ -21,7 +21,7 @@ export function MarketResearchCard() {
         {/* <Button className="flex w-full items-center" disabled={true}>
           <img
             src={logoIcon}
-            alt="Acme"
+            alt="Seawatts"
             className="mb-0.5 mr-2 size-5"
           />
           Coming Soon

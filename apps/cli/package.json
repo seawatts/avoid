@@ -1,7 +1,7 @@
 {
-  "author": "Acme Team (https://github.com/acme-sh)",
+  "author": "Seawatts Team (https://github.com/seawatts-sh)",
   "bin": {
-    "acme": "./bin/cli.js"
+    "seawatts": "./bin/cli.js"
   },
   "bugs": {
     "url": "https://github.com/seawatts/seawatts/issues"
@@ -111,7 +111,7 @@
   "repository": {
     "directory": "apps/cli",
     "type": "git",
-    "url": "git+https://github.com/acme-sh/acme.git"
+    "url": "git+https://github.com/seawatts-sh/seawatts.git"
   },
   "scripts": {
     "build": "tsup",

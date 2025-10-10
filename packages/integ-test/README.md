@@ -1,6 +1,6 @@
-# Acme Integration Tests
+# Seawatts Integration Tests
 
-This package contains comprehensive integration tests for the Acme platform, testing the interaction between the web application, CLI, and VSCode extension.
+This package contains comprehensive integration tests for the Seawatts platform, testing the interaction between the web application, CLI, and VSCode extension.
 
 ## Overview
 

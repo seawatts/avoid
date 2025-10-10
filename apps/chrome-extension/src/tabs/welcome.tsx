@@ -222,7 +222,7 @@ function WelcomePage() {
                 {/* <Card>
                       <CardHeader>
                         <CardTitle className="flex items-center">
-                          6. Invite Your Acmes
+                          6. Invite Your Seawattss
                         </CardTitle>
                         <CardDescription>
                           YC vibe-check works best when your whole team is
@@ -238,7 +238,7 @@ function WelcomePage() {
                         <Button asChild>
                           <a href="./invite.html">
                             <Icons.Plus className="mr-2" />
-                            Invite Acmes
+                            Invite Seawattss
                           </a>
                         </Button>
                       </CardContent>
@@ -295,14 +295,14 @@ function WelcomePage() {
                 View our{' '}
                 <a
                   className="text-muted-foreground underline underline-offset-4"
-                  href="https://acme.ai/terms"
+                  href="https://seawatts.ai/terms"
                 >
                   terms of service
                 </a>{' '}
                 and{' '}
                 <a
                   className="text-muted-foreground underline underline-offset-4"
-                  href="https://acme.ai/privacy"
+                  href="https://seawatts.ai/privacy"
                 >
                   privacy policy
                 </a>

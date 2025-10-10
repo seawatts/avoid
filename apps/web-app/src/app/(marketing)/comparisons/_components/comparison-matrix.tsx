@@ -13,7 +13,7 @@ interface ComparisonRow {
   ngrok: boolean;
   smee: boolean;
   svix: boolean;
-  acme: boolean;
+  seawatts: boolean;
   webhookSite: boolean;
 }
 
@@ -91,7 +91,7 @@ export function ComparisonMatrix({ comparisonMatrix }: ComparisonMatrixProps) {
                   Feature
                 </th>
                 <th className="text-center p-4 font-medium text-secondary">
-                  Acme
+                  Seawatts
                 </th>
                 <th className="text-center p-4 font-medium text-muted-foreground">
                   ngrok
@@ -127,7 +127,7 @@ export function ComparisonMatrix({ comparisonMatrix }: ComparisonMatrixProps) {
                 >
                   <td className="p-4 font-medium text-nowrap">{row.feature}</td>
                   <td className="p-4 text-center">
-                    {row.acme ? (
+                    {row.seawatts ? (
                       <CheckmarkIcon />
                     ) : (
                       <XCircle className="w-5 h-5 text-destructive mx-auto" />

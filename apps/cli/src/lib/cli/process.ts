@@ -2,7 +2,7 @@ import { debug, defaultLogger } from '@seawatts/logger';
 import { useCliStore } from '../../stores/cli-store';
 import { capture, captureException, shutdown } from '../posthog';
 
-const log = debug('acme:cli:process');
+const log = debug('seawatts:cli:process');
 
 let webhookClientCleanup: (() => void) | null = null;
 let requestSubscriptionCleanup: (() => void) | undefined;

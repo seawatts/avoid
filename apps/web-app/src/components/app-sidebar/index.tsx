@@ -131,7 +131,7 @@ export function AppSidebar({
             <SidebarMenuButton asChild>
               <a
                 className="flex items-center justify-between"
-                href="https://docs.acme.com"
+                href="https://docs.seawatts.com"
                 rel="noreferrer"
                 target="_blank"
               >
@@ -147,7 +147,7 @@ export function AppSidebar({
             <SidebarMenuButton asChild>
               <a
                 className="flex items-center justify-between"
-                href="https://docs.acme.com/ref/overview"
+                href="https://docs.seawatts.com/ref/overview"
                 rel="noreferrer"
                 target="_blank"
               >
@@ -179,7 +179,7 @@ export function AppSidebar({
             <SidebarMenuButton asChild>
               <a
                 className="flex items-center justify-between"
-                href="https://github.com/acme-ai/acme/blob/canary/CHANGELOG.md"
+                href="https://github.com/seawatts-ai/seawatts/blob/canary/CHANGELOG.md"
                 rel="noreferrer"
                 target="_blank"
               >

@@ -17,19 +17,19 @@ import { Suspense } from 'react';
 import { env } from '~/env.server';
 
 export const metadata: Metadata = {
-  description: 'Acme is a tool for developers to manage their webhooks',
+  description: 'Seawatts is a tool for developers to manage their webhooks',
   metadataBase: new URL(
     env.VERCEL_ENV === 'production'
-      ? 'https://acme.sh'
+      ? 'https://seawatts.sh'
       : 'http://localhost:3000',
   ),
   openGraph: {
-    description: 'Acme is a tool for developers to manage their webhooks',
-    siteName: 'Acme',
-    title: 'Acme',
-    url: 'https://acme.sh',
+    description: 'Seawatts is a tool for developers to manage their webhooks',
+    siteName: 'Seawatts',
+    title: 'Seawatts',
+    url: 'https://seawatts.sh',
   },
-  title: 'Acme',
+  title: 'Seawatts',
   twitter: {
     card: 'summary_large_image',
     creator: '@seawatts',

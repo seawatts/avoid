@@ -22,7 +22,7 @@ export function GenerateApplicationButton() {
         disabled={isDisabled}
         onClick={handleClick}
       >
-        <img alt="Acme" className="mb-0.5 mr-2 size-5" src={logoIcon} />
+        <img alt="Seawatts" className="mb-0.5 mr-2 size-5" src={logoIcon} />
         Auto-fill
       </Button>
       <GenerateApplicationDialog

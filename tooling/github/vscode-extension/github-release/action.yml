@@ -49,13 +49,13 @@ runs:
         bun run package
 
         # Verify the expected file was created
-        if [ ! -f "acme-vscode-${{ inputs.version }}.vsix" ]; then
+        if [ ! -f "seawatts-vscode-${{ inputs.version }}.vsix" ]; then
           echo "Expected package file not found. Listing available files:"
           ls -la *.vsix || echo "No .vsix files found"
           exit 1
         fi
 
-        echo "✅ Package created: acme-vscode-${{ inputs.version }}.vsix"
+        echo "✅ Package created: seawatts-vscode-${{ inputs.version }}.vsix"
 
     - name: Publish to Visual Studio Marketplace
       shell: bash
@@ -64,7 +64,7 @@ runs:
         VSCE_PAT: ${{ inputs.vsce_pat }}
       run: |
         echo "Publishing to Visual Studio Marketplace..."
-        bunx vsce publish --packagePath acme-vscode-${{ inputs.version }}.vsix
+        bunx vsce publish --packagePath seawatts-vscode-${{ inputs.version }}.vsix
 
     - name: Publish to Open VSX Registry
       shell: bash
@@ -84,7 +84,7 @@ runs:
 
         # Publish to Open VSX Registry
         echo "Publishing extension..."
-        bunx ovsx publish acme-vscode-${{ inputs.version }}.vsix --pat "$OVSX_PAT"
+        bunx ovsx publish seawatts-vscode-${{ inputs.version }}.vsix --pat "$OVSX_PAT"
 
         echo "✅ Successfully published to Open VSX Registry!"
 
@@ -140,6 +140,6 @@ runs:
         draft: false
         prerelease: false
         files: |
-          apps/vscode-extension/acme-vscode-${{ inputs.version }}.vsix
+          apps/vscode-extension/seawatts-vscode-${{ inputs.version }}.vsix
       env:
         GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}

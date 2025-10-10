@@ -13,18 +13,18 @@ const stripe = new Stripe(env.STRIPE_SECRET_KEY, {
 
 // Define the mapping of lookup keys to their corresponding product names
 const LOOKUP_KEY_MAPPINGS = {
-  acme_dedicated_support_2025_01_monthly: {
+  seawatts_dedicated_support_2025_01_monthly: {
     name: 'DEDICATED_SUPPORT',
     type: 'product',
   },
-  acme_dedicated_support_2025_01_yearly: {
+  seawatts_dedicated_support_2025_01_yearly: {
     name: 'DEDICATED_SUPPORT',
     type: 'product',
   },
   // Product mappings
-  acme_free_2025_01_monthly: { name: 'FREE_PLAN', type: 'product' },
-  acme_team_2025_01_monthly: { name: 'TEAM_PLAN', type: 'product' },
-  acme_team_2025_01_yearly: { name: 'TEAM_PLAN', type: 'product' },
+  seawatts_free_2025_01_monthly: { name: 'FREE_PLAN', type: 'product' },
+  seawatts_team_2025_01_monthly: { name: 'TEAM_PLAN', type: 'product' },
+  seawatts_team_2025_01_yearly: { name: 'TEAM_PLAN', type: 'product' },
 } as const;
 
 async function fetchStripeIds() {
@@ -98,7 +98,7 @@ function generateBillingTypesFile(
     // Convert lookup key to the constant name format
     const priceName = lookupKey
       .toUpperCase()
-      .replace(/ACME_/, '')
+      .replace(/SEAWATTS_/, '')
       .replace(/_2025_01_/, '_')
       .replace(/_/g, '_');
 

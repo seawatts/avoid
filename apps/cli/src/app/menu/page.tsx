@@ -47,7 +47,7 @@ export const MenuPage: FC<RouteProps> = () => {
   return (
     <Box flexDirection="column">
       <Box marginBottom={1}>
-        <Ascii color="gray" font="ANSI Shadow" text="Acme" />
+        <Ascii color="gray" font="ANSI Shadow" text="Seawatts" />
       </Box>
       <Box flexDirection="column" marginBottom={1}>
         <Text bold>{env.NEXT_PUBLIC_API_URL}</Text>

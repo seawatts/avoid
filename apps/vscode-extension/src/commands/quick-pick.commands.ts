@@ -3,7 +3,7 @@ import { WebhookEventQuickPick } from '../quickPick';
 
 export function registerQuickPickCommand(context: vscode.ExtensionContext) {
   const quickPickCommand = vscode.commands.registerCommand(
-    'acme.quickPick',
+    'seawatts.quickPick',
     () => {
       WebhookEventQuickPick.getInstance().showQuickPick();
     },

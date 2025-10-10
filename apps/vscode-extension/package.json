@@ -7,7 +7,7 @@
     "onUri:windsurf"
   ],
   "bugs": {
-    "url": "https://github.com/acme-sh/acme/issues"
+    "url": "https://github.com/seawatts-sh/seawatts/issues"
   },
   "categories": [
     "Debuggers",
@@ -17,134 +17,134 @@
   "contributes": {
     "authentication": [
       {
-        "id": "acme",
-        "label": "Acme"
+        "id": "seawatts",
+        "label": "Seawatts"
       }
     ],
     "commands": [
       {
-        "category": "Acme",
-        "command": "acme.showWebhookEvents",
+        "category": "Seawatts",
+        "command": "seawatts.showWebhookEvents",
         "title": "Show Webhook Events"
       },
       {
-        "category": "Acme",
-        "command": "acme.addWebhookEvent",
+        "category": "Seawatts",
+        "command": "seawatts.addWebhookEvent",
         "title": "Add Webhook Event"
       },
       {
-        "command": "acme.replayEvent",
+        "command": "seawatts.replayEvent",
         "icon": "$(play)",
         "title": "Replay Event"
       },
       {
-        "command": "acme.viewEvent",
+        "command": "seawatts.viewEvent",
         "icon": "$(eye)",
         "title": "View Event"
       },
       {
-        "command": "acme.viewRequest",
+        "command": "seawatts.viewRequest",
         "icon": "$(eye)",
         "title": "View Request"
       },
       {
-        "command": "acme.replayRequest",
+        "command": "seawatts.replayRequest",
         "icon": "$(play)",
         "title": "Replay Request"
       },
       {
-        "command": "acme.copyEvent",
+        "command": "seawatts.copyEvent",
         "icon": "$(copy)",
         "title": "Copy Event"
       },
       {
-        "command": "acme.webhookEvents.refresh",
+        "command": "seawatts.webhookEvents.refresh",
         "icon": "$(refresh)",
         "title": "Refresh"
       },
       {
-        "command": "acme.openRequestDetails",
+        "command": "seawatts.openRequestDetails",
         "title": "Open Request Details"
       },
       {
-        "category": "Acme",
-        "command": "acme.quickPick",
+        "category": "Seawatts",
+        "command": "seawatts.quickPick",
         "icon": "$(list-selection)",
         "title": "Quick Pick Webhook Event"
       },
       {
-        "command": "acme.webhookEvents.filter",
+        "command": "seawatts.webhookEvents.filter",
         "icon": "$(filter)",
         "title": "Filter Webhook Events"
       },
       {
-        "category": "Acme",
-        "command": "acme.focusOutput",
+        "category": "Seawatts",
+        "command": "seawatts.focusOutput",
         "icon": "$(output)",
         "title": "Focus Output"
       },
       {
-        "category": "Acme",
-        "command": "acme.clearOutput",
+        "category": "Seawatts",
+        "command": "seawatts.clearOutput",
         "icon": "$(clear-all)",
         "title": "Clear Output"
       },
       {
-        "category": "Acme",
-        "command": "acme.toggleOutput",
+        "category": "Seawatts",
+        "command": "seawatts.toggleOutput",
         "icon": "$(eye)",
         "title": "Toggle Output"
       },
       {
-        "category": "Acme",
-        "command": "acme.openSettings",
+        "category": "Seawatts",
+        "command": "seawatts.openSettings",
         "icon": "$(settings-gear)",
         "title": "Open Settings"
       },
       {
-        "category": "Acme",
-        "command": "acme.toggleAutoShowOutput",
+        "category": "Seawatts",
+        "command": "seawatts.toggleAutoShowOutput",
         "icon": "$(eye)",
         "title": "Toggle Auto-Show Output"
       },
       {
-        "category": "Acme",
-        "command": "acme.toggleAutoClearEvents",
+        "category": "Seawatts",
+        "command": "seawatts.toggleAutoClearEvents",
         "icon": "$(trash)",
         "title": "Toggle Auto-Clear Events"
       },
       {
-        "category": "Acme",
-        "command": "acme.toggleRequestDetailsView",
+        "category": "Seawatts",
+        "command": "seawatts.toggleRequestDetailsView",
         "icon": "$(split-horizontal)",
         "title": "Toggle Request Details View"
       },
       {
-        "category": "Acme",
-        "command": "acme.signIn",
+        "category": "Seawatts",
+        "command": "seawatts.signIn",
         "icon": "$(sign-in)",
-        "title": "Sign in to Acme"
+        "title": "Sign in to Seawatts"
       },
       {
-        "category": "Acme",
-        "command": "acme.signOut",
+        "category": "Seawatts",
+        "command": "seawatts.signOut",
         "icon": "$(sign-out)",
-        "title": "Sign out of Acme"
+        "title": "Sign out of Seawatts"
       }
     ],
     "configuration": {
       "properties": {
-        "acme.output.autoShow": {
+        "seawatts.output.autoShow": {
           "default": true,
           "description": "Automatically show the output panel when new webhook events are received",
           "type": "boolean"
         },
-        "acme.output.maxLines": {
+        "seawatts.output.maxLines": {
           "default": 1000,
           "description": "Maximum number of lines to keep in the output panel",
           "type": "number"
         },
-        "acme.requestDetails.defaultView": {
+        "seawatts.requestDetails.defaultView": {
           "default": "formatted",
           "description": "Default view mode for request details",
           "enum": [
@@ -153,75 +153,75 @@
           ],
           "type": "string"
         },
-        "acme.webhookEvents.autoClear": {
+        "seawatts.webhookEvents.autoClear": {
           "default": false,
           "description": "Automatically clear old webhook events when the maximum history is reached",
           "type": "boolean"
         },
-        "acme.webhookEvents.maxHistory": {
+        "seawatts.webhookEvents.maxHistory": {
           "default": 100,
           "description": "Maximum number of webhook events to keep in history",
           "type": "number"
         }
       },
-      "title": "Acme"
+      "title": "Seawatts"
     },
     "menus": {
       "view/item/context": [
         {
-          "command": "acme.copyEvent",
+          "command": "seawatts.copyEvent",
           "group": "inline",
-          "when": "view == acme.webhookEvents && viewItem == webhookEvent"
+          "when": "view == seawatts.webhookEvents && viewItem == webhookEvent"
         },
         {
-          "command": "acme.viewEvent",
+          "command": "seawatts.viewEvent",
           "group": "inline",
-          "when": "view == acme.webhookEvents && viewItem == webhookEvent"
+          "when": "view == seawatts.webhookEvents && viewItem == webhookEvent"
         },
         {
-          "command": "acme.replayEvent",
+          "command": "seawatts.replayEvent",
           "group": "inline",
-          "when": "view == acme.webhookEvents && viewItem == webhookEvent"
+          "when": "view == seawatts.webhookEvents && viewItem == webhookEvent"
         },
         {
-          "command": "acme.viewRequest",
+          "command": "seawatts.viewRequest",
           "group": "inline",
-          "when": "view == acme.webhookEvents && viewItem == webhookRequest"
+          "when": "view == seawatts.webhookEvents && viewItem == webhookRequest"
         },
         {
-          "command": "acme.replayRequest",
+          "command": "seawatts.replayRequest",
           "group": "inline",
-          "when": "view == acme.webhookEvents && viewItem == webhookRequest"
+          "when": "view == seawatts.webhookEvents && viewItem == webhookRequest"
         }
       ],
       "view/title": [
         {
-          "command": "acme.quickPick",
+          "command": "seawatts.quickPick",
           "group": "navigation",
-          "when": "view == acme.webhookEvents"
+          "when": "view == seawatts.webhookEvents"
         },
         {
-          "command": "acme.webhookEvents.filter",
+          "command": "seawatts.webhookEvents.filter",
           "group": "navigation@1",
-          "when": "view == acme.webhookEvents"
+          "when": "view == seawatts.webhookEvents"
         }
       ]
     },
     "views": {
-      "acme": [
+      "seawatts": [
         {
           "contextualTitle": "Webhook Events",
-          "id": "acme.webhookEvents",
+          "id": "seawatts.webhookEvents",
           "name": "Webhook Events"
         },
         {
           "contextualTitle": "Settings",
-          "id": "acme.settings",
+          "id": "seawatts.settings",
           "name": "Settings"
         },
         {
           "contextualTitle": "Request Details",
-          "id": "acme.requestDetails",
+          "id": "seawatts.requestDetails",
           "name": "Request Details",
           "visibility": "hidden"
         }
@@ -231,8 +231,8 @@
       "activitybar": [
         {
           "icon": "$(radio-tower)",
-          "id": "acme",
-          "title": "Acme"
+          "id": "seawatts",
+          "title": "Seawatts"
         }
       ]
     }
@@ -265,11 +265,11 @@
     "typescript": "5.9.3",
     "vite": "7.1.9"
   },
-  "displayName": "Acme - Webhook Development",
+  "displayName": "Seawatts - Webhook Development",
   "engines": {
     "vscode": ">=1.96.0"
   },
-  "homepage": "https://github.com/acme-sh/acme#readme",
+  "homepage": "https://github.com/seawatts-sh/seawatts#readme",
   "keywords": [
     "webhook",
     "development",
@@ -279,10 +279,10 @@
   "main": "./dist/extension.js",
   "name": "seawatts-vscode",
   "private": true,
-  "publisher": "acme",
+  "publisher": "seawatts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/acme-sh/acme"
+    "url": "https://github.com/seawatts-sh/seawatts"
   },
   "scripts": {
     "build": "bun run typecheck && bun run build:webview && bun run build:base --minify --production",

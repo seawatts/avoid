@@ -23,7 +23,7 @@ export async function speechToText({
   const endpoint = '/api/speech-to-text';
   const apiUrl =
     process.env.NODE_ENV === 'production'
-      ? `https://app.acme.ai${endpoint}`
+      ? `https://app.seawatts.ai${endpoint}`
       : `http://localhost:3000${endpoint}`;
 
   const formData = new FormData();

@@ -9,7 +9,7 @@ import { env } from '~/env';
 import { capture } from '../posthog';
 import { InvalidAuthResponseError } from './errors';
 
-const log = debug('acme:cli:auth-server');
+const log = debug('seawatts:cli:auth-server');
 
 interface AuthCallbackParams {
   csrfToken: string | null;

@@ -2,7 +2,7 @@ import { debug } from '@seawatts/logger';
 import { createSelectors } from '@seawatts/zustand';
 import { createStore } from 'zustand';
 
-const log = debug('acme:lib:network-store');
+const log = debug('seawatts:lib:network-store');
 
 export type NetworkStatus = 'online' | 'offline' | 'checking';
 
@@ -44,7 +44,7 @@ const store = createStore<NetworkStore>()((set, get) => {
       }
 
       // Then try to resolve our domain
-      await lookup('acme.sh');
+      await lookup('seawatts.sh');
       return true;
     } catch (error) {
       log('Network check failed:', error);

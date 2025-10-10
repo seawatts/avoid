@@ -1,7 +1,7 @@
 import { EventEmitter } from 'node:events';
 import * as vscode from 'vscode';
 
-export interface AcmeSettings {
+export interface SeawattsSettings {
   output: {
     autoShow: boolean;
     maxLines: number;
@@ -24,7 +24,7 @@ export class SettingsService {
     // Listen for configuration changes
     this.disposables.push(
       vscode.workspace.onDidChangeConfiguration((e) => {
-        if (e.affectsConfiguration('acme')) {
+        if (e.affectsConfiguration('seawatts')) {
           this.onSettingsChanged();
         }
       }),
@@ -38,8 +38,8 @@ export class SettingsService {
     return SettingsService.instance;
   }
 
-  public getSettings(): AcmeSettings {
-    const config = vscode.workspace.getConfiguration('acme');
+  public getSettings(): SeawattsSettings {
+    const config = vscode.workspace.getConfiguration('seawatts');
     return {
       output: {
         autoShow: config.get('output.autoShow') ?? true,
@@ -59,7 +59,9 @@ export class SettingsService {
     this.settingsChanged.emit('change', this.getSettings());
   }
 
-  public onSettingsChange(callback: (settings: AcmeSettings) => void): void {
+  public onSettingsChange(
+    callback: (settings: SeawattsSettings) => void,
+  ): void {
     this.settingsChanged.on('change', callback);
   }
 

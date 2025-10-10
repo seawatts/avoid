@@ -104,7 +104,7 @@ const Content = ({ anchor }: { anchor: { element?: Element } }) => {
           {!isLoading && (
             <img
               src={logoIcon}
-              alt="Acme"
+              alt="Seawatts"
               className="mb-0.5 mr-2 size-5"
             />
           )}

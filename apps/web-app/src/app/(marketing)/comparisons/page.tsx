@@ -4,15 +4,15 @@ import { ComparisonsContent } from './_components/comparisons-content';
 
 export const metadata = {
   description:
-    'Compare Acme with ngrok, Webhook.site, Beeceptor, Localtunnel and other webhook testing tools. See why teams choose Acme for better collaboration and VS Code integration.',
+    'Compare Seawatts with ngrok, Webhook.site, Beeceptor, Localtunnel and other webhook testing tools. See why teams choose Seawatts for better collaboration and VS Code integration.',
   keywords: [
     'webhook testing comparison',
-    'ngrok vs acme',
+    'ngrok vs seawatts',
     'webhook.site alternative',
     'beeceptor alternative',
     'webhook testing tools',
   ],
-  title: 'Acme vs Competitors: Webhook Testing Tool Comparisons | Acme',
+  title: 'Seawatts vs Competitors: Webhook Testing Tool Comparisons | Seawatts',
 };
 
 export default function ComparisonsPage() {

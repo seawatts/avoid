@@ -2,7 +2,7 @@
 
 set -e
 
-echo "🧪 Testing Acme CLI npm package approach with Bun..."
+echo "🧪 Testing Seawatts CLI npm package approach with Bun..."
 
 # Check if we're in the right directory
 if [ ! -f "package.json" ]; then
@@ -74,12 +74,12 @@ echo "✅ Build successful"
 
 # Test 5: Check if built file exists
 echo "📋 Testing built file..."
-if [ ! -f "bin/acme.js" ]; then
-    echo "❌ bin/acme.js not found after build"
+if [ ! -f "bin/seawatts.js" ]; then
+    echo "❌ bin/seawatts.js not found after build"
     exit 1
 fi
 
-echo "✅ bin/acme.js exists"
+echo "✅ bin/seawatts.js exists"
 
 # Test 6: Check if cli.cjs exists and is executable
 echo "📋 Testing CLI launcher..."
@@ -129,8 +129,8 @@ echo "✅ The CLI is ready for npm distribution"
 echo ""
 echo "To test installation:"
 echo "  npm pack"
-echo "  npm install -g acme-cli-*.tgz"
-echo "  acme --help"
+echo "  npm install -g seawatts-cli-*.tgz"
+echo "  seawatts --help"
 echo ""
 echo "To publish:"
 echo "  npm publish"

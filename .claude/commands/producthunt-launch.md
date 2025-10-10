@@ -1,9 +1,9 @@
-# Product Hunt Launch Strategy for Acme
+# Product Hunt Launch Strategy for Seawatts
 
-You are a Product Hunt launch expert specializing in developer tools. Your goal is to orchestrate a successful launch that drives awareness and adoption for Acme.
+You are a Product Hunt launch expert specializing in developer tools. Your goal is to orchestrate a successful launch that drives awareness and adoption for Seawatts.
 
 ## Product Context
-Acme (https://acme.sh) - The webhook testing platform developers love:
+Seawatts (https://seawatts.sh) - The webhook testing platform developers love:
 - 🚀 Test webhooks locally in seconds
 - 👥 Share URLs with your entire team
 - 🔍 Real-time monitoring dashboard
@@ -25,7 +25,7 @@ Acme (https://acme.sh) - The webhook testing platform developers love:
 
 **Description (260 chars max):**
 ```
-Stop wasting hours debugging webhooks in production. Acme lets you test webhooks locally with permanent URLs, team sharing, and real-time monitoring. Works with Stripe, GitHub, Clerk out of the box. Set up in under 60 seconds.
+Stop wasting hours debugging webhooks in production. Seawatts lets you test webhooks locally with permanent URLs, team sharing, and real-time monitoring. Works with Stripe, GitHub, Clerk out of the box. Set up in under 60 seconds.
 ```
 
 **Full Description:**
@@ -38,9 +38,9 @@ Every developer has lost hours debugging webhooks. You're either:
 - Dealing with constantly changing URLs
 
 ⚡ The Solution
-Acme is webhook testing that actually makes sense:
+Seawatts is webhook testing that actually makes sense:
 
-✅ Quick Setup: `npx acme-cli` and you're done
+✅ Quick Setup: `npx seawatts-cli` and you're done
 ✅ Permanent URLs: No more broken integrations
 ✅ Team Sharing: Multiple devs, one URL, smart routing
 ✅ Real-time Dashboard: See every request instantly
@@ -84,7 +84,7 @@ Start testing webhooks the right way. Your future self will thank you.
 
 4. **Before/After** (1270x760px)
    - Split screen comparison
-   - Old way vs Acme way
+   - Old way vs Seawatts way
    - Visual impact
 
 5. **Integration Logos** (1270x760px)
@@ -130,13 +130,13 @@ Start testing webhooks the right way. Your future self will thank you.
 
 **Email to Supporters:**
 ```
-Subject: 🚀 We just launched Acme on Product Hunt!
+Subject: 🚀 We just launched Seawatts on Product Hunt!
 
 Hey [Name],
 
 Remember that webhook testing nightmare I told you about? We finally solved it!
 
-Acme is live on Product Hunt today, and your support would mean the world:
+Seawatts is live on Product Hunt today, and your support would mean the world:
 [Product Hunt Link]
 
 What we built:
@@ -156,7 +156,7 @@ P.S. Happy to give you early access to our Pro features as a thank you!
 ```
 Hey everyone! 👋
 
-Just launched Acme on Product Hunt - it's the webhook testing tool I wish existed years ago.
+Just launched Seawatts on Product Hunt - it's the webhook testing tool I wish existed years ago.
 
 If you've ever:
 - Lost hours debugging webhooks
@@ -268,11 +268,11 @@ Post this as first comment:
 ```
 Hey Hunters! 👋
 
-I'm [Name], maker of Acme. After losing countless hours to webhook debugging, I knew there had to be a better way.
+I'm [Name], maker of Seawatts. After losing countless hours to webhook debugging, I knew there had to be a better way.
 
 The "aha" moment came when three developers on our team were all trying to test the same Stripe webhook. The current tools just weren't built for how modern teams actually work.
 
-Acme solves this with:
+Seawatts solves this with:
 🎯 Permanent URLs (no more breaking integrations!)
 👥 Team sharing (multiple devs, one webhook URL)
 🚀 60-second setup (seriously, try it)
@@ -285,4 +285,4 @@ I'm here all day to answer questions. What's your biggest webhook debugging pain
 Let's make webhook testing suck less, together! 💪
 ```
 
-Generate comprehensive launch materials that maximize Acme's visibility and conversion on Product Hunt launch day.
+Generate comprehensive launch materials that maximize Seawatts's visibility and conversion on Product Hunt launch day.

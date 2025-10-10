@@ -27,7 +27,7 @@ export function ComparisonsContent() {
       <section className="w-full py-12">
         <div className="container mx-auto px-6">
           {/* <SectionHeader
-            description="In-depth analysis of how Acme compares to each major competitor in the webhook testing space."
+            description="In-depth analysis of how Seawatts compares to each major competitor in the webhook testing space."
             title="Detailed Competitor Comparisons"
           /> */}
 

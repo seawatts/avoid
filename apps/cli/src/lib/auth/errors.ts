@@ -1,7 +1,7 @@
 import { debug } from '@seawatts/logger';
 import { capture, captureException } from '../posthog';
 
-const log = debug('acme:cli:auth-errors');
+const log = debug('seawatts:cli:auth-errors');
 
 export class AuthError extends Error {
   constructor(

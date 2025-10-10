@@ -5,7 +5,7 @@
   "changelog": [
     "@changesets/changelog-github",
     {
-      "repo": "acme/acme"
+      "repo": "seawatts/seawatts"
     }
   ],
   "commit": false,

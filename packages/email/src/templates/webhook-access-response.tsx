@@ -42,9 +42,9 @@ export const WebhookAccessResponseEmail = ({
         <Container style={container}>
           <Section style={logoContainer}>
             <Img
-              alt="Acme"
+              alt="Seawatts"
               height="36"
-              src="https://acme.sh/logo.png"
+              src="https://seawatts.sh/logo.png"
               width="120"
             />
           </Section>
@@ -111,8 +111,8 @@ export const WebhookAccessResponseEmail = ({
           <Hr style={hr} />
 
           <Text style={footerText}>
-            This is an automated message from Acme. Please do not reply to this
-            email.
+            This is an automated message from Seawatts. Please do not reply to
+            this email.
           </Text>
         </Container>
       </Body>

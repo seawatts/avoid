@@ -2,7 +2,7 @@ import { debug } from '@seawatts/logger';
 import { PostHog } from 'posthog-node';
 import { env } from '../env.client';
 
-const log = debug('acme:vscode:posthog');
+const log = debug('seawatts:vscode:posthog');
 
 // We'll initialize PostHog with configuration from the extension
 let posthog: PostHog | null = null;

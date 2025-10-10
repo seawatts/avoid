@@ -1,6 +1,6 @@
 # @seawatts/email
 
-Email sending package for Acme using Resend and React Email.
+Email sending package for Seawatts using Resend and React Email.
 
 ## Features
 
@@ -49,9 +49,9 @@ await emailClient.send({
     webhookName="Production Webhook"
     webhookId="wh_123"
     message="I need access for testing"
-    approveUrl="https://acme.sh/app/approve/123"
-    rejectUrl="https://acme.sh/app/reject/123"
-    dashboardUrl="https://acme.sh/app/dashboard"
+    approveUrl="https://seawatts.sh/app/approve/123"
+    rejectUrl="https://seawatts.sh/app/reject/123"
+    dashboardUrl="https://seawatts.sh/app/dashboard"
   />,
 });
 ```

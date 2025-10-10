@@ -3,7 +3,7 @@ import { createClient as createSupabaseClient } from '@supabase/supabase-js';
 import { env } from '../env.client';
 import type { Database } from './types';
 
-const log = debug('acme:lib:supabase:realtime-client');
+const log = debug('seawatts:lib:supabase:realtime-client');
 
 export function createClient(props: { authToken: string; url?: string }) {
   const { authToken, url } = props;

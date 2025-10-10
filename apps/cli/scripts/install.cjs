@@ -4,7 +4,7 @@
 // @ts-nocheck
 
 // Prevent recursive execution - check this first before doing anything else
-if (process.env.ACME_CLI_LAUNCHED === '1') {
+if (process.env.SEAWATTS_CLI_LAUNCHED === '1') {
   console.error('❌ Recursive execution detected. Exiting.');
   process.exit(1);
 }
@@ -19,8 +19,8 @@ const https = require('node:https');
 let version = 'unknown';
 
 // Check for environment variable override first (for testing)
-if (process.env.ACME_CLI_VERSION) {
-  version = process.env.ACME_CLI_VERSION;
+if (process.env.SEAWATTS_CLI_VERSION) {
+  version = process.env.SEAWATTS_CLI_VERSION;
   console.debug(`🔧 Using version from environment: ${version}`);
 } else {
   try {
@@ -33,8 +33,8 @@ if (process.env.ACME_CLI_VERSION) {
   }
 }
 
-const repo = 'acme-sh/acme';
-const cliName = 'acme';
+const repo = 'seawatts-sh/seawatts';
+const cliName = 'seawatts';
 const platformMap = { darwin: 'darwin', linux: 'linux', win32: 'win32' };
 const archMap = {
   arm64: 'arm64',
@@ -284,7 +284,7 @@ function runBinary() {
       setBinaryPermissions();
     }
 
-    const env = { ...process.env, ACME_CLI_LAUNCHED: '1' };
+    const env = { ...process.env, SEAWATTS_CLI_LAUNCHED: '1' };
     const result = spawnSync(binPath, process.argv.slice(2), {
       env,
       stdio: 'inherit',
@@ -320,7 +320,7 @@ function runBinary() {
 
 // If this script is being run directly (not required), download and run
 if (require.main === module) {
-  if (process.env.ACME_CLI_INSTALL_ONLY === '1') {
+  if (process.env.SEAWATTS_CLI_INSTALL_ONLY === '1') {
     downloadBinary(() => {
       console.log('✅ Binary installation complete');
     });

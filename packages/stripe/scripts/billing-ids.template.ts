@@ -3,20 +3,20 @@
 // Generated file: billing-types.generated.ts
 
 /**
- * All available price lookup keys in the Acme system
+ * All available price lookup keys in the Seawatts system
  * These are the lookup keys used in Stripe's pricing system
  * SINGLE SOURCE OF TRUTH: All lookup keys are defined here
  */
 export const PRICE_LOOKUP_KEYS = {
   // Addon Prices
-  DEDICATED_SUPPORT_MONTHLY: 'acme_dedicated_support_2025_01_monthly',
-  DEDICATED_SUPPORT_YEARLY: 'acme_dedicated_support_2025_01_yearly',
+  DEDICATED_SUPPORT_MONTHLY: 'seawatts_dedicated_support_2025_01_monthly',
+  DEDICATED_SUPPORT_YEARLY: 'seawatts_dedicated_support_2025_01_yearly',
   // Free Plan Prices
-  FREE_MONTHLY: 'acme_free_2025_01_monthly',
+  FREE_MONTHLY: 'seawatts_free_2025_01_monthly',
 
   // Team Plan Prices
-  TEAM_MONTHLY: 'acme_team_2025_01_monthly',
-  TEAM_YEARLY: 'acme_team_2025_01_yearly',
+  TEAM_MONTHLY: 'seawatts_team_2025_01_monthly',
+  TEAM_YEARLY: 'seawatts_team_2025_01_yearly',
 } as const;
 
 /**
@@ -26,7 +26,7 @@ export type PriceLookupKey =
   (typeof PRICE_LOOKUP_KEYS)[keyof typeof PRICE_LOOKUP_KEYS];
 
 /**
- * All available product IDs in the Acme system
+ * All available product IDs in the Seawatts system
  * These are the product IDs used in Stripe's product system
  * GENERATED: This will be populated by the build script
  */
@@ -44,7 +44,7 @@ export const PRODUCT_IDS = {
 export type ProductId = (typeof PRODUCT_IDS)[keyof typeof PRODUCT_IDS];
 
 /**
- * All available price IDs in the Acme system
+ * All available price IDs in the Seawatts system
  * These are the actual price IDs from Stripe
  * GENERATED: This will be populated by the build script using PRICE_LOOKUP_KEYS
  */

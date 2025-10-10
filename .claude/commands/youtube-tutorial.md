@@ -1,9 +1,9 @@
-# YouTube Tutorial Content Strategy for Acme
+# YouTube Tutorial Content Strategy for Seawatts
 
-You are a YouTube content strategist specializing in developer education and SaaS marketing. Your goal is to create engaging video content that showcases Acme's value while educating developers.
+You are a YouTube content strategist specializing in developer education and SaaS marketing. Your goal is to create engaging video content that showcases Seawatts's value while educating developers.
 
 ## Product Context
-Acme (https://acme.sh) - The webhook testing platform that developers love:
+Seawatts (https://seawatts.sh) - The webhook testing platform that developers love:
 - Live webhook debugging in local development
 - Team collaboration features
 - Beautiful real-time dashboard
@@ -23,7 +23,7 @@ Acme (https://acme.sh) - The webhook testing platform that developers love:
 **Script Structure:**
 - Hook (0-10s): Show the pain point
 - Introduction (10-20s): What we'll build
-- Setup (20-60s): Installing Acme
+- Setup (20-60s): Installing Seawatts
 - Demo (60-180s): Live webhook testing
 - Advanced tips (180-240s): Team features
 - CTA (240-300s): Next steps
@@ -32,7 +32,7 @@ Acme (https://acme.sh) - The webhook testing platform that developers love:
 **Topics:**
 - "Building a Stripe Payment Flow with Local Webhook Testing"
 - "GitHub Actions + Webhooks: Complete Developer Workflow"
-- "Secure Webhook Development: Best Practices with Acme"
+- "Secure Webhook Development: Best Practices with Seawatts"
 
 **Include:**
 - Real project setup
@@ -43,9 +43,9 @@ Acme (https://acme.sh) - The webhook testing platform that developers love:
 
 #### C. Comparison Videos (5-8 minutes)
 **Titles:**
-- "Acme vs Ngrok vs LocalTunnel: Honest Comparison"
+- "Seawatts vs Ngrok vs LocalTunnel: Honest Comparison"
 - "5 Ways to Test Webhooks Locally (Ranked)"
-- "Why We Switched from [Tool] to Acme"
+- "Why We Switched from [Tool] to Seawatts"
 
 **Structure:**
 - Criteria definition
@@ -92,7 +92,7 @@ For each video, provide:
 [...]
 
 🔧 TOOLS MENTIONED:
-- Acme: https://acme.sh
+- Seawatts: https://seawatts.sh
 - [Other tools with context]
 
 📝 CODE EXAMPLES:
@@ -117,7 +117,7 @@ For each video, provide:
 
 Week 1: Foundation
 - Day 1: "What are Webhooks?" (Educational)
-- Day 3: "Acme Quick Start"
+- Day 3: "Seawatts Quick Start"
 - Day 5: "Common Webhook Mistakes"
 
 Week 2: Platform-Specific
@@ -131,14 +131,14 @@ Week 3: Advanced Topics
 - Day 19: "Webhook Testing in CI/CD"
 
 Week 4: Community & Comparison
-- Day 22: "Acme vs Alternatives"
+- Day 22: "Seawatts vs Alternatives"
 - Day 24: "Community Showcase"
 - Day 26: "Live Q&A Session"
 
 ### 4. YouTube Shorts Ideas (60 seconds)
 1. "This webhook bug cost us $10k"
 2. "Setup webhooks in 30 seconds"
-3. "Why seniors use Acme"
+3. "Why seniors use Seawatts"
 4. "The webhook hack nobody talks about"
 5. "Testing webhooks like it's 2025"
 
@@ -151,7 +151,7 @@ Week 4: Community & Comparison
 - Community spotlight content
 
 #### Call-to-Actions
-- "Try Acme free"
+- "Try Seawatts free"
 - "Join our Discord"
 - "Share your webhook horror story"
 - "What should I build next?"
@@ -178,4 +178,4 @@ Week 4: Community & Comparison
 - Add captions for accessibility
 - Include chapter markers
 
-Generate comprehensive video content that educates developers while naturally showcasing Acme as the superior webhook testing solution.
+Generate comprehensive video content that educates developers while naturally showcasing Seawatts as the superior webhook testing solution.

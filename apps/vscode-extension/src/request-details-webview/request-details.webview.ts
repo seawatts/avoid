@@ -12,7 +12,7 @@ interface RequestData {
 export class RequestDetailsWebviewProvider
   implements vscode.WebviewViewProvider
 {
-  public static readonly viewType = 'acme.requestDetails';
+  public static readonly viewType = 'seawatts.requestDetails';
   private _view?: vscode.WebviewView;
   private _disposables: vscode.Disposable[] = [];
   private _lastHtml?: string;

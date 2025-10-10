@@ -2,7 +2,7 @@ import os from 'node:os';
 import { debug } from '@seawatts/logger';
 import { $ } from 'zx';
 
-const log = debug('acme:cli:get-process-id');
+const log = debug('seawatts:cli:get-process-id');
 
 interface ProcessInfo {
   pid: number;

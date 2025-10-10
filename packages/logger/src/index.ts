@@ -1,15 +1,15 @@
-import { AcmeLogger } from './logger';
+import { SeawattsLogger } from './logger';
 
 // Create and export a default logger instance
-export const defaultLogger = new AcmeLogger({
-  defaultNamespace: 'acme',
+export const defaultLogger = new SeawattsLogger({
+  defaultNamespace: 'seawatts',
 });
 
 // Export a debug function that uses the default logger
 export const debug = (namespace: string) => defaultLogger.debug(namespace);
 
 // Export everything else
-export { AcmeLogger };
+export { SeawattsLogger };
 export type { LoggerProps } from './logger';
 
 // Enable debug namespaces based on environment variable (similar to debug package)

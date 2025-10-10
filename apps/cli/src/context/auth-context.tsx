@@ -5,7 +5,7 @@ import { useAuthStore } from '~/stores/auth-store';
 import { useCliStore } from '~/stores/cli-store';
 import { useRouterStore } from '~/stores/router-store';
 
-const log = debug('acme:cli:auth-context');
+const log = debug('seawatts:cli:auth-context');
 
 export function AuthProvider({ children }: PropsWithChildren) {
   const validateSession = useAuthStore.use.validateSession();

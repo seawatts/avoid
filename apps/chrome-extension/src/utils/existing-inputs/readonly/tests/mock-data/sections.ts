@@ -25,7 +25,7 @@ export const mockReadOnlySections = {
           <div data-q="Company URL, if any">
             <div class="text-[16px] font-bold">Company URL, if any</div>
             <div class="!mt-4">
-              <a href="https://acme.ai" class="text-yc-orange text-[16px] font-semibold">https://acme.ai</a>
+              <a href="https://seawatts.ai" class="text-yc-orange text-[16px] font-semibold">https://seawatts.ai</a>
             </div>
           </div>
         </div>
@@ -48,7 +48,7 @@ export const mockReadOnlySections = {
         label: 'Company URL, if any',
         section: 'Company',
         url: 'https://apply.ycombinator.com/application#url',
-        value: 'https://acme.ai',
+        value: 'https://seawatts.ai',
       },
     ],
   },

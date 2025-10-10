@@ -6,7 +6,7 @@ import { useEffect, useRef } from 'react';
 import { createStore } from 'zustand';
 import { useDimensions } from '~/hooks/use-dimensions';
 
-const log = debug('acme:cli:tabs');
+const log = debug('seawatts:cli:tabs');
 
 export type TabsTriggerProps = {
   value: string;

@@ -68,7 +68,7 @@ if (!skipInstallUpdate && !isVsCodeExtension) {
 }
 
 // Get all @seawatts/* dependencies from both dependencies and devDependencies
-const acmeDeps = [
+const seawattsDeps = [
   ...Object.keys(packageJson.dependencies || {}).filter(
     (dep) => dep.startsWith('@seawatts/') && dep !== '@seawatts/client',
   ),
@@ -78,7 +78,7 @@ const acmeDeps = [
 ];
 
 // Remove workspace dependencies from both sections
-for (const dep of acmeDeps) {
+for (const dep of seawattsDeps) {
   delete packageJson.dependencies?.[dep];
   delete packageJson.devDependencies?.[dep];
 }
@@ -145,8 +145,8 @@ if (!isVsCodeExtension) {
 }
 
 console.log(
-  `✅ Removed ${acmeDeps.length} workspace dependencies from package.json:`,
-  acmeDeps.join(', '),
+  `✅ Removed ${seawattsDeps.length} workspace dependencies from package.json:`,
+  seawattsDeps.join(', '),
 );
 
 process.exit(0);

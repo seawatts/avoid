@@ -67,10 +67,10 @@ export function FirstBentoAnimation() {
       <div className="max-w-md w-full mx-auto bg-background border border-border rounded-xl shadow-lg p-0 overflow-hidden">
         <div className="px-4 pt-4 pb-2">
           <div className="font-mono text-xs text-muted-foreground">
-            $ acme listen
+            $ seawatts listen
           </div>
           <div className="font-mono text-xs text-primary">
-            https://acme.sh/wh_AH21J
+            https://seawatts.sh/wh_AH21J
           </div>
         </div>
         <div className="w-full px-2 pb-2">

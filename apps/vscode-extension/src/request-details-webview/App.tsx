@@ -251,9 +251,9 @@ function MainView() {
         )}
       </div>
       {/* Main Content */}
-      <h1>Acme API</h1>
+      <h1>Seawatts API</h1>
       <div className="content">
-        <p>Welcome to the Acme VS Code extension!</p>
+        <p>Welcome to the Seawatts VS Code extension!</p>
         <div className="card">
           <button onClick={() => setCount((count) => count + 1)} type="button">
             Count is {count}

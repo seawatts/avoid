@@ -137,12 +137,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       {
         icon: IconBrandGithub,
         title: 'GitHub',
-        url: 'https://github.com/acme-sh/acme',
+        url: 'https://github.com/seawatts-sh/seawatts',
       },
       {
         icon: IconCodeDots,
         title: 'Docs',
-        url: 'https://docs.acme.sh',
+        url: 'https://docs.seawatts.sh',
       },
       // {
       //   icon: IconSearch,
@@ -171,7 +171,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 metric="navigation_logo_clicked"
               >
                 <Icons.logo className="size-10" />
-                <span className="text-base font-semibold">acme AI</span>
+                <span className="text-base font-semibold">seawatts AI</span>
               </MetricLink>
             </SidebarMenuButton>
           </SidebarMenuItem>

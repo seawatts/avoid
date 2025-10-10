@@ -38,7 +38,7 @@ export const createCheckoutSessionAction = action.action(async () => {
 
   // Get the origin URL
   const headersList = await headers();
-  const origin = headersList.get('origin') || 'https://acme.sh';
+  const origin = headersList.get('origin') || 'https://seawatts.sh';
 
   // Create or get Stripe customer
   let customerId = org.stripeCustomerId;
@@ -107,7 +107,7 @@ export const createBillingPortalSessionAction = action.action(async () => {
 
   // Get the origin URL
   const headersList = await headers();
-  const origin = headersList.get('origin') || 'https://acme.sh';
+  const origin = headersList.get('origin') || 'https://seawatts.sh';
 
   // Create billing portal session
   const session = await createBillingPortalSession({

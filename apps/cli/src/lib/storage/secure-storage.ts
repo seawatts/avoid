@@ -2,8 +2,8 @@ import { debug } from '@seawatts/logger';
 import keytar from 'keytar';
 import type { StorageInterface } from './storage-interface';
 
-const log = debug('acme:cli:secure-storage');
-const SERVICE_NAME = 'acme-cli';
+const log = debug('seawatts:cli:secure-storage');
+const SERVICE_NAME = 'seawatts-cli';
 
 interface StorageData {
   [key: string]: string | null;

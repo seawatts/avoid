@@ -61,7 +61,7 @@ export default function OnboardingSuccessPage() {
     );
   }
 
-  const webhookUrl = `${env.NEXT_PUBLIC_WEBHOOK_BASE_URL || env.NEXT_PUBLIC_API_URL || 'https://acme.sh'}/${orgName}/${webhookName}`;
+  const webhookUrl = `${env.NEXT_PUBLIC_WEBHOOK_BASE_URL || env.NEXT_PUBLIC_API_URL || 'https://seawatts.sh'}/${orgName}/${webhookName}`;
 
   return (
     <div className="flex min-h-[calc(100vh-12rem)] items-center justify-center p-4">

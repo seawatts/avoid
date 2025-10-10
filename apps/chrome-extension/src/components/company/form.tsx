@@ -157,7 +157,7 @@ export function CompanyForm() {
       </div>
       <NoCompany>
         {/* <Button type="submit" disabled={createCompany.isPending}>
-          <img src={logoIcon} alt="Acme" className="mb-0.5 mr-2 size-5" />
+          <img src={logoIcon} alt="Seawatts" className="mb-0.5 mr-2 size-5" />
           {createCompany.isPending && <Icons.Spinner className="mr-2" />}
           {createCompany.isPending ? 'Creating...' : 'Create'}
         </Button> */}

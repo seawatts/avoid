@@ -1,6 +1,6 @@
 # @seawatts/analytics
 
-Analytics package for Acme with PostHog integration and Next.js components.
+Analytics package for Seawatts with PostHog integration and Next.js components.
 
 ## Components
 

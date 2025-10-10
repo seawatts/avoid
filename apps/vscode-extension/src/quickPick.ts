@@ -32,13 +32,13 @@ export class WebhookEventQuickPick {
         });
       } else if (this.authStore.isSignedIn) {
         items.push({
-          description: 'Sign out of your Acme account',
+          description: 'Sign out of your Seawatts account',
           detail: `Currently signed in as ${this.authStore.user?.email ?? 'User'}`,
           label: '$(sign-out) Sign Out',
         });
       } else {
         items.push({
-          description: 'Sign in to your Acme account',
+          description: 'Sign in to your Seawatts account',
           detail: 'Sign in to access your webhook events',
           label: '$(sign-in) Sign In',
         });
@@ -64,7 +64,7 @@ export class WebhookEventQuickPick {
     // Add settings item
     items.push({
       description: 'Open settings panel',
-      detail: 'Configure Acme extension settings',
+      detail: 'Configure Seawatts extension settings',
       label: '$(settings) Configure Settings',
     });
 
@@ -72,27 +72,29 @@ export class WebhookEventQuickPick {
       matchOnDescription: true,
       matchOnDetail: true,
       placeHolder: 'Select an action',
-      title: 'Acme Quick Actions',
+      title: 'Seawatts Quick Actions',
     });
 
     if (selected) {
       switch (selected.label) {
         case '$(sign-in) Sign In':
-          await vscode.commands.executeCommand('acme.signIn');
+          await vscode.commands.executeCommand('seawatts.signIn');
           break;
         case '$(sign-out) Sign Out':
-          await vscode.commands.executeCommand('acme.signOut');
+          await vscode.commands.executeCommand('seawatts.signOut');
           break;
         case '$(add) Add New Webhook Event':
-          await vscode.commands.executeCommand('acme.addWebhookEvent');
+          await vscode.commands.executeCommand('seawatts.addWebhookEvent');
           break;
         case '$(refresh) Refresh Events':
-          await vscode.commands.executeCommand('acme.webhookEvents.refresh');
+          await vscode.commands.executeCommand(
+            'seawatts.webhookEvents.refresh',
+          );
           break;
         case '$(settings) Configure Settings':
           await vscode.commands.executeCommand(
             'workbench.action.openSettings',
-            '@ext:acme',
+            '@ext:seawatts',
           );
           break;
       }

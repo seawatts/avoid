@@ -20,8 +20,8 @@ export interface ParsedWebhookUrl {
  * @example
  * ```typescript
  * // Production URL
- * parseWebhookUrl('https://acme.sh/my-org/my-webhook')
- * // Returns: { orgName: 'my-org', webhookName: 'my-webhook', baseUrl: 'https://acme.sh', fullUrl: 'https://acme.sh/my-org/my-webhook' }
+ * parseWebhookUrl('https://seawatts.sh/my-org/my-webhook')
+ * // Returns: { orgName: 'my-org', webhookName: 'my-webhook', baseUrl: 'https://seawatts.sh', fullUrl: 'https://seawatts.sh/my-org/my-webhook' }
  *
  * // Localhost URL
  * parseWebhookUrl('http://localhost:3000/my-org/my-webhook')
@@ -96,7 +96,7 @@ export function isLocalhostUrl(webhookUrl: string): boolean {
 /**
  * Creates a webhook URL from its components
  *
- * @param baseUrl - The base URL (e.g., 'https://acme.sh' or 'http://localhost:3000')
+ * @param baseUrl - The base URL (e.g., 'https://seawatts.sh' or 'http://localhost:3000')
  * @param orgName - The organization name
  * @param webhookName - The webhook name
  * @returns The complete webhook URL

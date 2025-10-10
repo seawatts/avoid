@@ -30,7 +30,7 @@ export function EvaluateApplicationCard() {
         >
           <img
             src={logoIcon}
-            alt="Acme"
+            alt="Seawatts"
             className="mb-0.5 mr-2 size-5"
           />
           Vibe-check

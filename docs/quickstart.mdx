@@ -1,16 +1,16 @@
 ---
 title: 'Quickstart'
-description: 'Get started with Acme in under 5 minutes'
+description: 'Get started with Seawatts in under 5 minutes'
 ---
 
 ## Quick Start Steps
 
 <Steps>
   <Step title="Installation">
-    Install Acme using your preferred package manager:
+    Install Seawatts using your preferred package manager:
     ```bash
     # Using Homebrew
-    brew install acme
+    brew install seawatts
 
     # Using npm
     npm install -g @seawatts/cli
@@ -45,26 +45,26 @@ description: 'Get started with Acme in under 5 minutes'
     ```
     This will:
     - Open your browser for authentication
-    - Create an `acme.config.yaml` file
+    - Create an `seawatts.config.yaml` file
     - Configure your webhook endpoints
   </Step>
   <Step title="Start Your Webhook">
     Start the webhook to begin receiving webhooks:
     ```bash
     # Basic usage
-    acme listen
+    seawatts listen
 
     # With custom client ID
-    acme listen --client-id your-name
+    seawatts listen --client-id your-name
 
     # With debug logging
-    acme listen --debug
+    seawatts listen --debug
     ```
   </Step>
   <Step title="Configure Your Webhook Provider">
-    Set up your webhook provider with the provided Acme URL:
+    Set up your webhook provider with the provided Seawatts URL:
     ```bash
-    https://acme.sh/wh_your_webhook_id
+    https://seawatts.sh/wh_your_webhook_id
     ```
   </Step>
 </Steps>
@@ -72,7 +72,7 @@ description: 'Get started with Acme in under 5 minutes'
 ## Configuration
 
 ### Basic Configuration
-Create an `acme.config.yaml` file in your project root:
+Create an `seawatts.config.yaml` file in your project root:
 
 ```yaml
 webhookId: "wh_your_webhook_id"
@@ -110,27 +110,27 @@ WEBHOOK_PING=true
 ### Stripe
 1. Go to your [Stripe Dashboard](https://dashboard.stripe.com/webhooks)
 2. Click "Add Endpoint"
-3. Enter your Acme URL:
+3. Enter your Seawatts URL:
 ```bash
-https://acme.sh/wh_your_webhook_id
+https://seawatts.sh/wh_your_webhook_id
 ```
 
 ### GitHub
 1. Go to your repository settings
 2. Navigate to "Webhooks"
 3. Click "Add webhook"
-4. Enter your Acme URL:
+4. Enter your Seawatts URL:
 ```bash
-https://acme.sh/wh_your_webhook_id
+https://seawatts.sh/wh_your_webhook_id
 ```
 
 ### Clerk
 1. Go to your [Clerk Dashboard](https://dashboard.clerk.dev)
 2. Navigate to "Webhooks"
 3. Click "Add Endpoint"
-4. Enter your Acme URL:
+4. Enter your Seawatts URL:
 ```bash
-https://acme.sh/wh_your_webhook_id
+https://seawatts.sh/wh_your_webhook_id
 ```
 
 ## Team Development
@@ -175,7 +175,7 @@ delivery:
 
 ## Authentication
 
-Authentication data is stored locally at `~/.acme/auth-storage.json`:
+Authentication data is stored locally at `~/.seawatts/auth-storage.json`:
 - Authentication state
 - User tokens
 - Organization ID
@@ -183,7 +183,7 @@ Authentication data is stored locally at `~/.acme/auth-storage.json`:
 
 To clear auth data:
 ```bash
-rm ~/.acme/auth-storage.json
+rm ~/.seawatts/auth-storage.json
 ```
 
 ## Next Steps
@@ -194,7 +194,7 @@ rm ~/.acme/auth-storage.json
     icon="users"
     href="/team-setup"
   >
-    Learn how to configure Acme for your entire team
+    Learn how to configure Seawatts for your entire team
   </Card>
   <Card
     title="Dashboard"
@@ -215,12 +215,12 @@ rm ~/.acme/auth-storage.json
     icon="shield"
     href="/security"
   >
-    Learn about Acme's security features and best practices
+    Learn about Seawatts's security features and best practices
   </Card>
 </CardGroup>
 
 ## Support
 
-- [Documentation](https://docs.acme.sh)
-- [GitHub Issues](https://github.com/acme-sh/acme/issues)
-- [Discord Community](https://discord.gg/acme)
+- [Documentation](https://docs.seawatts.sh)
+- [GitHub Issues](https://github.com/seawatts-sh/seawatts/issues)
+- [Discord Community](https://discord.gg/seawatts)

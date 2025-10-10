@@ -242,11 +242,11 @@ export function OnboardingForm({
   // Live URL preview
   const webhookUrl = (() => {
     // For local development, use NEXT_PUBLIC_API_URL (localhost:3000)
-    // For production, use NEXT_PUBLIC_WEBHOOK_BASE_URL or fallback to acme.sh
+    // For production, use NEXT_PUBLIC_WEBHOOK_BASE_URL or fallback to seawatts.sh
     const baseUrl =
       env.NEXT_PUBLIC_WEBHOOK_BASE_URL ||
       env.NEXT_PUBLIC_API_URL ||
-      'https://acme.sh';
+      'https://seawatts.sh';
     if (!orgName) return `${baseUrl}/{org-name}/{webhook-name}`;
     if (!webhookName) return `${baseUrl}/${orgName}/{webhook-name}`;
     return `${baseUrl}/${orgName}/${webhookName}`;
@@ -439,7 +439,7 @@ export function OnboardingForm({
     <div className="flex min-h-[calc(100vh-12rem)] items-center justify-center p-4">
       <Card className="w-full max-w-2xl">
         <CardHeader>
-          <CardTitle className="text-2xl">Welcome to acme! 🎉</CardTitle>
+          <CardTitle className="text-2xl">Welcome to seawatts! 🎉</CardTitle>
           <CardDescription>
             Let's set up your webhook endpoint. Choose names for your
             organization and webhook.

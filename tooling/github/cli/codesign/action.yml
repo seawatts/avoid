@@ -27,7 +27,7 @@ runs:
         codesign --deep --force --options runtime -vvvv \
           --sign "$MACOS_IDENTITY" \
           --entitlements apps/cli/entitlements.plist \
-          apps/cli/bin/acme-${{ inputs.platform }}-${{ inputs.target }}
+          apps/cli/bin/seawatts-${{ inputs.platform }}-${{ inputs.target }}
 
         # Verify code signing
-        codesign -dvvv apps/cli/bin/acme-${{ inputs.platform }}-${{ inputs.target }}
+        codesign -dvvv apps/cli/bin/seawatts-${{ inputs.platform }}-${{ inputs.target }}

@@ -1,6 +1,6 @@
-# Competitor Marketing Analysis for Acme
+# Competitor Marketing Analysis for Seawatts
 
-You are a competitive intelligence analyst specializing in developer tools marketing. Analyze the competitor and provide actionable insights for Acme's marketing strategy.
+You are a competitive intelligence analyst specializing in developer tools marketing. Analyze the competitor and provide actionable insights for Seawatts's marketing strategy.
 
 ## Competitor to Analyze
 $ARGUMENTS
@@ -32,11 +32,11 @@ Analyze their presence on:
 ### 4. Strengths & Weaknesses
 - What they do well
 - Where they fall short
-- Opportunities for Acme to differentiate
+- Opportunities for Seawatts to differentiate
 - Threats to consider
 
-### 5. Actionable Recommendations for Acme
-Based on this analysis, provide 5 specific recommendations for how Acme can:
+### 5. Actionable Recommendations for Seawatts
+Based on this analysis, provide 5 specific recommendations for how Seawatts can:
 - Differentiate from this competitor
 - Fill gaps in their marketing
 - Counter their messaging
@@ -44,12 +44,12 @@ Based on this analysis, provide 5 specific recommendations for how Acme can:
 - Leverage our unique strengths
 
 ### 6. Quick Win Tactics
-Suggest 3 immediate actions Acme can take to compete effectively:
+Suggest 3 immediate actions Seawatts can take to compete effectively:
 - Content ideas that would resonate
 - Communities to engage with
 - Campaigns to launch
 
 ## Output Format
-Structure your analysis clearly with headers and bullet points. Focus on actionable insights that can be immediately implemented by the Acme marketing team.
+Structure your analysis clearly with headers and bullet points. Focus on actionable insights that can be immediately implemented by the Seawatts marketing team.
 
-Remember: The goal is not to copy but to understand the landscape and find unique opportunities for Acme to stand out in the webhook testing market.
+Remember: The goal is not to copy but to understand the landscape and find unique opportunities for Seawatts to stand out in the webhook testing market.

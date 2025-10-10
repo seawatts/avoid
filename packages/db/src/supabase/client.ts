@@ -5,7 +5,7 @@ import { useEffect, useMemo } from 'react';
 import { env } from '../env.client';
 import type { Database } from './types';
 
-const log = debug('acme:lib:supabase:client');
+const log = debug('seawatts:lib:supabase:client');
 
 export const useClient = () => {
   const { session } = useSession();

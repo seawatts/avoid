@@ -19,7 +19,7 @@ export const mockSections = {
         </div>
         <div id="describe" class="q">
           <label><span>Describe what your company does</span></label>
-          <input type="text" value="AI acme helping startups with fundraising" />
+          <input type="text" value="AI seawatts helping startups with fundraising" />
         </div>
       </div>
     `,
@@ -34,7 +34,7 @@ export const mockSections = {
         label: 'Describe what your company does',
         section: 'Company',
         url: 'https://apply.ycombinator.com/application#describe',
-        value: 'AI acme helping startups with fundraising',
+        value: 'AI seawatts helping startups with fundraising',
       },
     ],
   },

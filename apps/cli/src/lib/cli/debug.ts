@@ -1,6 +1,6 @@
 import { debug, defaultLogger } from '@seawatts/logger';
 
-const log = debug('acme:cli');
+const log = debug('seawatts:cli');
 
 // Static import that can be tree-shaken in production builds
 let connectToDevTools: ((options?: unknown) => void) | null = null;
@@ -32,7 +32,7 @@ export async function setupDebug({
 }): Promise<void> {
   if (!isDebugEnabled) return;
 
-  defaultLogger.enableNamespace('acme:*');
+  defaultLogger.enableNamespace('seawatts:*');
   log('Debug logging enabled');
 
   // Only attempt to connect to devtools if we have it available and we're not in a compiled binary

@@ -4,8 +4,8 @@ import path from 'node:path';
 import { debug } from '@seawatts/logger';
 import type { StorageInterface } from './storage-interface';
 
-const log = debug('acme:cli:file-storage');
-const STORAGE_DIR = path.join(os.homedir(), '.acme');
+const log = debug('seawatts:cli:file-storage');
+const STORAGE_DIR = path.join(os.homedir(), '.seawatts');
 
 interface StorageData {
   [key: string]: string;

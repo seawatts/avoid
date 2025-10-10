@@ -3,7 +3,7 @@ import { Text } from 'ink';
 import type { FC } from 'react';
 import { matchRoute, useRouterStore } from '~/stores/router-store';
 
-const log = debug('acme:cli:router');
+const log = debug('seawatts:cli:router');
 
 // Route rendering component
 export const Router: FC = () => {

@@ -29,7 +29,7 @@ export function AuthCodeContent() {
         <CardTitle>Grant Access</CardTitle>
         <CardDescription>
           Select or create an organization, then click the button below to
-          authenticate with acme.
+          authenticate with seawatts.
         </CardDescription>
       </CardHeader>
       <CardContent className="flex flex-col gap-4">

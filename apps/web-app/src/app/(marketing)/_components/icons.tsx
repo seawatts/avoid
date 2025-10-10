@@ -1318,7 +1318,7 @@ export const Icons = {
   ),
   logo: ({ className }: { className?: string }) => (
     <Image
-      alt="Acme Logo"
+      alt="Seawatts Logo"
       className={cn('size-4', className)}
       height={24}
       src="/logo.svg"

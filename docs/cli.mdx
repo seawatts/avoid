@@ -1,16 +1,16 @@
 ---
 title: 'CLI Reference'
-description: 'Command line interface for Acme'
+description: 'Command line interface for Seawatts'
 ---
 
 ## Installation
 
-Install the Acme CLI globally using your preferred package manager:
+Install the Seawatts CLI globally using your preferred package manager:
 
 <CodeGroup>
 
 ```bash homebrew
-brew install acme
+brew install seawatts
 ```
 
 ```bash npm
@@ -44,12 +44,12 @@ npx @seawatts/cli init
 
 2. Start the webhook:
 ```bash
-acme listen
+seawatts listen
 ```
 
 3. Use the generated webhook URL in your provider's settings:
 ```bash
-https://acme.sh/wh_your_webhook_id
+https://seawatts.sh/wh_your_webhook_id
 ```
 
 ## Core Commands
@@ -57,16 +57,16 @@ https://acme.sh/wh_your_webhook_id
 ### Start Webhook
 ```bash
 # Basic usage
-acme listen
+seawatts listen
 
 # With custom client ID
-acme listen --client-id dev-1
+seawatts listen --client-id dev-1
 
 # With debug logging
-acme listen --debug
+seawatts listen --debug
 
 # Redirect to remote URL
-acme --redirect https://api.example.com
+seawatts --redirect https://api.example.com
 ```
 
 ### Initialize Project
@@ -102,7 +102,7 @@ deno run --allow-net --allow-read --allow-write npm:@seawatts/cli init
 ## Configuration
 
 ### Configuration File
-Create an `acme.config.yaml` in your project root:
+Create an `seawatts.config.yaml` in your project root:
 
 ```yaml
 webhookId: "wh_your_webhook_id"
@@ -163,18 +163,18 @@ The `--ping` option configures connection health monitoring:
 
 ```bash
 # Disable health checks
-acme listen --ping false
+seawatts listen --ping false
 
 # Check specific port
-acme listen --ping 3001
+seawatts listen --ping 3001
 
 # Check specific URL
-acme listen --ping https://api.example.com/health
+seawatts listen --ping https://api.example.com/health
 ```
 
 ## Authentication
 
-Authentication data is stored locally at `~/.acme/auth-storage.json`:
+Authentication data is stored locally at `~/.seawatts/auth-storage.json`:
 - Authentication state
 - User tokens
 - Organization ID
@@ -182,7 +182,7 @@ Authentication data is stored locally at `~/.acme/auth-storage.json`:
 
 To clear auth data:
 ```bash
-rm ~/.acme/auth-storage.json
+rm ~/.seawatts/auth-storage.json
 ```
 
 ## Exit Codes
@@ -200,28 +200,28 @@ rm ~/.acme/auth-storage.json
 ### Basic Development Setup
 ```bash
 # Start webhook on default port
-acme listen --webhook-id your_webhook_id
+seawatts listen --webhook-id your_webhook_id
 ```
 
 ### Team Development
 ```bash
 # Developer 1
-acme listen --client-id dev1 --webhook-id team_webhook_id
+seawatts listen --client-id dev1 --webhook-id team_webhook_id
 
 # Developer 2
-acme listen --client-id dev2 --webhook-id team_webhook_id
+seawatts listen --client-id dev2 --webhook-id team_webhook_id
 ```
 
 ### Production Redirect
 ```bash
 # Redirect to production API
-acme --redirect https://api.production.com --webhook-id prod_webhook_id
+seawatts --redirect https://api.production.com --webhook-id prod_webhook_id
 ```
 
 ### Custom Health Checks
 ```bash
 # Check specific health endpoint
-acme listen --ping https://localhost:3000/health
+seawatts listen --ping https://localhost:3000/health
 ```
 
 ## Best Practices
@@ -242,15 +242,15 @@ acme listen --ping https://localhost:3000/health
    - Ensure the port is available
 
 2. **Authentication Problems**
-   - Clear auth data: `rm ~/.acme/auth-storage.json`
+   - Clear auth data: `rm ~/.seawatts/auth-storage.json`
    - Re-run initialization: `npx @seawatts/cli init`
 
 3. **Debug Mode**
-   - Enable debug logging: `acme listen --debug`
+   - Enable debug logging: `seawatts listen --debug`
    - Check the debug panel for detailed information
 
 ## Support
 
-- [Documentation](https://docs.acme.sh)
-- [GitHub Issues](https://github.com/acme-sh/acme/issues)
-- [Discord Community](https://discord.gg/acme)
+- [Documentation](https://docs.seawatts.sh)
+- [GitHub Issues](https://github.com/seawatts-sh/seawatts/issues)
+- [Discord Community](https://discord.gg/seawatts)

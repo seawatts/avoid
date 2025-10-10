@@ -6,7 +6,7 @@ export async function fetchAndStream<T>(
 ): Promise<T | undefined> {
   const apiUrl =
     process.env.NODE_ENV === 'production'
-      ? `https://app.acme.ai${apiEndpoint}`
+      ? `https://app.seawatts.ai${apiEndpoint}`
       : `http://localhost:3000${apiEndpoint}`;
 
   try {

@@ -25,7 +25,7 @@ export async function parseArgs(): Promise<CliState> {
     })
     .command(
       'init',
-      'Authenticate with Acme and set up your project. Creates an acme.yaml config and guides you through connecting your webhook provider.',
+      'Authenticate with Seawatts and set up your project. Creates an seawatts.yaml config and guides you through connecting your webhook provider.',
       {
         code: {
           alias: 'c',
@@ -58,11 +58,11 @@ export async function parseArgs(): Promise<CliState> {
     )
     .command(
       'listen',
-      'Start the Acme relay to receive and forward webhooks to your local server. Keeps the CLI running and displays incoming requests.',
+      'Start the Seawatts relay to receive and forward webhooks to your local server. Keeps the CLI running and displays incoming requests.',
       {
         config: {
           alias: 'c',
-          description: 'Path to a custom acme.yaml configuration file.',
+          description: 'Path to a custom seawatts.yaml configuration file.',
           type: 'string',
         },
         path: {
@@ -77,7 +77,7 @@ export async function parseArgs(): Promise<CliState> {
     )
     .command(
       'login',
-      'Authenticate your CLI with your Acme account. Opens a browser for login.',
+      'Authenticate your CLI with your Seawatts account. Opens a browser for login.',
       {
         code: {
           alias: 'c',
@@ -92,7 +92,7 @@ export async function parseArgs(): Promise<CliState> {
     )
     .help()
     .alias('help', 'h')
-    .scriptName('acme')
+    .scriptName('seawatts')
     .parseAsync();
 
   // biome-ignore lint/suspicious/noExplicitAny: args doesn't have a type

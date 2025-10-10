@@ -1,6 +1,6 @@
 ---
 title: 'Webhook Providers'
-description: 'Set up Acme with popular webhook providers'
+description: 'Set up Seawatts with popular webhook providers'
 ---
 
 ## Stripe
@@ -9,9 +9,9 @@ description: 'Set up Acme with popular webhook providers'
 
 1. Go to your [Stripe Dashboard](https://dashboard.stripe.com/webhooks)
 2. Click "Add Endpoint"
-3. Enter your Acme URL:
+3. Enter your Seawatts URL:
 ```bash
-https://acme.sh/t_123?e=stripe
+https://seawatts.sh/t_123?e=stripe
 ```
 4. Select the events you want to receive
 5. Save the endpoint
@@ -19,11 +19,11 @@ https://acme.sh/t_123?e=stripe
 ### Local Development
 
 ```bash
-# Start Acme
-acme listen
+# Start Seawatts
+seawatts listen
 
 # Configure your application
-STRIPE_WEBHOOK_URL=https://acme.sh/t_123?e=stripe
+STRIPE_WEBHOOK_URL=https://seawatts.sh/t_123?e=stripe
 ```
 
 ### Event Types
@@ -40,9 +40,9 @@ Stripe sends webhook events for various actions. Common events include:
 1. Go to your repository settings
 2. Navigate to "Webhooks"
 3. Click "Add webhook"
-4. Enter your Acme URL:
+4. Enter your Seawatts URL:
 ```bash
-https://acme.sh/t_123?e=github
+https://seawatts.sh/t_123?e=github
 ```
 5. Choose your events
 6. Set content type to `application/json`
@@ -51,11 +51,11 @@ https://acme.sh/t_123?e=github
 ### Local Development
 
 ```bash
-# Start Acme
-acme listen
+# Start Seawatts
+seawatts listen
 
 # Configure your application
-GITHUB_WEBHOOK_URL=https://acme.sh/t_123?e=github
+GITHUB_WEBHOOK_URL=https://seawatts.sh/t_123?e=github
 ```
 
 ### Event Types
@@ -72,9 +72,9 @@ GitHub sends webhook events for repository actions like:
 1. Go to your [Clerk Dashboard](https://dashboard.clerk.dev)
 2. Navigate to "Webhooks"
 3. Click "Add Endpoint"
-4. Enter your Acme URL:
+4. Enter your Seawatts URL:
 ```bash
-https://acme.sh/t_123?e=clerk
+https://seawatts.sh/t_123?e=clerk
 ```
 5. Select webhook events
 6. Save the endpoint
@@ -82,11 +82,11 @@ https://acme.sh/t_123?e=clerk
 ### Local Development
 
 ```bash
-# Start Acme
-acme listen
+# Start Seawatts
+seawatts listen
 
 # Configure your application
-CLERK_WEBHOOK_URL=https://acme.sh/t_123?e=clerk
+CLERK_WEBHOOK_URL=https://seawatts.sh/t_123?e=clerk
 ```
 
 ### Event Types
@@ -103,9 +103,9 @@ Clerk sends webhook events for user actions:
 1. Go to your [Slack App Settings](https://api.slack.com/apps)
 2. Select your app
 3. Click "Event Subscriptions"
-4. Enter your Acme URL:
+4. Enter your Seawatts URL:
 ```bash
-https://acme.sh/t_123?e=slack
+https://seawatts.sh/t_123?e=slack
 ```
 5. Subscribe to bot events
 6. Save changes
@@ -113,11 +113,11 @@ https://acme.sh/t_123?e=slack
 ### Local Development
 
 ```bash
-# Start Acme
-acme listen
+# Start Seawatts
+seawatts listen
 
 # Configure your application
-SLACK_WEBHOOK_URL=https://acme.sh/t_123?e=slack
+SLACK_WEBHOOK_URL=https://seawatts.sh/t_123?e=slack
 ```
 
 ### Event Types
@@ -133,19 +133,19 @@ Slack sends webhook events for:
 
 For any webhook provider:
 
-1. Use the Acme URL format:
+1. Use the Seawatts URL format:
 ```bash
-https://acme.sh/t_123?e=YOUR_ENDPOINT
+https://seawatts.sh/t_123?e=YOUR_ENDPOINT
 ```
 
-2. Start Acme locally:
+2. Start Seawatts locally:
 ```bash
-acme listen
+seawatts listen
 ```
 
 3. Configure your application:
 ```bash
-WEBHOOK_URL=https://acme.sh/t_123?e=YOUR_ENDPOINT
+WEBHOOK_URL=https://seawatts.sh/t_123?e=YOUR_ENDPOINT
 ```
 
 ### Best Practices

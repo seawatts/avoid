@@ -19,7 +19,7 @@ export async function textToSpeech({
   const endpoint = '/api/text-to-speech';
   const apiUrl =
     process.env.NODE_ENV === 'production'
-      ? `https://app.acme.ai${endpoint}`
+      ? `https://app.seawatts.ai${endpoint}`
       : `http://localhost:3000${endpoint}`;
 
   const response = await fetch(apiUrl, {

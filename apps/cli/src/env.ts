@@ -10,7 +10,10 @@ const shouldSkipValidation = !!process.env.CI || isHelpMode || isDevelopment;
 
 export const env = createEnv({
   client: {
-    NEXT_PUBLIC_API_URL: z.string().optional().default('https://api.acme.sh'),
+    NEXT_PUBLIC_API_URL: z
+      .string()
+      .optional()
+      .default('https://api.seawatts.sh'),
     NEXT_PUBLIC_APP_ENV: z
       .enum(['development', 'production'])
       .default('development'),

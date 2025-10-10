@@ -11,12 +11,12 @@ import { SettingsService } from './services/settings.service';
 import { AuthStore } from './stores/auth-store';
 
 defaultLogger.enableNamespace('*');
-defaultLogger.enableNamespace('acme:vscode');
-defaultLogger.enableNamespace('acme:vscode:*');
-const log = debug('acme:vscode');
+defaultLogger.enableNamespace('seawatts:vscode');
+defaultLogger.enableNamespace('seawatts:vscode:*');
+const log = debug('seawatts:vscode');
 
 export async function activate(context: vscode.ExtensionContext) {
-  log('Acme extension is activating...');
+  log('Seawatts extension is activating...');
 
   // Initialize auth store
   const authStore = new AuthStore(context);
@@ -35,7 +35,7 @@ export async function activate(context: vscode.ExtensionContext) {
   // Add VS Code output destination to default logger
   const outputDestination = new VSCodeOutputDestination({
     autoShow: settingsService.getSettings().output.autoShow,
-    name: 'Acme',
+    name: 'Seawatts',
     vscode,
   });
   defaultLogger.addDestination(outputDestination);
@@ -54,17 +54,17 @@ export async function activate(context: vscode.ExtensionContext) {
   // Update status bar based on auth state
   function updateStatusBar() {
     if (authStore.isValidatingSession) {
-      statusBarItem.text = '$(sync~spin) Validating Acme Session...';
-      statusBarItem.tooltip = 'Validating your Acme session...';
+      statusBarItem.text = '$(sync~spin) Validating Seawatts Session...';
+      statusBarItem.tooltip = 'Validating your Seawatts session...';
       statusBarItem.command = undefined;
     } else if (authStore.isSignedIn) {
       statusBarItem.text = `$(check) ${authStore.user?.email ?? 'Signed in'}`;
-      statusBarItem.tooltip = 'Click to sign out of Acme';
-      statusBarItem.command = 'acme.signOut';
+      statusBarItem.tooltip = 'Click to sign out of Seawatts';
+      statusBarItem.command = 'seawatts.signOut';
     } else {
-      statusBarItem.text = '$(sign-in) Sign in to Acme';
-      statusBarItem.tooltip = 'Click to sign in to Acme';
-      statusBarItem.command = 'acme.signIn';
+      statusBarItem.text = '$(sign-in) Sign in to Seawatts';
+      statusBarItem.tooltip = 'Click to sign in to Seawatts';
+      statusBarItem.command = 'seawatts.signIn';
     }
     statusBarItem.show();
   }
@@ -83,7 +83,7 @@ export async function activate(context: vscode.ExtensionContext) {
   );
 
   const settingsProvider = new SettingsProvider();
-  vscode.window.registerTreeDataProvider('acme.settings', settingsProvider);
+  vscode.window.registerTreeDataProvider('seawatts.settings', settingsProvider);
 
   // Register the custom URI scheme handler
   context.subscriptions.push(
@@ -99,7 +99,7 @@ export async function activate(context: vscode.ExtensionContext) {
           if (code) {
             // The auth provider will handle the code exchange
             vscode.authentication.getSession(
-              'acme',
+              'seawatts',
               ['openid', 'email', 'profile'],
               {
                 createIfNone: true,
@@ -117,7 +117,7 @@ export async function activate(context: vscode.ExtensionContext) {
 
   registerSettingsCommands(context);
 
-  log('Acme extension activation complete');
+  log('Seawatts extension activation complete');
 }
 
 export function deactivate() {}

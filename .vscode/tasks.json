@@ -39,7 +39,7 @@
       "problemMatcher": {
         "background": {
           "activeOnStart": true,
-          "beginsPattern": "Starting Acme MCP development server",
+          "beginsPattern": "Starting Seawatts MCP development server",
           "endsPattern": "MCP development server is running"
         },
         "pattern": {

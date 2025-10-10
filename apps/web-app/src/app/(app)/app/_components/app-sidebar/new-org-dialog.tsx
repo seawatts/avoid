@@ -64,7 +64,7 @@ export function NewOrgDialog({ open, onOpenChange }: NewOrgDialogProps) {
     const baseUrl =
       env.NEXT_PUBLIC_WEBHOOK_BASE_URL ||
       env.NEXT_PUBLIC_API_URL ||
-      'https://acme.sh';
+      'https://seawatts.sh';
     if (!name) return `${baseUrl}/{org-name}/{webhook-name}`;
     if (!webhookName) return `${baseUrl}/${name}/{webhook-name}`;
     return `${baseUrl}/${name}/${webhookName}`;
@@ -217,7 +217,7 @@ export function NewOrgDialog({ open, onOpenChange }: NewOrgDialogProps) {
               disabled={isLoading || !isEntitled}
               id="org-name"
               onChange={(e) => setName(e.target.value)}
-              placeholder="Acme Inc"
+              placeholder="Seawatts Inc"
               required
               value={name}
             />

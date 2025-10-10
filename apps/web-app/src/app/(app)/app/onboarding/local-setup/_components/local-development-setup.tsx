@@ -37,12 +37,12 @@ export function LocalDevelopmentSetup({
   const router = useRouter();
   const [selectedTab, setSelectedTab] = useState('cli');
 
-  const webhookUrl = `${env.NEXT_PUBLIC_WEBHOOK_BASE_URL || env.NEXT_PUBLIC_API_URL || 'https://acme.sh'}/${orgName}/${webhookName}`;
+  const webhookUrl = `${env.NEXT_PUBLIC_WEBHOOK_BASE_URL || env.NEXT_PUBLIC_API_URL || 'https://seawatts.sh'}/${orgName}/${webhookName}`;
 
-  // Generate the acme.yml content
-  const generateacmeYml = () => {
-    return `# acme Configuration
-# This file configures how acme delivers webhooks to your local development environment
+  // Generate the seawatts.yml content
+  const generateseawattsYml = () => {
+    return `# seawatts Configuration
+# This file configures how seawatts delivers webhooks to your local development environment
 
 webhookUrl: ${webhookUrl}
 
@@ -68,8 +68,8 @@ delivery:
 
 # Optional: Server configuration
 # server:
-#   apiUrl: https://api.acme.sh
-#   dashboardUrl: https://acme.sh
+#   apiUrl: https://api.seawatts.sh
+#   dashboardUrl: https://seawatts.sh
 
 # Optional: Enable debug mode
 # debug: true
@@ -78,7 +78,7 @@ delivery:
 # telemetry: false`;
   };
 
-  const acmeYmlContent = generateacmeYml();
+  const seawattsYmlContent = generateseawattsYml();
 
   const handleContinue = () => {
     const params = new URLSearchParams({
@@ -123,7 +123,7 @@ delivery:
             <CardDescription>
               Create an{' '}
               <code className="bg-muted px-1 py-0.5 rounded text-xs">
-                acme.yml
+                seawatts.yml
               </code>{' '}
               file in your project root
             </CardDescription>
@@ -137,7 +137,7 @@ delivery:
                 <span className="text-sm">
                   Create a new file called{' '}
                   <code className="bg-muted px-1 py-0.5 rounded text-xs">
-                    acme.yml
+                    seawatts.yml
                   </code>
                 </span>
               </div>
@@ -151,7 +151,7 @@ delivery:
                 <div className="flex h-6 w-6 items-center justify-center rounded-full bg-blue-500/10 text-xs font-medium text-blue-600">
                   3
                 </div>
-                <span className="text-sm">Start the acme CLI</span>
+                <span className="text-sm">Start the seawatts CLI</span>
               </div>
             </div>
 
@@ -160,12 +160,16 @@ delivery:
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <span className="text-sm font-medium">Configuration File</span>
-                <CopyButton size="sm" text={acmeYmlContent} variant="outline" />
+                <CopyButton
+                  size="sm"
+                  text={seawattsYmlContent}
+                  variant="outline"
+                />
               </div>
               <Textarea
                 className="font-mono text-xs resize-none min-h-[300px]"
                 readOnly
-                value={acmeYmlContent}
+                value={seawattsYmlContent}
               />
             </div>
           </CardContent>
@@ -237,17 +241,17 @@ delivery:
                         className="font-mono text-xs resize-none"
                         readOnly
                         rows={1}
-                        value="code --install-extension acme.acme-vscode"
+                        value="code --install-extension seawatts.seawatts-vscode"
                       />
                       <CopyButton
                         size="sm"
-                        text="code --install-extension acme.acme-vscode"
+                        text="code --install-extension seawatts.seawatts-vscode"
                         variant="outline"
                       />
                     </div>
                     <p className="text-xs text-muted-foreground">
                       Install the extension and it will automatically detect
-                      your acme.yml
+                      your seawatts.yml
                     </p>
                   </div>
                 </div>
@@ -257,9 +261,9 @@ delivery:
                 <div className="space-y-2">
                   <H4 className="text-sm">Install Cursor Extension</H4>
                   <p className="text-xs text-muted-foreground">
-                    Search for "acme" in Cursor's extension marketplace and
+                    Search for "seawatts" in Cursor's extension marketplace and
                     install it. The extension will automatically detect your
-                    acme.yml configuration.
+                    seawatts.yml configuration.
                   </p>
                 </div>
               </TabsContent>
@@ -318,7 +322,7 @@ delivery:
             <div className="space-y-2">
               <H4 className="text-sm">Monitor Webhooks</H4>
               <p className="text-xs text-muted-foreground">
-                Use the acme dashboard to monitor incoming webhooks, debug
+                Use the seawatts dashboard to monitor incoming webhooks, debug
                 issues, and replay events for testing.
               </p>
             </div>
@@ -348,7 +352,7 @@ delivery:
         </Button>
         <Button asChild variant="outline">
           <a
-            href="https://docs.acme.sh"
+            href="https://docs.seawatts.sh"
             rel="noopener noreferrer"
             target="_blank"
           >
@@ -365,7 +369,7 @@ delivery:
           Need help? Check out our{' '}
           <a
             className="underline hover:no-underline"
-            href="https://docs.acme.sh"
+            href="https://docs.seawatts.sh"
             rel="noopener noreferrer"
             target="_blank"
           >
@@ -374,7 +378,7 @@ delivery:
           , join our{' '}
           <a
             className="underline hover:no-underline"
-            href="https://discord.gg/acme"
+            href="https://discord.gg/seawatts"
             rel="noopener noreferrer"
             target="_blank"
           >
@@ -383,7 +387,7 @@ delivery:
           , or{' '}
           <a
             className="underline hover:no-underline"
-            href="https://github.com/acme-sh/acme/issues"
+            href="https://github.com/seawatts-sh/seawatts/issues"
             rel="noopener noreferrer"
             target="_blank"
           >

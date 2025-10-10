@@ -1,5 +1,5 @@
 {
-  "author": "Acme, Inc.",
+  "author": "Seawatts, Inc.",
   "dependencies": {
     "@clerk/chrome-extension": "2.7.3",
     "@clerk/elements": "0.23.69",
@@ -64,9 +64,9 @@
     "host_permissions": [
       "https://apply.ycombinator.com/*",
       "http://localhost/*",
-      "https://clerk.acme.ai/*",
+      "https://clerk.seawatts.ai/*",
       "https://immortal-koi-31.clerk.accounts.dev/*",
-      "https://app.acme.ai/*",
+      "https://app.seawatts.ai/*",
       "https://*.s3.us-west-2.amazonaws.com/*"
     ],
     "key": "$CRX_KEY",

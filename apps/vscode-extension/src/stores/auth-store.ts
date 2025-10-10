@@ -2,11 +2,11 @@ import { debug } from '@seawatts/logger';
 import * as vscode from 'vscode';
 import { type ApiClient, type AuthUser, createApiClient } from '../api/client';
 
-const TOKEN_KEY = 'acme.auth.token';
-const SESSION_ID_KEY = 'acme.auth.sessionId';
+const TOKEN_KEY = 'seawatts.auth.token';
+const SESSION_ID_KEY = 'seawatts.auth.sessionId';
 
 // Create debug logger for auth store
-const log = debug('acme:vscode:auth');
+const log = debug('seawatts:vscode:auth');
 
 export class AuthStore implements vscode.Disposable {
   private _onDidChangeAuth = new vscode.EventEmitter<void>();

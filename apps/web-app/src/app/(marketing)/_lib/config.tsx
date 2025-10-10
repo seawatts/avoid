@@ -190,29 +190,29 @@ export const siteConfig = {
   description: 'Secure webhook testing and development platform.',
   faqSection: {
     description:
-      "Answers to common questions about Acme and its features. If you have any other questions, please don't hesitate to contact us.",
+      "Answers to common questions about Seawatts and its features. If you have any other questions, please don't hesitate to contact us.",
     faQitems: [
       {
         answer:
-          'Acme is a modern webhook development platform that enables teams to test webhooks locally while sharing URLs across the team. It provides real-time monitoring, payload inspection, and team collaboration features to streamline the webhook testing process.',
+          'Seawatts is a modern webhook development platform that enables teams to test webhooks locally while sharing URLs across the team. It provides real-time monitoring, payload inspection, and team collaboration features to streamline the webhook testing process.',
         id: 1,
-        question: 'What is Acme?',
+        question: 'What is Seawatts?',
       },
       {
         answer:
-          'Acme works by creating shareable webhook URLs that route to your local development environment. Team members can then test these webhooks by sending requests to these URLs. Acme provides a web dashboard for real-time monitoring and payload inspection, allowing you to see who is accessing your webhooks and what data is being sent.',
+          'Seawatts works by creating shareable webhook URLs that route to your local development environment. Team members can then test these webhooks by sending requests to these URLs. Seawatts provides a web dashboard for real-time monitoring and payload inspection, allowing you to see who is accessing your webhooks and what data is being sent.',
         id: 2,
-        question: 'How does Acme work?',
+        question: 'How does Seawatts work?',
       },
       {
         answer:
-          'Yes, Acme uses end-to-end encryption for all webhook traffic. We do not store webhook payload data permanently, and all data is encrypted in transit. Your API keys and sensitive information are protected with industry-standard security measures.',
+          'Yes, Seawatts uses end-to-end encryption for all webhook traffic. We do not store webhook payload data permanently, and all data is encrypted in transit. Your API keys and sensitive information are protected with industry-standard security measures.',
         id: 3,
         question: 'Is my data secure?',
       },
       {
         answer:
-          'Simply click on any webhook event in the Acme sidebar, then use the "Replay Event" button. The extension will resend the webhook to your local development server, making it easy to test and debug.',
+          'Simply click on any webhook event in the Seawatts sidebar, then use the "Replay Event" button. The extension will resend the webhook to your local development server, making it easy to test and debug.',
         id: 4,
         question: 'How do I replay webhook events from VS Code?',
       },
@@ -224,25 +224,25 @@ export const siteConfig = {
       },
       {
         answer:
-          'Acme is perfect for testing webhooks triggered by AI agents using MCP (Model Context Protocol) servers. When your AI agent calls an MCP tool that triggers a webhook, Acme captures it for inspection and replay. This helps you debug AI workflows and validate that your agentic systems are working correctly.',
+          'Seawatts is perfect for testing webhooks triggered by AI agents using MCP (Model Context Protocol) servers. When your AI agent calls an MCP tool that triggers a webhook, Seawatts captures it for inspection and replay. This helps you debug AI workflows and validate that your agentic systems are working correctly.',
         id: 6,
         question: 'How can I test AI calls with MCP servers?',
       },
       {
         answer:
-          'MCP (Model Context Protocol) is a standard for connecting AI models to external data sources and tools. Many MCP servers trigger webhooks when AI agents perform actions. Acme helps you test these AI-triggered webhooks, making it easier to debug agentic systems and validate AI-driven automations.',
+          'MCP (Model Context Protocol) is a standard for connecting AI models to external data sources and tools. Many MCP servers trigger webhooks when AI agents perform actions. Seawatts helps you test these AI-triggered webhooks, making it easier to debug agentic systems and validate AI-driven automations.',
         id: 7,
         question: 'What is MCP and how does it relate to webhook testing?',
       },
       {
         answer:
-          'Yes! Acme provides one shared webhook URL that your entire team can use across all services like Stripe, GitHub, and Clerk. The same URL intelligently routes webhooks to the active developer, eliminating the need for individual URLs.',
+          'Yes! Seawatts provides one shared webhook URL that your entire team can use across all services like Stripe, GitHub, and Clerk. The same URL intelligently routes webhooks to the active developer, eliminating the need for individual URLs.',
         id: 8,
         question: 'Can my entire team use the same webhook URL?',
       },
       {
         answer:
-          'Create an acme.config.json file in your repository with your shared webhook URLs. When team members check out the code, they automatically get access to the same webhook configuration. No more manual URL sharing or setup for new team members.',
+          'Create an seawatts.config.json file in your repository with your shared webhook URLs. When team members check out the code, they automatically get access to the same webhook configuration. No more manual URL sharing or setup for new team members.',
         id: 9,
         question: 'How do I share webhook configuration with my team?',
       },
@@ -251,7 +251,7 @@ export const siteConfig = {
   },
   featureSection: {
     description:
-      'Discover how Acme transforms webhook testing in four easy steps',
+      'Discover how Seawatts transforms webhook testing in four easy steps',
     items: [
       {
         content:
@@ -283,11 +283,11 @@ export const siteConfig = {
         id: 4,
         image:
           'https://images.unsplash.com/photo-1720371300677-ba4838fa0678?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        title: 'Acme CLI',
+        title: 'Seawatts CLI',
       },
 
       // {
-      //   component: <AcmeConfigDemo />,
+      //   component: <SeawattsConfigDemo />,
       //   content:
       //     "Webhooks are securely routed to the appropriate developer's machine based on active sessions.",
       //   id: 2,
@@ -309,21 +309,21 @@ export const siteConfig = {
         {
           id: 12,
           title: 'VS Code Extension',
-          url: 'https://marketplace.visualstudio.com/items?itemName=acme.acme-vscode',
+          url: 'https://marketplace.visualstudio.com/items?itemName=seawatts.seawatts-vscode',
         },
         {
           id: 13,
           title: 'JetBrains Plugin',
-          url: 'https://plugins.jetbrains.com/plugin/24002-acme',
+          url: 'https://plugins.jetbrains.com/plugin/24002-seawatts',
         },
         {
           id: 14,
           title: 'MCP Server',
-          url: 'https://docs.acme.sh/mcp-integration',
+          url: 'https://docs.seawatts.sh/mcp-integration',
         },
         {
           id: 15,
-          title: 'Acme CLI',
+          title: 'Seawatts CLI',
           url: 'https://www.npmjs.com/package/@seawatts/cli',
         },
       ],
@@ -334,10 +334,10 @@ export const siteConfig = {
         {
           id: 16,
           title: 'Changelog',
-          url: 'https://github.com/acme-sh/acme/releases',
+          url: 'https://github.com/seawatts-sh/seawatts/releases',
         },
         // { id: 17, title: 'Blog', url: '/blog' },
-        { id: 18, title: 'Docs', url: 'https://docs.acme.sh' },
+        { id: 18, title: 'Docs', url: 'https://docs.seawatts.sh' },
         { id: 19, title: 'OSS Friends', url: '/oss-friends' },
         { id: 20, title: 'Glossary', url: '/glossary' },
       ],
@@ -410,15 +410,15 @@ export const siteConfig = {
     badge: 'Free During Beta',
     badgeIcon: <span>🔥</span>,
     badgeUrl:
-      // 'https://marketplace.visualstudio.com/items?itemName=acme.acme-vscode',
-      'https://acme.sh/app/onboarding?utm_source=marketing-site&utm_medium=hero-cta',
+      // 'https://marketplace.visualstudio.com/items?itemName=seawatts.seawatts-vscode',
+      'https://seawatts.sh/app/onboarding?utm_source=marketing-site&utm_medium=hero-cta',
     cta: {
       primary: {
         href: '/app/onboarding?utm_source=marketing-site&utm_medium=hero-cta',
         text: 'Install Extension',
       },
       secondary: {
-        href: 'https://docs.acme.sh',
+        href: 'https://docs.seawatts.sh',
         text: 'View Docs',
       },
     },
@@ -433,34 +433,34 @@ export const siteConfig = {
     'API Testing',
   ],
   links: {
-    discord: 'https://discord.gg/acmesh',
+    discord: 'https://discord.gg/seawattssh',
     email: 'chris.watts.t@gmail.com',
-    github: 'https://github.com/acme-sh',
-    twitter: 'https://twitter.com/acmesh',
+    github: 'https://github.com/seawatts-sh',
+    twitter: 'https://twitter.com/seawattssh',
   },
-  name: 'Acme',
+  name: 'Seawatts',
   nav: {
     links: [
       { href: '#hero', id: 1, name: 'Home' },
       {
-        href: 'https://marketplace.visualstudio.com/items?itemName=acme.acme-vscode',
+        href: 'https://marketplace.visualstudio.com/items?itemName=seawatts.seawatts-vscode',
         id: 3,
         name: 'VS Code Extension',
       },
       {
-        href: 'https://plugins.jetbrains.com/plugin/24002-acme',
+        href: 'https://plugins.jetbrains.com/plugin/24002-seawatts',
         id: 4,
         name: 'JetBrains Plugin',
       },
       {
-        href: 'https://docs.acme.sh/mcp-integration',
+        href: 'https://docs.seawatts.sh/mcp-integration',
         id: 5,
         name: 'MCP Server',
       },
       {
         href: 'https://www.npmjs.com/package/@seawatts/cli',
         id: 6,
-        name: 'Acme CLI',
+        name: 'Seawatts CLI',
       },
       // { id: 5, name: 'Features', href: '#features' },
       // { id: 6, name: 'Pricing', href: '#pricing' },
@@ -551,7 +551,7 @@ export const siteConfig = {
       role: 'Lead Developer, TechFlow',
     },
     quote:
-      'Acme has transformed our webhook development process. What used to be a complex coordination effort is now seamless collaboration.',
+      'Seawatts has transformed our webhook development process. What used to be a complex coordination effort is now seamless collaboration.',
   },
   testimonials: [
     {

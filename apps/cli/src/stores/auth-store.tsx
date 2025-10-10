@@ -15,7 +15,7 @@ import type { StorageInterface } from '../lib/storage/storage-interface';
 import { findAvailablePort } from '../utils/port';
 import { useApiStore } from './api-store';
 
-const log = debug('acme:cli:auth-store');
+const log = debug('seawatts:cli:auth-store');
 
 export interface AuthState {
   isSignedIn: boolean;

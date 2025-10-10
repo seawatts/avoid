@@ -67,7 +67,7 @@ const changelogData: ChangelogEntry[] = [
       'Initial beta release of the YC vibe-check Chrome extension',
       'Basic functionality for interacting with YC application pages',
       'Implemented core UI components and styling',
-      'Added integration with acme.ai backend services',
+      'Added integration with seawatts.ai backend services',
       'Established foundation for future feature development',
     ],
     date: '2024-10-01',

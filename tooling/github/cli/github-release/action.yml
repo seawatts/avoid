@@ -58,12 +58,12 @@ runs:
         draft: false
         prerelease: false
         files: |
-          dist/acme-linux-x64/acme-linux-x64
-          dist/acme-linux-arm64/acme-linux-arm64
-          dist/acme-linux-x64-musl/acme-linux-x64-musl
-          dist/acme-linux-arm64-musl/acme-linux-arm64-musl
-          dist/acme-darwin-x64/acme-darwin-x64
-          dist/acme-darwin-arm64/acme-darwin-arm64
-          dist/acme-win32-x64/acme-win32-x64.exe
+          dist/seawatts-linux-x64/seawatts-linux-x64
+          dist/seawatts-linux-arm64/seawatts-linux-arm64
+          dist/seawatts-linux-x64-musl/seawatts-linux-x64-musl
+          dist/seawatts-linux-arm64-musl/seawatts-linux-arm64-musl
+          dist/seawatts-darwin-x64/seawatts-darwin-x64
+          dist/seawatts-darwin-arm64/seawatts-darwin-arm64
+          dist/seawatts-win32-x64/seawatts-win32-x64.exe
       env:
         GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}

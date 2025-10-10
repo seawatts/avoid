@@ -4,7 +4,9 @@ import { z } from 'zod';
 export const env = createEnv({
   client: {
     NEXT_PUBLIC_API_URL: z.string(),
-    NEXT_PUBLIC_VSCODE_EXTENSION_ID: z.string().default('acme.acme-vscode'),
+    NEXT_PUBLIC_VSCODE_EXTENSION_ID: z
+      .string()
+      .default('seawatts.seawatts-vscode'),
   },
   clientPrefix: '',
   runtimeEnv: process.env,

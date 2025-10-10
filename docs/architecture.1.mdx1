@@ -1,16 +1,16 @@
 ---
 title: 'Architecture'
-description: 'Understanding Acme's system design and data flow'
+description: 'Understanding Seawatts's system design and data flow'
 ---
 
 ## System Overview
 
-Acme consists of several key components working together to provide seamless webhook development:
+Seawatts consists of several key components working together to provide seamless webhook development:
 
 <Frame>
   ```mermaid
   graph TD
-    A[Webhook Provider] -->|POST| B[Acme API]
+    A[Webhook Provider] -->|POST| B[Seawatts API]
     B -->|Store| C[(Database)]
     D[CLI Client] -->|Subscribe| C
     C -->|New Events| D
@@ -27,7 +27,7 @@ Acme consists of several key components working together to provide seamless web
 ## Data Flow
 
 1. **Webhook Reception**
-   - Provider sends webhook to `https://acme.sh/t_123&e=ENDPOINT`
+   - Provider sends webhook to `https://seawatts.sh/t_123&e=ENDPOINT`
    - API validates the API key and processes the request
    - Event is stored in the database
 

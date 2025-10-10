@@ -34,20 +34,20 @@ export function HeroSection() {
             className="text-4xl md:text-6xl lg:text-7xl font-medium tracking-tighter text-balance text-center text-primary"
             variants={fadeInUpVariants}
           >
-            How Acme Compares
+            How Seawatts Compares
           </motion.h1>
           <motion.p
             className="text-xl md:text-2xl text-primary font-semibold text-balance"
             variants={fadeInUpVariants}
           >
-            See why teams choose Acme over other webhook testing tools
+            See why teams choose Seawatts over other webhook testing tools
           </motion.p>
           <motion.p
             className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed tracking-tight text-balance"
             variants={fadeInUpVariants}
           >
-            Compare Acme with popular webhook testing tools. See why teams
-            choose Acme for better collaboration and VS Code integration.
+            Compare Seawatts with popular webhook testing tools. See why teams
+            choose Seawatts for better collaboration and VS Code integration.
           </motion.p>
         </motion.div>
       </div>

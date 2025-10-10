@@ -1,6 +1,6 @@
-# Contributing to Acme
+# Contributing to Seawatts
 
-First off, thank you for considering contributing to Acme! It's people like you that make Acme such a great tool.
+First off, thank you for considering contributing to Seawatts! It's people like you that make Seawatts such a great tool.
 
 ## Code of Conduct
 
@@ -11,7 +11,7 @@ By participating in this project, you are expected to uphold our Code of Conduct
 This is a monorepo using [Turborepo](https://turbo.build/) and bun workspaces. The project is organized into several main components:
 
 ```
-acme/
+seawatts/
 ├── apps/                   # Application packages
 │   ├── cli/               # Command-line interface
 │   ├── web-app/           # Main web application
@@ -46,8 +46,8 @@ acme/
 
 2. Clone the repository:
    ```bash
-   git clone https://github.com/acme-sh/acme.git
-   cd acme
+   git clone https://github.com/seawatts-sh/seawatts.git
+   cd seawatts
    ```
 
 3. Install dependencies:
@@ -103,7 +103,7 @@ Enhancement suggestions are tracked as GitHub issues. When creating an enhanceme
 
 * A clear and descriptive title
 * A detailed description of the proposed functionality
-* Explain why this enhancement would be useful to most Acme users
+* Explain why this enhancement would be useful to most Seawatts users
 * List any additional context or screenshots
 
 ### Pull Requests
@@ -195,9 +195,9 @@ Configuration is in `lefthook.yml`
 
 Don't hesitate to ask questions by:
 * Opening an issue
-* Joining our [Discord community](https://discord.gg/acme)
-* Checking our [documentation](https://docs.acme.sh)
+* Joining our [Discord community](https://discord.gg/seawatts)
+* Checking our [documentation](https://docs.seawatts.sh)
 
 ## License
 
-By contributing to Acme, you agree that your contributions will be licensed under its MIT License.
+By contributing to Seawatts, you agree that your contributions will be licensed under its MIT License.

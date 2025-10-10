@@ -1,11 +1,11 @@
 # Analytics Events Documentation
 
-This document outlines all the PostHog analytics events being tracked in the Acme web application.
+This document outlines all the PostHog analytics events being tracked in the Seawatts web application.
 
 ## Navigation Events
 
 ### Main Navigation
-- **`navigation_logo_clicked`** - When user clicks the Acme AI logo
+- **`navigation_logo_clicked`** - When user clicks the Seawatts AI logo
   - Properties: None
   - Location: App sidebar logo
 

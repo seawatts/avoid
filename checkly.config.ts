@@ -35,11 +35,11 @@ const config = defineConfig({
   /** A logical ID that needs to be unique across your Checkly account,
    * See https://www.checklyhq.com/docs/cli/constructs/ to learn more about logical IDs.
    */
-  logicalId: 'acme',
+  logicalId: 'seawatts',
   /* A human friendly name for your project */
-  projectName: 'acme',
+  projectName: 'seawatts',
   /* An optional URL to your Git repo */
-  repoUrl: 'https://github.com/seawatts/acme',
+  repoUrl: 'https://github.com/seawatts/seawatts',
 });
 
 export default config;

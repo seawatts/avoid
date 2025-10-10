@@ -1,14 +1,14 @@
-# Acme VS Code Extension
+# Seawatts VS Code Extension
 
 <div align="center">
-  <img src="https://raw.githubusercontent.com/acme-sh/acme/main/apps/web-app/public/logo.png" alt="Acme Logo" width="100" height="100" />
+  <img src="https://raw.githubusercontent.com/seawatts-sh/seawatts/main/apps/web-app/public/logo.png" alt="Seawatts Logo" width="100" height="100" />
 </div>
 
 ## The Modern Webhook Development Tool for Teams — Now in VS Code
 
-Acme is the open-source platform that makes testing and collaborating on webhooks simple and secure. This extension brings Acme's powerful webhook routing, monitoring, and team features directly into your VS Code workflow.
+Seawatts is the open-source platform that makes testing and collaborating on webhooks simple and secure. This extension brings Seawatts's powerful webhook routing, monitoring, and team features directly into your VS Code workflow.
 
-[Learn more about Acme](https://acme.sh)
+[Learn more about Seawatts](https://seawatts.sh)
 
 ---
 
@@ -30,16 +30,16 @@ Acme is the open-source platform that makes testing and collaborating on webhook
 ### 1. Install the Extension
 
 - Open the Extensions view in VS Code (`⇧⌘X`)
-- Search for `Acme - Webhook Development` (or install from a local `.vsix` file if provided)
+- Search for `Seawatts - Webhook Development` (or install from a local `.vsix` file if provided)
 - Click **Install**
 
-### 2. Authenticate with Acme
+### 2. Authenticate with Seawatts
 
-- Open the Acme sidebar from the Activity Bar
-- Follow the prompts to sign in with your Acme account
-- If you don't have an account, you can create one for free at [acme.sh](https://acme.sh)
+- Open the Seawatts sidebar from the Activity Bar
+- Follow the prompts to sign in with your Seawatts account
+- If you don't have an account, you can create one for free at [seawatts.sh](https://seawatts.sh)
 
-### 3. Start Using Acme in VS Code
+### 3. Start Using Seawatts in VS Code
 
 - Use the sidebar to view, replay, and debug webhook events
 - Add or manage API events with the provided commands
@@ -47,7 +47,7 @@ Acme is the open-source platform that makes testing and collaborating on webhook
 
 ---
 
-## Why Acme?
+## Why Seawatts?
 
 - **For Teams**: Share a single webhook endpoint while everyone tests locally
 - **For Security**: All traffic is encrypted and authenticated
@@ -57,17 +57,17 @@ Acme is the open-source platform that makes testing and collaborating on webhook
 
 ## Configuration & Advanced Usage
 
-- Configure routing and provider integrations via the Acme web dashboard or CLI
-- For advanced configuration, see the [Acme documentation](https://acme.sh/docs)
+- Configure routing and provider integrations via the Seawatts web dashboard or CLI
+- For advanced configuration, see the [Seawatts documentation](https://seawatts.sh/docs)
 
 ---
 
 ## Support & Feedback
 
-- [Acme Documentation](https://acme.sh/docs)
-- [GitHub Issues](https://github.com/acme-sh/acme/issues)
-- [Contact Us](https://acme.sh/contact)
+- [Seawatts Documentation](https://seawatts.sh/docs)
+- [GitHub Issues](https://github.com/seawatts-sh/seawatts/issues)
+- [Contact Us](https://seawatts.sh/contact)
 
 ---
 
-© Acme. All rights reserved.
+© Seawatts. All rights reserved.

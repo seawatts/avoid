@@ -188,7 +188,7 @@ function AccountPage() {
                 <div className="mb-4">
                   <Button asChild variant="outline">
                     <a
-                      href="https://app.acme.ai/companies/your-company-id/settings/billing"
+                      href="https://app.seawatts.ai/companies/your-company-id/settings/billing"
                       target="_blank"
                       rel="noopener noreferrer"
                     >

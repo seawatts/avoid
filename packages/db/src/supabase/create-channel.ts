@@ -9,7 +9,7 @@ import type {
 import { REALTIME_POSTGRES_CHANGES_LISTEN_EVENT } from '@supabase/supabase-js';
 import type { TableName, Tables } from './types';
 
-const log = debug('acme:lib:channel');
+const log = debug('seawatts:lib:channel');
 
 type SubscriptionStatus = 'connecting' | 'connected' | 'disconnected' | 'error';
 

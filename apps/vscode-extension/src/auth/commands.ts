@@ -1,22 +1,22 @@
 import * as vscode from 'vscode';
 import type { AuthStore } from '../stores/auth-store';
-import { AcmeAuthProvider } from './provider';
+import { SeawattsAuthProvider } from './provider';
 
 export function registerAuthCommands(
   context: vscode.ExtensionContext,
   authStore: AuthStore,
 ) {
   // Register auth provider
-  const provider = new AcmeAuthProvider(context, authStore);
-  const authProvider = AcmeAuthProvider.register(context, authStore);
+  const provider = new SeawattsAuthProvider(context, authStore);
+  const authProvider = SeawattsAuthProvider.register(context, authStore);
 
   // Register sign in command
   const signInCommand = vscode.commands.registerCommand(
-    'acme.signIn',
+    'seawatts.signIn',
     async () => {
       try {
         const session = await vscode.authentication.getSession(
-          'acme',
+          'seawatts',
           ['openid', 'email', 'profile'],
           {
             createIfNone: true,
@@ -24,12 +24,12 @@ export function registerAuthCommands(
         );
         if (session) {
           vscode.window.showInformationMessage(
-            'Successfully signed in to Acme',
+            'Successfully signed in to Seawatts',
           );
         }
       } catch (error) {
         vscode.window.showErrorMessage(
-          `Failed to sign in to Acme: ${(error as Error).message}`,
+          `Failed to sign in to Seawatts: ${(error as Error).message}`,
         );
       }
     },
@@ -37,11 +37,11 @@ export function registerAuthCommands(
 
   // Register sign out command
   const signOutCommand = vscode.commands.registerCommand(
-    'acme.signOut',
+    'seawatts.signOut',
     async () => {
       try {
         const session = await vscode.authentication.getSession(
-          'acme',
+          'seawatts',
           ['openid', 'email', 'profile'],
           {
             createIfNone: false,
@@ -50,12 +50,12 @@ export function registerAuthCommands(
         if (session) {
           await provider.removeSession(session.id);
           vscode.window.showInformationMessage(
-            'Successfully signed out of Acme',
+            'Successfully signed out of Seawatts',
           );
         }
       } catch (error) {
         vscode.window.showErrorMessage(
-          `Failed to sign out of Acme: ${(error as Error).message}`,
+          `Failed to sign out of Seawatts: ${(error as Error).message}`,
         );
       }
     },

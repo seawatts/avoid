@@ -76,7 +76,7 @@ export function LoadingLogo() {
           }}
         >
           <Image
-            alt="acme Logo"
+            alt="seawatts Logo"
             className="h-32 w-auto"
             height={128}
             priority
@@ -101,7 +101,7 @@ export function LoadingLogo() {
             },
           }}
         >
-          Welcome to acme
+          Welcome to seawatts
         </motion.div>
       </motion.div>
     </motion.div>

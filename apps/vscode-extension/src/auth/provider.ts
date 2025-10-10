@@ -9,8 +9,8 @@ interface AuthenticationProvider {
   removeSession(sessionId: string): Promise<void>;
 }
 
-export class AcmeAuthProvider implements AuthenticationProvider {
-  private static readonly AUTH_TYPE = 'acme';
+export class SeawattsAuthProvider implements AuthenticationProvider {
+  private static readonly AUTH_TYPE = 'seawatts';
   private static readonly SCOPES = ['openid', 'email', 'profile'];
 
   private _onDidChangeSessions =
@@ -43,10 +43,10 @@ export class AcmeAuthProvider implements AuthenticationProvider {
   }
 
   static register(context: vscode.ExtensionContext, authStore: AuthStore) {
-    const provider = new AcmeAuthProvider(context, authStore);
+    const provider = new SeawattsAuthProvider(context, authStore);
     return vscode.authentication.registerAuthenticationProvider(
-      AcmeAuthProvider.AUTH_TYPE,
-      'Acme',
+      SeawattsAuthProvider.AUTH_TYPE,
+      'Seawatts',
       provider,
       {
         supportsMultipleAccounts: false,
@@ -73,7 +73,7 @@ export class AcmeAuthProvider implements AuthenticationProvider {
         label: this.authStore.user?.email ?? '',
       },
       id: this.authStore.sessionId ?? '',
-      scopes: AcmeAuthProvider.SCOPES,
+      scopes: SeawattsAuthProvider.SCOPES,
     };
   }
 
@@ -90,7 +90,7 @@ export class AcmeAuthProvider implements AuthenticationProvider {
 
       // Wait for the auth code from VS Code
       const session = await vscode.authentication.getSession(
-        AcmeAuthProvider.AUTH_TYPE,
+        SeawattsAuthProvider.AUTH_TYPE,
         scopes,
         { createIfNone: true },
       );
@@ -117,7 +117,7 @@ export class AcmeAuthProvider implements AuthenticationProvider {
           label: user.email ?? '',
         },
         id: sessionId,
-        scopes: AcmeAuthProvider.SCOPES,
+        scopes: SeawattsAuthProvider.SCOPES,
       };
 
       this._onDidChangeSessions.fire({
@@ -136,7 +136,7 @@ export class AcmeAuthProvider implements AuthenticationProvider {
   }
 
   async removeSession(_sessionId: string): Promise<void> {
-    const session = await this.getSession(AcmeAuthProvider.SCOPES);
+    const session = await this.getSession(SeawattsAuthProvider.SCOPES);
     await this.authStore.signOut();
     if (session) {
       this._onDidChangeSessions.fire({

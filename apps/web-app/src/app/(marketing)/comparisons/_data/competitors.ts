@@ -7,7 +7,7 @@ export interface Competitor {
   name: string;
   pricing: string;
   strengths: string[];
-  acmeAdvantages: string[];
+  seawattsAdvantages: string[];
   weaknesses: string[];
   website: string;
 }
@@ -22,13 +22,20 @@ export interface ComparisonRow {
   ngrok: boolean;
   smee: boolean;
   svix: boolean;
-  acme: boolean;
+  seawatts: boolean;
   webhookSite: boolean;
 }
 
 export const competitors: Competitor[] = [
   {
-    acmeAdvantages: [
+    category: 'Tunneling Platform',
+    comparison: '/vs-ngrok',
+    description: 'Popular tunneling tool for individual developers',
+    logo: '🚇',
+    marketShare: 'High',
+    name: 'ngrok',
+    pricing: 'From $25/month',
+    seawattsAdvantages: [
       'One shared URL for entire team',
       'Config file in your repo',
       'VS Code integration',
@@ -37,13 +44,6 @@ export const competitors: Competitor[] = [
       'Team collaboration features',
       'Webhook-specific design',
     ],
-    category: 'Tunneling Platform',
-    comparison: '/vs-ngrok',
-    description: 'Popular tunneling tool for individual developers',
-    logo: '🚇',
-    marketShare: 'High',
-    name: 'ngrok',
-    pricing: 'From $25/month',
     strengths: [
       'Easy to use',
       'Popular',
@@ -61,7 +61,14 @@ export const competitors: Competitor[] = [
     website: 'https://ngrok.com',
   },
   {
-    acmeAdvantages: [
+    category: 'Webhook Testing',
+    comparison: '/vs-webhook-site',
+    description: 'Simple webhook testing and inspection tool',
+    logo: '🌐',
+    marketShare: 'Medium',
+    name: 'Webhook.site',
+    pricing: 'From $18/month',
+    seawattsAdvantages: [
       'One shared URL for entire team',
       'Config file in your repo',
       'VS Code integration',
@@ -70,13 +77,6 @@ export const competitors: Competitor[] = [
       'Team collaboration',
       'Custom transformations',
     ],
-    category: 'Webhook Testing',
-    comparison: '/vs-webhook-site',
-    description: 'Simple webhook testing and inspection tool',
-    logo: '🌐',
-    marketShare: 'Medium',
-    name: 'Webhook.site',
-    pricing: 'From $18/month',
     strengths: [
       'Simple interface',
       'Quick setup',
@@ -94,7 +94,14 @@ export const competitors: Competitor[] = [
     website: 'https://webhook.site',
   },
   {
-    acmeAdvantages: [
+    category: 'API Mocking',
+    comparison: '/vs-beeceptor',
+    description: 'API mocking and webhook testing platform',
+    logo: '🐝',
+    marketShare: 'Medium',
+    name: 'Beeceptor',
+    pricing: 'From $25/month',
+    seawattsAdvantages: [
       'One shared URL for entire team',
       'Config file in your repo',
       'Webhook-focused design',
@@ -103,13 +110,6 @@ export const competitors: Competitor[] = [
       'Local development routing',
       'Team collaboration',
     ],
-    category: 'API Mocking',
-    comparison: '/vs-beeceptor',
-    description: 'API mocking and webhook testing platform',
-    logo: '🐝',
-    marketShare: 'Medium',
-    name: 'Beeceptor',
-    pricing: 'From $25/month',
     strengths: [
       'API mocking',
       'Multiple protocols',
@@ -126,7 +126,14 @@ export const competitors: Competitor[] = [
     website: '',
   },
   {
-    acmeAdvantages: [
+    category: 'Basic Tunneling',
+    comparison: '/vs-localtunnel',
+    description: 'Basic tunneling solution (no longer maintained)',
+    logo: '🔗',
+    marketShare: 'Low',
+    name: 'Localtunnel',
+    pricing: 'Free',
+    seawattsAdvantages: [
       'One shared URL for entire team',
       'Config file in your repo',
       'Active maintenance',
@@ -135,13 +142,6 @@ export const competitors: Competitor[] = [
       'VS Code integration',
       'Professional support',
     ],
-    category: 'Basic Tunneling',
-    comparison: '/vs-localtunnel',
-    description: 'Basic tunneling solution (no longer maintained)',
-    logo: '🔗',
-    marketShare: 'Low',
-    name: 'Localtunnel',
-    pricing: 'Free',
     strengths: ['Free', 'Simple', 'Open source'],
     weaknesses: [
       'Unmaintained',
@@ -154,7 +154,14 @@ export const competitors: Competitor[] = [
     website: 'https://localtunnel.me',
   },
   {
-    acmeAdvantages: [
+    category: 'Webhook Proxy',
+    comparison: '/vs-smee',
+    description: 'GitHub webhook proxy for quick testing',
+    logo: '🔌',
+    marketShare: 'Medium',
+    name: 'Smee.io',
+    pricing: 'Free',
+    seawattsAdvantages: [
       'Professional features',
       'Team collaboration',
       'VS Code integration',
@@ -163,13 +170,6 @@ export const competitors: Competitor[] = [
       'Advanced monitoring',
       'Multiple provider support',
     ],
-    category: 'Webhook Proxy',
-    comparison: '/vs-smee',
-    description: 'GitHub webhook proxy for quick testing',
-    logo: '🔌',
-    marketShare: 'Medium',
-    name: 'Smee.io',
-    pricing: 'Free',
     strengths: [
       'Free',
       'GitHub integration',
@@ -187,7 +187,14 @@ export const competitors: Competitor[] = [
     website: 'https://smee.io',
   },
   {
-    acmeAdvantages: [
+    category: 'Infrastructure Tunneling',
+    comparison: '/vs-cloudflare-tunnel',
+    description: 'Enterprise-grade secure tunneling solution',
+    logo: '☁️',
+    marketShare: 'High',
+    name: 'Cloudflare Tunnel',
+    pricing: 'From $25/month',
+    seawattsAdvantages: [
       'Built for webhooks',
       'Simple setup',
       'Team collaboration',
@@ -196,13 +203,6 @@ export const competitors: Competitor[] = [
       'Request inspection',
       'Better pricing for teams',
     ],
-    category: 'Infrastructure Tunneling',
-    comparison: '/vs-cloudflare-tunnel',
-    description: 'Enterprise-grade secure tunneling solution',
-    logo: '☁️',
-    marketShare: 'High',
-    name: 'Cloudflare Tunnel',
-    pricing: 'From $25/month',
     strengths: [
       'Enterprise security',
       'Global network',
@@ -221,7 +221,14 @@ export const competitors: Competitor[] = [
     website: 'https://cloudflare.com',
   },
   {
-    acmeAdvantages: [
+    category: 'Event Gateway',
+    comparison: '/vs-hookdeck',
+    description: 'Event gateway for production webhook infrastructure',
+    logo: '🎣',
+    marketShare: 'Medium',
+    name: 'Hookdeck',
+    pricing: 'From $39/month',
+    seawattsAdvantages: [
       'Development-focused',
       'Simple setup',
       'VS Code integration',
@@ -230,13 +237,6 @@ export const competitors: Competitor[] = [
       'Local development routing',
       'Better pricing',
     ],
-    category: 'Event Gateway',
-    comparison: '/vs-hookdeck',
-    description: 'Event gateway for production webhook infrastructure',
-    logo: '🎣',
-    marketShare: 'Medium',
-    name: 'Hookdeck',
-    pricing: 'From $39/month',
     strengths: [
       'Production-ready',
       'Advanced routing',
@@ -254,7 +254,14 @@ export const competitors: Competitor[] = [
     website: 'https://hookdeck.com',
   },
   {
-    acmeAdvantages: [
+    category: 'Webhook Infrastructure',
+    comparison: '/vs-svix',
+    description: 'Enterprise webhook infrastructure as a service',
+    logo: '🚀',
+    marketShare: 'High',
+    name: 'Svix',
+    pricing: 'From $490/month',
+    seawattsAdvantages: [
       'Built for development',
       'Simple team setup',
       'VS Code integration',
@@ -263,13 +270,6 @@ export const competitors: Competitor[] = [
       'Better pricing',
       'Request inspection',
     ],
-    category: 'Webhook Infrastructure',
-    comparison: '/vs-svix',
-    description: 'Enterprise webhook infrastructure as a service',
-    logo: '🚀',
-    marketShare: 'High',
-    name: 'Svix',
-    pricing: 'From $490/month',
     strengths: [
       'Enterprise-grade',
       'Sending & receiving',
@@ -292,7 +292,6 @@ export const competitors: Competitor[] = [
 
 export const comparisonMatrix: ComparisonRow[] = [
   {
-    acme: true,
     beeceptor: false,
     cloudflare: false,
     feature: 'Shared Webhook URLs',
@@ -300,12 +299,12 @@ export const comparisonMatrix: ComparisonRow[] = [
     localtunnel: false,
     mcpServer: false,
     ngrok: false,
+    seawatts: true,
     smee: false,
     svix: false,
     webhookSite: false,
   },
   {
-    acme: true,
     beeceptor: false,
     cloudflare: false,
     feature: 'Config File in Repo',
@@ -313,12 +312,12 @@ export const comparisonMatrix: ComparisonRow[] = [
     localtunnel: false,
     mcpServer: false,
     ngrok: false,
+    seawatts: true,
     smee: false,
     svix: false,
     webhookSite: false,
   },
   {
-    acme: true,
     beeceptor: false,
     cloudflare: false,
     feature: 'VS Code Integration',
@@ -326,12 +325,12 @@ export const comparisonMatrix: ComparisonRow[] = [
     localtunnel: false,
     mcpServer: false,
     ngrok: false,
+    seawatts: true,
     smee: false,
     svix: false,
     webhookSite: false,
   },
   {
-    acme: true,
     beeceptor: false,
     cloudflare: true,
     feature: 'Custom Domains Included',
@@ -339,12 +338,12 @@ export const comparisonMatrix: ComparisonRow[] = [
     localtunnel: false,
     mcpServer: false,
     ngrok: true,
+    seawatts: true,
     smee: false,
     svix: true,
     webhookSite: false,
   },
   {
-    acme: true,
     beeceptor: true,
     cloudflare: false,
     feature: 'Event Replay',
@@ -352,12 +351,12 @@ export const comparisonMatrix: ComparisonRow[] = [
     localtunnel: false,
     mcpServer: true,
     ngrok: true,
+    seawatts: true,
     smee: false,
     svix: true,
     webhookSite: true,
   },
   {
-    acme: true,
     beeceptor: false,
     cloudflare: false,
     feature: 'MCP Server',
@@ -365,12 +364,12 @@ export const comparisonMatrix: ComparisonRow[] = [
     localtunnel: false,
     mcpServer: true,
     ngrok: false,
+    seawatts: true,
     smee: false,
     svix: false,
     webhookSite: false,
   },
   {
-    acme: true,
     beeceptor: true,
     cloudflare: true,
     feature: 'Free Tier',
@@ -378,12 +377,12 @@ export const comparisonMatrix: ComparisonRow[] = [
     localtunnel: true,
     mcpServer: true,
     ngrok: true,
+    seawatts: true,
     smee: true,
     svix: true,
     webhookSite: true,
   },
   {
-    acme: true,
     beeceptor: true,
     cloudflare: true,
     feature: 'Enterprise Features',
@@ -391,12 +390,12 @@ export const comparisonMatrix: ComparisonRow[] = [
     localtunnel: false,
     mcpServer: true,
     ngrok: true,
+    seawatts: true,
     smee: false,
     svix: true,
     webhookSite: false,
   },
   {
-    acme: true,
     beeceptor: false,
     cloudflare: false,
     feature: 'Team Collaboration',
@@ -404,12 +403,12 @@ export const comparisonMatrix: ComparisonRow[] = [
     localtunnel: false,
     mcpServer: false,
     ngrok: false,
+    seawatts: true,
     smee: false,
     svix: false,
     webhookSite: false,
   },
   {
-    acme: true,
     beeceptor: false,
     cloudflare: false,
     feature: 'Local Development Routing',
@@ -417,12 +416,12 @@ export const comparisonMatrix: ComparisonRow[] = [
     localtunnel: false,
     mcpServer: false,
     ngrok: false,
+    seawatts: true,
     smee: false,
     svix: false,
     webhookSite: false,
   },
   {
-    acme: true,
     beeceptor: true,
     cloudflare: false,
     feature: 'Request Inspection',
@@ -430,12 +429,12 @@ export const comparisonMatrix: ComparisonRow[] = [
     localtunnel: false,
     mcpServer: true,
     ngrok: true,
+    seawatts: true,
     smee: false,
     svix: true,
     webhookSite: true,
   },
   {
-    acme: true,
     beeceptor: true,
     cloudflare: false,
     feature: 'Custom Transformations',
@@ -443,12 +442,12 @@ export const comparisonMatrix: ComparisonRow[] = [
     localtunnel: false,
     mcpServer: false,
     ngrok: false,
+    seawatts: true,
     smee: false,
     svix: true,
     webhookSite: false,
   },
   {
-    acme: true,
     beeceptor: false,
     cloudflare: false,
     feature: 'AI-Powered Debugging',
@@ -456,12 +455,12 @@ export const comparisonMatrix: ComparisonRow[] = [
     localtunnel: false,
     mcpServer: false,
     ngrok: false,
+    seawatts: true,
     smee: false,
     svix: false,
     webhookSite: false,
   },
   {
-    acme: true,
     beeceptor: false,
     cloudflare: false,
     feature: 'Unlimited Team Members',
@@ -469,12 +468,12 @@ export const comparisonMatrix: ComparisonRow[] = [
     localtunnel: false,
     mcpServer: false,
     ngrok: false,
+    seawatts: true,
     smee: false,
     svix: false,
     webhookSite: false,
   },
   {
-    acme: true,
     beeceptor: false,
     cloudflare: false,
     feature: 'Private Webhook URLs',
@@ -482,12 +481,12 @@ export const comparisonMatrix: ComparisonRow[] = [
     localtunnel: false,
     mcpServer: false,
     ngrok: true,
+    seawatts: true,
     smee: false,
     svix: true,
     webhookSite: false,
   },
   {
-    acme: true,
     beeceptor: false,
     cloudflare: false,
     feature: 'Advanced Analytics',
@@ -495,12 +494,12 @@ export const comparisonMatrix: ComparisonRow[] = [
     localtunnel: false,
     mcpServer: false,
     ngrok: false,
+    seawatts: true,
     smee: false,
     svix: true,
     webhookSite: false,
   },
   {
-    acme: true,
     beeceptor: false,
     cloudflare: false,
     feature: 'External Integrations',
@@ -508,12 +507,12 @@ export const comparisonMatrix: ComparisonRow[] = [
     localtunnel: false,
     mcpServer: false,
     ngrok: false,
+    seawatts: true,
     smee: false,
     svix: true,
     webhookSite: false,
   },
   {
-    acme: true,
     beeceptor: false,
     cloudflare: true,
     feature: 'SSO & SAML',
@@ -521,12 +520,12 @@ export const comparisonMatrix: ComparisonRow[] = [
     localtunnel: false,
     mcpServer: false,
     ngrok: true,
+    seawatts: true,
     smee: false,
     svix: true,
     webhookSite: false,
   },
   {
-    acme: true,
     beeceptor: false,
     cloudflare: true,
     feature: 'Audit Logs',
@@ -534,12 +533,12 @@ export const comparisonMatrix: ComparisonRow[] = [
     localtunnel: false,
     mcpServer: false,
     ngrok: true,
+    seawatts: true,
     smee: false,
     svix: true,
     webhookSite: false,
   },
   {
-    acme: true,
     beeceptor: false,
     cloudflare: true,
     feature: '99.9% Uptime SLA',
@@ -547,6 +546,7 @@ export const comparisonMatrix: ComparisonRow[] = [
     localtunnel: false,
     mcpServer: false,
     ngrok: true,
+    seawatts: true,
     smee: false,
     svix: true,
     webhookSite: false,

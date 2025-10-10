@@ -1,6 +1,6 @@
 # @seawatts/stripe
 
-Type-safe Stripe integration for Acme.
+Type-safe Stripe integration for Seawatts.
 
 ## Billing Types Generation
 

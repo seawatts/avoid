@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import { useAuthStore } from '~/stores/auth-store';
 import { type RouteProps, useRouterStore } from '~/stores/router-store';
 
-const log = debug('acme:cli:login-page');
+const log = debug('seawatts:cli:login-page');
 
 export const LoginPage: FC<RouteProps> = () => {
   // State management
@@ -59,7 +59,9 @@ export const LoginPage: FC<RouteProps> = () => {
         {authUrl && (
           <Box flexDirection="column" gap={1}>
             <Box flexDirection="column" gap={1}>
-              <Text>Please go to the link to authenticate the Acme CLI.</Text>
+              <Text>
+                Please go to the link to authenticate the Seawatts CLI.
+              </Text>
               <Text>
                 If the browser doesn't open automatically, click here:
               </Text>

@@ -465,14 +465,14 @@ export function GlossarySection() {
               className="rounded-full"
               metric="glossary_view_documentation_clicked"
               properties={{
-                destination: 'https://docs.acme.sh',
+                destination: 'https://docs.seawatts.sh',
                 location: 'glossary_section',
                 source: 'marketing_site',
               }}
               size="lg"
             >
               <a
-                href="https://docs.acme.sh"
+                href="https://docs.seawatts.sh"
                 rel="noopener noreferrer"
                 target="_blank"
               >
@@ -636,8 +636,8 @@ export function GlossarySection() {
             Need help with webhooks?
           </H2>
           <P className="text-muted-foreground mb-6">
-            Start building with Acme today and get real-time webhook testing and
-            management.
+            Start building with Seawatts today and get real-time webhook testing
+            and management.
           </P>
           <MetricButton
             asChild
@@ -649,7 +649,7 @@ export function GlossarySection() {
               source: 'marketing_site',
             }}
           >
-            <a href="/app/onboarding">Get Started with Acme</a>
+            <a href="/app/onboarding">Get Started with Seawatts</a>
           </MetricButton>
         </motion.div>
       </div>

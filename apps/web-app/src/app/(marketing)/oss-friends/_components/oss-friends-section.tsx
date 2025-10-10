@@ -303,8 +303,8 @@ export function OSSFriendsSection() {
             className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8"
             variants={fadeInUpVariants}
           >
-            Acme finds inspiration in open-source projects. Here's a list of our
-            favorite ones that are building amazing developer tools and
+            Seawatts finds inspiration in open-source projects. Here's a list of
+            our favorite ones that are building amazing developer tools and
             platforms.
           </motion.p>
 
@@ -312,20 +312,20 @@ export function OSSFriendsSection() {
             <MetricButton
               asChild
               className="rounded-full"
-              metric="oss_friends_view_acme_github_clicked"
+              metric="oss_friends_view_seawatts_github_clicked"
               properties={{
-                destination: 'https://github.com/acme-sh/acme',
+                destination: 'https://github.com/seawatts-sh/seawatts',
                 location: 'oss_friends_section',
                 source: 'marketing_site',
               }}
               size="lg"
             >
               <a
-                href="https://github.com/acme-sh/acme"
+                href="https://github.com/seawatts-sh/seawatts"
                 rel="noopener noreferrer"
                 target="_blank"
               >
-                View Acme on GitHub
+                View Seawatts on GitHub
               </a>
             </MetricButton>
           </motion.div>

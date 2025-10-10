@@ -20,7 +20,7 @@ interface Competitor {
   name: string;
   pricing: string;
   strengths: string[];
-  acmeAdvantages: string[];
+  seawattsAdvantages: string[];
   weaknesses: string[];
   website: string;
 }
@@ -112,10 +112,10 @@ export function CompetitorCard({ competitor, index }: CompetitorCardProps) {
 
             <div>
               <h4 className="font-semibold mb-3 text-primary">
-                Why Teams Choose Acme:
+                Why Teams Choose Seawatts:
               </h4>
               <ul className="space-y-2">
-                {competitor.acmeAdvantages.map((advantage) => (
+                {competitor.seawattsAdvantages.map((advantage) => (
                   <li
                     className="flex items-center gap-2 text-sm"
                     key={advantage}

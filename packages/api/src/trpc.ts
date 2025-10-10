@@ -13,7 +13,7 @@ import superjson from 'superjson';
 import { ZodError } from 'zod';
 import type { Context } from './context';
 
-const log = debug('acme:trpc');
+const log = debug('seawatts:trpc');
 
 /**
  * 2. INITIALIZATION

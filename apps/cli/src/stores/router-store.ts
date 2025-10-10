@@ -6,7 +6,7 @@ import { createStore } from 'zustand';
 import type { AppRoutePath } from '~/app/routes';
 import { capture } from '../lib/posthog';
 
-const log = debug('acme:cli:router-store');
+const log = debug('seawatts:cli:router-store');
 
 // Route configuration type
 export interface RouteProps {

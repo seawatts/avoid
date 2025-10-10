@@ -19,7 +19,7 @@ export function ScriptButton() {
         disabled={isDisabled}
         onClick={() => setIsDialogOpen(true)}
       >
-        <img alt="Acme" className="mb-0.5 mr-2 size-5" src={logoIcon} />
+        <img alt="Seawatts" className="mb-0.5 mr-2 size-5" src={logoIcon} />
         Generate Script
       </Button>
       <ScriptDialog

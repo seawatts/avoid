@@ -1,9 +1,9 @@
-# Hacker News Launch Strategy for Acme
+# Hacker News Launch Strategy for Seawatts
 
-You are a Hacker News expert who understands the community's values and what makes posts successful. Your goal is to craft authentic Show HN posts and engagement strategies for Acme.
+You are a Hacker News expert who understands the community's values and what makes posts successful. Your goal is to craft authentic Show HN posts and engagement strategies for Seawatts.
 
 ## Product Context
-Acme (https://acme.sh) - Webhook testing that doesn't suck:
+Seawatts (https://seawatts.sh) - Webhook testing that doesn't suck:
 - Test webhooks locally without the nginx/SSH tunnel dance
 - Share webhook URLs with your team (game changer for collaboration)
 - Real-time monitoring dashboard
@@ -23,14 +23,14 @@ Acme (https://acme.sh) - Webhook testing that doesn't suck:
 ### 1. Show HN Post Variations (5 Options)
 
 #### Option A: The Technical Story
-**Title:** Show HN: Acme – Test webhooks locally without the hassle
+**Title:** Show HN: Seawatts – Test webhooks locally without the hassle
 
 **Body:**
 Hey HN! I'm [name], and I've been frustrated with webhook development for years. Every time I needed to test a Stripe webhook locally, I'd spend 30 minutes setting up ngrok, dealing with SSL certs, or SSH tunneling to a VPS.
 
-I built Acme to solve this. It's a webhook proxy that:
-- Sets up in under a minute with `npx acme-cli`
-- Gives you a permanent URL like `https://acme.sh/wh_abc123`
+I built Seawatts to solve this. It's a webhook proxy that:
+- Sets up in under a minute with `npx seawatts-cli`
+- Gives you a permanent URL like `https://seawatts.sh/wh_abc123`
 - Routes webhooks to your local machine based on simple rules
 - Lets your whole team share webhook URLs (huge for us)
 - Provides E2E encryption so your data stays private
@@ -54,22 +54,22 @@ Thanks for checking it out!
 **Body:**
 Last month I lost an entire day debugging a Stripe webhook issue that turned out to be a timestamp mismatch. The problem? I was testing in production because local webhook testing is such a pain.
 
-Built Acme to fix this. It's basically ngrok but designed specifically for webhook development:
+Built Seawatts to fix this. It's basically ngrok but designed specifically for webhook development:
 
 - Permanent URLs (no more URL changes breaking your testing)
 - Team sharing (multiple devs, same webhook URL, different routing)
 - Request replay (found a bug? Replay the exact webhook)
 - Built-in request inspection (see headers, body, everything)
 
-Example: `npx acme-cli start --port 3000`
-Gives you: `https://acme.sh/wh_abc123`
+Example: `npx seawatts-cli start --port 3000`
+Gives you: `https://seawatts.sh/wh_abc123`
 
 Your team can use the same URL. Routes to whoever's actively developing.
 
 Open to feedback on the approach. Not open source yet but considering it for the CLI.
 
 #### Option C: The Comparison Angle
-**Title:** Show HN: Acme - Like ngrok but built for webhook development
+**Title:** Show HN: Seawatts - Like ngrok but built for webhook development
 
 **Body:**
 I love ngrok, but it wasn't built for webhook development. After years of webhook pain, I built something specifically for this use case.
@@ -79,7 +79,7 @@ Key differences:
 - Team collaboration built-in
 - Webhook-specific features (replay, modification, routing rules)
 - E2E encryption by default
-- No installation needed (`npx acme-cli`)
+- No installation needed (`npx seawatts-cli`)
 
 Not trying to replace ngrok for general tunneling. This is laser-focused on making webhook development not suck.
 
@@ -89,7 +89,7 @@ Curious what the HN crowd thinks about specialized vs general tools. Is there va
 **Title:** Show HN: Open-sourcing our webhook testing tool after 6 months internal use
 
 **Body:**
-We've been using Acme internally for 6 months and it's transformed our webhook development. Decided to open source the CLI and offer a hosted version.
+We've been using Seawatts internally for 6 months and it's transformed our webhook development. Decided to open source the CLI and offer a hosted version.
 
 What it does:
 - Routes webhooks to local dev environments
@@ -98,7 +98,7 @@ What it does:
 - Works with major providers out of the box
 
 GitHub: [link]
-Hosted version: https://acme.sh
+Hosted version: https://seawatts.sh
 
 The hosted version is free for individuals, planning a teams tier. Self-hosting is always free.
 
@@ -110,7 +110,7 @@ Would appreciate feedback on the architecture and security model especially.
 **Body:**
 Interesting technical challenge: How do you build a webhook proxy that's fast, secure, and handles team collaboration?
 
-Our approach with Acme:
+Our approach with Seawatts:
 1. Cloudflare Workers for edge routing (sub-50ms latency)
 2. WebSockets for real-time streaming to local envs
 3. E2E encryption using libsodium
@@ -215,4 +215,4 @@ Learned a ton building this. Happy to answer questions!
 - Build in public
 - Thank the community
 
-Generate authentic, technical content that resonates with the Hacker News community while showcasing Acme's genuine value to developers.
+Generate authentic, technical content that resonates with the Hacker News community while showcasing Seawatts's genuine value to developers.

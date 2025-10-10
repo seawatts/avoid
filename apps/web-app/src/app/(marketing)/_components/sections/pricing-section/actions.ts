@@ -46,7 +46,7 @@ export const createCheckoutSessionAction = action
 
     // Get the origin URL
     const headersList = await headers();
-    const origin = headersList.get('origin') || 'https://acme.sh';
+    const origin = headersList.get('origin') || 'https://seawatts.sh';
 
     // Create or get Stripe customer
     let customerId = org.stripeCustomerId;

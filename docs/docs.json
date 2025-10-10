@@ -1,14 +1,14 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "banner": {
-    "content": "Acme is currently in beta."
+    "content": "Seawatts is currently in beta."
   },
   "colors": {
     "dark": "#009689",
     "light": "#009689",
     "primary": "#009689"
   },
-  "description": "Acme is a simple, secure, and reliable webhook service that allows you to create and manage webhooks for your applications.",
+  "description": "Seawatts is a simple, secure, and reliable webhook service that allows you to create and manage webhooks for your applications.",
   "favicon": "/logo/favicon.png",
   "fonts": {
     "family": "Geist",
@@ -18,7 +18,7 @@
   },
   "footer": {
     "socials": {
-      "github": "https://github.com/acme-sh/acme"
+      "github": "https://github.com/seawatts-sh/seawatts"
     }
   },
   "icons": {
@@ -34,7 +34,7 @@
     "dark": "/logo/logo-dark.svg",
     "light": "/logo/logo-light.svg"
   },
-  "name": "Acme",
+  "name": "Seawatts",
   "navbar": {
     "links": [
       {
@@ -42,12 +42,12 @@
         "label": "Support"
       },
       {
-        "href": "https://acme.sh/app",
+        "href": "https://seawatts.sh/app",
         "label": "Dashboard"
       }
     ],
     "primary": {
-      "href": "https://acme.sh/app/webhooks/create?utm_source=docs",
+      "href": "https://seawatts.sh/app/webhooks/create?utm_source=docs",
       "label": "Create Webhook URL",
       "type": "button"
     }
@@ -57,12 +57,12 @@
       "anchors": [
         {
           "anchor": "Github",
-          "href": "https://github.com/acme-sh",
+          "href": "https://github.com/seawatts-sh",
           "icon": "github"
         },
         {
           "anchor": "Changelog",
-          "href": "https://github.com/acme-sh/acme/releases",
+          "href": "https://github.com/seawatts-sh/seawatts/releases",
           "icon": "newspaper"
         },
         {

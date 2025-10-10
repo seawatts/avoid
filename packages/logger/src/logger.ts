@@ -45,7 +45,7 @@ interface BufferedLogMessage extends LogMessage {
   sequence: number;
 }
 
-export class AcmeLogger {
+export class SeawattsLogger {
   private enabledNamespaces: Set<string>;
   private defaultNamespace: string;
   private useColors: boolean;
@@ -147,7 +147,7 @@ export class AcmeLogger {
   private isNamespaceEnabled(namespace: string): boolean {
     if (this.enabledNamespaces.has('*')) return true;
 
-    // Support wildcard patterns like 'acme:*'
+    // Support wildcard patterns like 'seawatts:*'
     for (const pattern of this.enabledNamespaces) {
       if (pattern.endsWith('*') && namespace.startsWith(pattern.slice(0, -1))) {
         return true;

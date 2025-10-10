@@ -7,7 +7,7 @@ import { useAuthStore } from '~/stores/auth-store';
 import { useCliStore } from '~/stores/cli-store';
 import { useRouterStore } from '~/stores/router-store';
 
-const log = debug('acme:cli:posthog');
+const log = debug('seawatts:cli:posthog');
 const nodeEnv = env.NEXT_PUBLIC_APP_ENV;
 const isProduction = nodeEnv === 'production';
 

@@ -7,7 +7,7 @@ export function registerOutputCommands(
 ) {
   // Register Focus Output command
   const focusOutputCommand = vscode.commands.registerCommand(
-    'acme.focusOutput',
+    'seawatts.focusOutput',
     () => {
       outputDestination.show();
     },
@@ -16,7 +16,7 @@ export function registerOutputCommands(
 
   // Register Clear Output command
   const clearOutputCommand = vscode.commands.registerCommand(
-    'acme.clearOutput',
+    'seawatts.clearOutput',
     () => {
       outputDestination.clear();
     },
@@ -25,7 +25,7 @@ export function registerOutputCommands(
 
   // Register Toggle Output command
   const toggleOutputCommand = vscode.commands.registerCommand(
-    'acme.toggleOutput',
+    'seawatts.toggleOutput',
     () => {
       // Since we can't directly check if the output is visible,
       // we'll just toggle it by showing/hiding

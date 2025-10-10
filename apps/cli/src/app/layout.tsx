@@ -21,7 +21,7 @@ import { useAuthStore } from '~/stores/auth-store';
 import { useCliStore } from '~/stores/cli-store';
 import { useRouterStore } from '~/stores/router-store';
 
-const log = debug('acme:cli:layout');
+const log = debug('seawatts:cli:layout');
 
 function ErrorFallback({ error }: { error: Error }) {
   // Call resetErrorBoundary() to reset the error boundary and retry the render.
@@ -61,7 +61,7 @@ function AppContent() {
           <Ascii
             color="gray"
             font="ANSI Shadow"
-            text="Acme"
+            text="Seawatts"
             width={dimensions.width}
           />
         </Box>

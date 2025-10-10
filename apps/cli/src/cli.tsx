@@ -4,11 +4,11 @@ import { join } from 'node:path';
 import { debug, defaultLogger } from '@seawatts/logger';
 import { RollingFileDestination } from '@seawatts/logger/destinations/rolling-file';
 
-const logDir = join(homedir(), '.acme');
+const logDir = join(homedir(), '.seawatts');
 defaultLogger.addDestination(
   new RollingFileDestination({
     createDirectory: true,
-    filepath: join(logDir, 'acme.log'),
+    filepath: join(logDir, 'seawatts.log'),
     maxFiles: 5,
     maxSize: 10 * 1024 * 1024, // 10MB
     rotationInterval: 60 * 60 * 1000, // 1 hour
@@ -23,7 +23,7 @@ import { setupProcessHandlers } from './lib/cli/process';
 import { capture, captureException, shutdown } from './lib/posthog';
 import { useCliStore } from './stores/cli-store';
 
-const log = debug('acme:cli');
+const log = debug('seawatts:cli');
 
 async function main() {
   try {

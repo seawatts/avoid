@@ -119,7 +119,7 @@ export function Navbar({ navs }: { navs?: NavItem[] }) {
           <div className="flex h-[56px] items-center justify-between pl-1 md:pl-2 pr-4">
             <Link className="flex items-center gap-1" href="/">
               <Icons.logo className="size-12" />
-              <p className="text-lg font-semibold text-primary">Acme</p>
+              <p className="text-lg font-semibold text-primary">Seawatts</p>
             </Link>
 
             <NavMenu navs={navs} />
@@ -157,7 +157,7 @@ export function Navbar({ navs }: { navs?: NavItem[] }) {
               </div>
               <GitHubStarsButtonWrapper
                 className="rounded-full"
-                repo="acme-sh/acme"
+                repo="seawatts-sh/seawatts"
               />
               <ThemeToggle className="rounded-full" mode="toggle" />
               <button
@@ -202,7 +202,9 @@ export function Navbar({ navs }: { navs?: NavItem[] }) {
                 <div className="flex items-center justify-between">
                   <Link className="flex items-center gap-3" href="/">
                     <Icons.logo className="size-7 md:size-10" />
-                    <p className="text-lg font-semibold text-primary">Acme</p>
+                    <p className="text-lg font-semibold text-primary">
+                      Seawatts
+                    </p>
                   </Link>
                   <button
                     className="border border-border rounded-md p-1 cursor-pointer"

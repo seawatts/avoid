@@ -71,7 +71,7 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
         return 'Package not scaffolded';
       },
     ],
-    description: 'Generate a new package for the Acme Monorepo',
+    description: 'Generate a new package for the Seawatts Monorepo',
     prompts: [
       {
         message:

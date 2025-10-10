@@ -1,4 +1,4 @@
-# 🚀 Acme Marketing Commands - Quick Reference
+# 🚀 Seawatts Marketing Commands - Quick Reference
 
 ## Core Commands
 
