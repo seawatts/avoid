@@ -56,27 +56,23 @@ export default function RootLayout(props: { children: React.ReactNode }) {
           GeistMono.variable,
         )}
       >
-        {isDevelopment && <ReactScan />}
-        <NuqsAdapter>
-          <TRPCReactProvider>
-            <Suspense>
-              <ClerkProvider>
-                <AnalyticsProviders identifyUser>
-                  <ThemeProvider
-                    attribute="class"
-                    defaultTheme="dark"
-                    enableSystem
-                  >
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+          {isDevelopment && <ReactScan />}
+          <NuqsAdapter>
+            <TRPCReactProvider>
+              <Suspense>
+                <ClerkProvider>
+                  <AnalyticsProviders identifyUser>
                     <StripeProvider>
                       {props.children}
                       <Toaster />
                     </StripeProvider>
-                  </ThemeProvider>
-                </AnalyticsProviders>
-              </ClerkProvider>
-            </Suspense>
-          </TRPCReactProvider>
-        </NuqsAdapter>
+                  </AnalyticsProviders>
+                </ClerkProvider>
+              </Suspense>
+            </TRPCReactProvider>
+          </NuqsAdapter>
+        </ThemeProvider>
       </body>
     </html>
   );
