@@ -1,8 +1,10 @@
 {
   "dependencies": {
     "@seawatts/analytics": "workspace:*",
+    "@t3-oss/env-core": "0.13.8",
     "next": "15.5.4",
-    "stripe": "19.1.0"
+    "stripe": "19.1.0",
+    "zod": "4.1.12"
   },
   "devDependencies": {
     "@seawatts/tsconfig": "workspace:*",
