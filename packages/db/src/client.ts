@@ -25,6 +25,6 @@ if (!isProd && !queryClient) {
 
 export const db = isProd
   ? drizzleVercel(sql, { schema })
-  : drizzle(queryClient, { schema });
+  : drizzle(queryClient as postgres.Sql, { schema });
 
 export { sql };
