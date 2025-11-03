@@ -8,13 +8,13 @@
   "devDependencies": {
     "@faker-js/faker": "10.1.0",
     "@seawatts/tsconfig": "workspace:*",
-    "@types/node": "24.8.1",
-    "@vitest/coverage-v8": "3.2.4",
-    "@vitest/ui": "3.2.4",
+    "@types/node": "24.10.0",
+    "@vitest/coverage-v8": "4.0.6",
+    "@vitest/ui": "4.0.6",
     "dotenv": "17.2.3",
-    "testcontainers": "11.7.1",
+    "testcontainers": "11.7.2",
     "typescript": "catalog:",
-    "vitest": "3.2.4"
+    "vitest": "4.0.6"
   },
   "engines": {
     "node": ">=20.12.0"

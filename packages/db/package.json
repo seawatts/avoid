@@ -28,11 +28,11 @@
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
     "chokidar": "4.0.3",
-    "drizzle-kit": "0.31.5",
-    "supabase": "2.51.0",
+    "drizzle-kit": "0.31.6",
+    "supabase": "2.54.11",
     "tsx": "4.20.6",
     "typescript": "catalog:",
-    "zx": "8.8.4"
+    "zx": "8.8.5"
   },
   "exports": {
     ".": "./src/index.ts",
