@@ -15,8 +15,12 @@ export const env = createEnv({
    * This way you can ensure the app isn't built with invalid env vars.
    */
   server: {
-    CLERK_SECRET_KEY: z.string(),
-    CLERK_WEBHOOK_SECRET: z.string(),
+    // Better Auth
+    BETTER_AUTH_SECRET: z.string(),
+    BETTER_AUTH_URL: z.string().url().optional(),
+    // Google OAuth
+    GOOGLE_CLIENT_ID: z.string().optional(),
+    GOOGLE_CLIENT_SECRET: z.string().optional(),
     NODE_ENV: z
       .enum(['development', 'production', 'test'])
       .default('development'),

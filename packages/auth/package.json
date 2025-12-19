@@ -1,21 +1,27 @@
 {
   "dependencies": {
-    "@clerk/backend": "2.19.1",
     "@seawatts/db": "workspace:*",
-    "@seawatts/id": "workspace:*",
     "@t3-oss/env-nextjs": "catalog:",
+    "better-auth": "catalog:",
     "drizzle-orm": "catalog:",
+    "next": "catalog:",
+    "react": "catalog:",
     "zod": "catalog:"
   },
   "devDependencies": {
     "@seawatts/tsconfig": "workspace:*",
+    "@types/react": "catalog:",
     "typescript": "catalog:"
   },
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./client": "./src/client.ts",
+    "./env": "./src/env.ts",
+    "./middleware": "./src/middleware.ts",
+    "./server": "./src/server.ts"
   },
   "license": "MIT",
-  "name": "@seawatts/test-utils",
+  "name": "@seawatts/auth",
   "private": true,
   "scripts": {
     "clean": "git clean -xdf .turbo node_modules dist",

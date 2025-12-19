@@ -1,8 +1,8 @@
 'use client';
 
-import { useOrganizationList, useUser } from '@clerk/nextjs';
 import { MetricButton, MetricLink } from '@seawatts/analytics/components';
 import { api } from '@seawatts/api/react';
+import { useListOrganizations, useSession } from '@seawatts/auth/client';
 import {
   Entitled,
   NotEntitled,
@@ -21,6 +21,7 @@ import {
 import { Input } from '@seawatts/ui/input';
 import { Label } from '@seawatts/ui/label';
 import { IconLoader2 } from '@tabler/icons-react';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { env } from '~/env.client';
 
@@ -32,12 +33,12 @@ interface NewOrgDialogProps {
 export function NewOrgDialog({ open, onOpenChange }: NewOrgDialogProps) {
   const [name, setName] = useState('');
   const [webhookName, setWebhookName] = useState('');
-  const { setActive, userMemberships } = useOrganizationList({
-    userMemberships: true,
-  });
+  const { refetch: refetchOrganizations } = useListOrganizations();
+  const router = useRouter();
 
   const [errors, setErrors] = useState<string[]>([]);
-  const { user } = useUser();
+  const { data: session } = useSession();
+  const user = session?.user;
   const isEntitled = useIsEntitled('unlimited_developers');
 
   // Webhook name validation state
@@ -52,9 +53,6 @@ export function NewOrgDialog({ open, onOpenChange }: NewOrgDialogProps) {
   // API mutations
   const { mutateAsync: createOrganization, isPending: isCreatingOrg } =
     api.org.upsert.useMutation();
-  // TODO: Re-enable when webhooks are re-implemented
-  // const { mutateAsync: createWebhook, isPending: isCreatingWebhook } =
-  //   api.webhooks.create.useMutation();
   const isCreatingWebhook = false;
 
   const isLoading = isCreatingOrg || isCreatingWebhook;
@@ -126,7 +124,6 @@ export function NewOrgDialog({ open, onOpenChange }: NewOrgDialogProps) {
 
     try {
       // Use the tRPC API to create a new organization with Stripe integration
-      // This will automatically create a Stripe customer, subscribe to the free plan, and create an API key
       const orgResult = await createOrganization({
         name: name,
       });
@@ -142,44 +139,11 @@ export function NewOrgDialog({ open, onOpenChange }: NewOrgDialogProps) {
         stripeCustomerId: orgResult.org.stripeCustomerId,
       });
 
-      // TODO: Re-enable when webhooks are re-implemented
-      // Create webhook with custom ID if provided, using the existing API
-      // if (webhookName.trim() && orgResult.apiKey?.id) {
-      //   const webhook = await createWebhook({
-      //     apiKeyId: orgResult.apiKey.id,
-      //     config: {
-      //       headers: {},
-      //       requests: {},
-      //       storage: {
-      //         maxRequestBodySize: 1024 * 1024,
-      //         maxResponseBodySize: 1024 * 1024,
-      //         storeHeaders: true,
-      //         storeRequestBody: true,
-      //         storeResponseBody: true,
-      //       },
-      //     },
-      //     id: webhookName.trim(),
-      //     name: webhookName.trim(),
-      //     orgId: orgResult.org.id, // Pass the organization ID we just created
-      //     status: 'active',
-      //   });
-
-      //   if (!webhook) {
-      //     throw new Error('Failed to create webhook');
-      //   }
-
-      //   console.log('Custom webhook created:', {
-      //     orgId: orgResult.org.id,
-      //     webhookId: webhook.id,
-      //     webhookName: webhook.name,
-      //   });
-      // }
-
-      // Set the new organization as active
-      if (!setActive) return;
-
-      await setActive({
-        organization: orgResult.org.id,
+      // Set the new organization as active via Better Auth
+      await fetch('/api/auth/organization/set-active', {
+        body: JSON.stringify({ organizationId: orgResult.org.id }),
+        headers: { 'Content-Type': 'application/json' },
+        method: 'POST',
       });
 
       // Close dialog and reset form
@@ -190,7 +154,8 @@ export function NewOrgDialog({ open, onOpenChange }: NewOrgDialogProps) {
 
       // Invalidate queries to refresh data
       apiUtils.invalidate();
-      userMemberships.revalidate();
+      refetchOrganizations();
+      router.refresh();
     } catch (error) {
       console.error('Failed to complete setup:', error);
       setErrors([
@@ -261,36 +226,6 @@ export function NewOrgDialog({ open, onOpenChange }: NewOrgDialogProps) {
               </p>
             )}
           </div>
-          {/* <div className="flex gap-2 items-center">
-            <Checkbox
-              checked={enableAutoJoiningByDomain}
-              id="auto-join"
-              onCheckedChange={(checked) =>
-                setEnableAutoJoiningByDomain(!!checked)
-              }
-            />
-            <Label htmlFor="auto-join">
-              Allow users to join by domain{' '}
-              <span className="text-muted-foreground">
-                ({user?.emailAddresses[0]?.emailAddress.split('@')[1]})
-              </span>
-            </Label>
-          </div>
-          <div className="flex gap-2 items-center">
-            <Checkbox
-              checked={membersMustHaveMatchingDomain}
-              id="restrict-domain"
-              onCheckedChange={(checked) =>
-                setMembersMustHaveMatchingDomain(!!checked)
-              }
-            />
-            <Label htmlFor="restrict-domain">
-              Only allow users with matching domain{' '}
-              <span className="text-muted-foreground">
-                ({user?.emailAddresses[0]?.emailAddress.split('@')[1]})
-              </span>
-            </Label>
-          </div> */}
           {errors.length > 0 && (
             <div className="space-y-1">
               {errors.map((error) => (

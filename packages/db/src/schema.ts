@@ -1,5 +1,5 @@
 import { createId } from '@seawatts/id';
-import { relations, sql } from 'drizzle-orm';
+import { relations } from 'drizzle-orm';
 import {
   boolean,
   json,
@@ -13,13 +13,11 @@ import {
 import { createInsertSchema, createUpdateSchema } from 'drizzle-zod';
 import { z } from 'zod';
 
-// Helper function to get user ID from Clerk JWT
-const requestingUserId = () => sql`requesting_user_id()`;
+// ============================================================================
+// ENUMS
+// ============================================================================
 
-// Helper function to get org ID from Clerk JWT
-const requestingOrgId = () => sql`requesting_org_id()`;
-
-export const userRoleEnum = pgEnum('userRole', ['admin', 'superAdmin', 'user']);
+export const userRoleEnum = pgEnum('userRole', ['admin', 'owner', 'member']);
 export const localConnectionStatusEnum = pgEnum('localConnectionStatus', [
   'connected',
   'disconnected',
@@ -34,8 +32,13 @@ export const stripeSubscriptionStatusEnum = pgEnum('stripeSubscriptionStatus', [
   'trialing',
   'unpaid',
 ]);
-
 export const apiKeyUsageTypeEnum = pgEnum('apiKeyUsageType', ['mcp-server']);
+export const invitationStatusEnum = pgEnum('invitationStatus', [
+  'pending',
+  'accepted',
+  'rejected',
+  'canceled',
+]);
 
 export const UserRoleType = z.enum(userRoleEnum.enumValues).enum;
 export const LocalConnectionStatusType = z.enum(
@@ -45,20 +48,30 @@ export const StripeSubscriptionStatusType = z.enum(
   stripeSubscriptionStatusEnum.enumValues,
 ).enum;
 export const ApiKeyUsageTypeType = z.enum(apiKeyUsageTypeEnum.enumValues).enum;
+export const InvitationStatusType = z.enum(
+  invitationStatusEnum.enumValues,
+).enum;
 
+// ============================================================================
+// BETTER AUTH TABLES
+// ============================================================================
+
+// Users table - Better Auth compatible
 export const Users = pgTable('user', {
-  avatarUrl: text('avatarUrl'),
-  clerkId: text('clerkId').unique().notNull(),
-  createdAt: timestamp('createdAt').defaultNow().notNull(),
-  email: text('email').notNull(),
-  firstName: text('firstName'),
-  id: varchar('id', { length: 128 }).notNull().primaryKey(),
-  lastLoggedInAt: timestamp('lastLoggedInAt', {
+  createdAt: timestamp('createdAt', {
     mode: 'date',
     withTimezone: true,
-  }),
-  lastName: text('lastName'),
-  online: boolean('online').default(false).notNull(),
+  })
+    .defaultNow()
+    .notNull(),
+  email: text('email').notNull().unique(),
+  emailVerified: boolean('emailVerified').default(false).notNull(),
+  id: varchar('id', { length: 128 })
+    .$defaultFn(() => createId({ prefix: 'user' }))
+    .notNull()
+    .primaryKey(),
+  image: text('image'),
+  name: text('name').notNull(),
   updatedAt: timestamp('updatedAt', {
     mode: 'date',
     withTimezone: true,
@@ -66,10 +79,12 @@ export const Users = pgTable('user', {
 });
 
 export const UsersRelations = relations(Users, ({ many }) => ({
+  accounts: many(Accounts),
   apiKeys: many(ApiKeys),
   apiKeyUsage: many(ApiKeyUsage),
   authCodes: many(AuthCodes),
   orgMembers: many(OrgMembers),
+  sessions: many(Sessions),
 }));
 
 export type UserType = typeof Users.$inferSelect;
@@ -80,22 +95,142 @@ export const CreateUserSchema = createInsertSchema(Users).omit({
   updatedAt: true,
 });
 
-export const Orgs = pgTable('orgs', {
-  clerkOrgId: text('clerkOrgId').unique().notNull(),
+// Sessions table - Better Auth required
+export const Sessions = pgTable('session', {
+  // Organization context - Better Auth organization plugin
+  activeOrganizationId: varchar('activeOrganizationId', {
+    length: 128,
+  }).references(() => Orgs.id, { onDelete: 'set null' }),
   createdAt: timestamp('createdAt', {
     mode: 'date',
     withTimezone: true,
-  }).defaultNow(),
-  createdByUserId: varchar('createdByUserId')
-    .references(() => Users.id, {
-      onDelete: 'cascade',
-    })
+  })
+    .defaultNow()
+    .notNull(),
+  expiresAt: timestamp('expiresAt', {
+    mode: 'date',
+    withTimezone: true,
+  }).notNull(),
+  id: varchar('id', { length: 128 })
+    .$defaultFn(() => createId({ prefix: 'sess' }))
+    .notNull()
+    .primaryKey(),
+  ipAddress: text('ipAddress'),
+  token: text('token').notNull().unique(),
+  updatedAt: timestamp('updatedAt', {
+    mode: 'date',
+    withTimezone: true,
+  }).$onUpdateFn(() => new Date()),
+  userAgent: text('userAgent'),
+  userId: varchar('userId', { length: 128 })
+    .references(() => Users.id, { onDelete: 'cascade' })
+    .notNull(),
+});
+
+export const SessionsRelations = relations(Sessions, ({ one }) => ({
+  activeOrganization: one(Orgs, {
+    fields: [Sessions.activeOrganizationId],
+    references: [Orgs.id],
+  }),
+  user: one(Users, {
+    fields: [Sessions.userId],
+    references: [Users.id],
+  }),
+}));
+
+export type SessionType = typeof Sessions.$inferSelect;
+
+// Accounts table - Better Auth OAuth providers
+export const Accounts = pgTable('account', {
+  accessToken: text('accessToken'),
+  accessTokenExpiresAt: timestamp('accessTokenExpiresAt', {
+    mode: 'date',
+    withTimezone: true,
+  }),
+  accountId: text('accountId').notNull(),
+  createdAt: timestamp('createdAt', {
+    mode: 'date',
+    withTimezone: true,
+  })
+    .defaultNow()
+    .notNull(),
+  id: varchar('id', { length: 128 })
+    .$defaultFn(() => createId({ prefix: 'acc' }))
+    .notNull()
+    .primaryKey(),
+  idToken: text('idToken'),
+  password: text('password'),
+  providerId: text('providerId').notNull(),
+  refreshToken: text('refreshToken'),
+  refreshTokenExpiresAt: timestamp('refreshTokenExpiresAt', {
+    mode: 'date',
+    withTimezone: true,
+  }),
+  scope: text('scope'),
+  updatedAt: timestamp('updatedAt', {
+    mode: 'date',
+    withTimezone: true,
+  }).$onUpdateFn(() => new Date()),
+  userId: varchar('userId', { length: 128 })
+    .references(() => Users.id, { onDelete: 'cascade' })
+    .notNull(),
+});
+
+export const AccountsRelations = relations(Accounts, ({ one }) => ({
+  user: one(Users, {
+    fields: [Accounts.userId],
+    references: [Users.id],
+  }),
+}));
+
+export type AccountType = typeof Accounts.$inferSelect;
+
+// Verifications table - Better Auth email verification
+export const Verifications = pgTable('verification', {
+  createdAt: timestamp('createdAt', {
+    mode: 'date',
+    withTimezone: true,
+  })
+    .defaultNow()
+    .notNull(),
+  expiresAt: timestamp('expiresAt', {
+    mode: 'date',
+    withTimezone: true,
+  }).notNull(),
+  id: varchar('id', { length: 128 })
+    .$defaultFn(() => createId({ prefix: 'ver' }))
+    .notNull()
+    .primaryKey(),
+  identifier: text('identifier').notNull(),
+  updatedAt: timestamp('updatedAt', {
+    mode: 'date',
+    withTimezone: true,
+  }).$onUpdateFn(() => new Date()),
+  value: text('value').notNull(),
+});
+
+export type VerificationType = typeof Verifications.$inferSelect;
+
+// ============================================================================
+// ORGANIZATION TABLES
+// ============================================================================
+
+// Organizations table - Better Auth organization plugin compatible
+export const Orgs = pgTable('organization', {
+  createdAt: timestamp('createdAt', {
+    mode: 'date',
+    withTimezone: true,
+  })
+    .defaultNow()
     .notNull(),
   id: varchar('id', { length: 128 })
     .$defaultFn(() => createId({ prefix: 'org' }))
     .notNull()
     .primaryKey(),
-  name: text('name').notNull().unique(),
+  logo: text('logo'),
+  metadata: json('metadata').$type<Record<string, unknown>>(),
+  name: text('name').notNull(),
+  slug: text('slug').unique(),
   // Stripe fields
   stripeCustomerId: text('stripeCustomerId'),
   stripeSubscriptionId: text('stripeSubscriptionId'),
@@ -112,66 +247,52 @@ export type OrgType = typeof Orgs.$inferSelect;
 
 export const updateOrgSchema = createInsertSchema(Orgs).omit({
   createdAt: true,
-  createdByUserId: true,
   id: true,
   updatedAt: true,
 });
 
-export const OrgsRelations = relations(Orgs, ({ one, many }) => ({
+export const OrgsRelations = relations(Orgs, ({ many }) => ({
   apiKeys: many(ApiKeys),
   apiKeyUsage: many(ApiKeyUsage),
   authCodes: many(AuthCodes),
-  createdByUser: one(Users, {
-    fields: [Orgs.createdByUserId],
-    references: [Users.id],
-  }),
-  orgMembers: many(OrgMembers),
+  invitations: many(Invitations),
+  members: many(OrgMembers),
+  sessions: many(Sessions),
 }));
 
-// Company Members Table
+// Organization Members table - Better Auth organization plugin compatible
 export const OrgMembers = pgTable(
-  'orgMembers',
+  'member',
   {
     createdAt: timestamp('createdAt', {
       mode: 'date',
       withTimezone: true,
-    }).defaultNow(),
+    })
+      .defaultNow()
+      .notNull(),
     id: varchar('id', { length: 128 })
       .$defaultFn(() => createId({ prefix: 'member' }))
       .notNull()
       .primaryKey(),
-    orgId: varchar('orgId')
-      .references(() => Orgs.id, {
-        onDelete: 'cascade',
-      })
-      .notNull()
-      .default(requestingOrgId()),
-    role: userRoleEnum('role').default('user').notNull(),
-    updatedAt: timestamp('updatedAt', {
-      mode: 'date',
-      withTimezone: true,
-    }).$onUpdateFn(() => new Date()),
-    userId: varchar('userId')
-      .references(() => Users.id, {
-        onDelete: 'cascade',
-      })
-      .notNull()
-      .default(requestingUserId()),
+    organizationId: varchar('organizationId', { length: 128 })
+      .references(() => Orgs.id, { onDelete: 'cascade' })
+      .notNull(),
+    role: userRoleEnum('role').default('member').notNull(),
+    userId: varchar('userId', { length: 128 })
+      .references(() => Users.id, { onDelete: 'cascade' })
+      .notNull(),
   },
-  (table) => [
-    // Add unique constraint for userId and orgId combination using the simpler syntax
-    unique().on(table.userId, table.orgId),
-  ],
+  (table) => [unique().on(table.userId, table.organizationId)],
 );
 
 export type OrgMembersType = typeof OrgMembers.$inferSelect & {
   user?: UserType;
-  org?: OrgType;
+  organization?: OrgType;
 };
 
 export const OrgMembersRelations = relations(OrgMembers, ({ one }) => ({
-  org: one(Orgs, {
-    fields: [OrgMembers.orgId],
+  organization: one(Orgs, {
+    fields: [OrgMembers.organizationId],
     references: [Orgs.id],
   }),
   user: one(Users, {
@@ -180,13 +301,58 @@ export const OrgMembersRelations = relations(OrgMembers, ({ one }) => ({
   }),
 }));
 
+// Invitations table - Better Auth organization plugin
+export const Invitations = pgTable('invitation', {
+  createdAt: timestamp('createdAt', {
+    mode: 'date',
+    withTimezone: true,
+  })
+    .defaultNow()
+    .notNull(),
+  email: text('email').notNull(),
+  expiresAt: timestamp('expiresAt', {
+    mode: 'date',
+    withTimezone: true,
+  }).notNull(),
+  id: varchar('id', { length: 128 })
+    .$defaultFn(() => createId({ prefix: 'inv' }))
+    .notNull()
+    .primaryKey(),
+  inviterId: varchar('inviterId', { length: 128 })
+    .references(() => Users.id, { onDelete: 'cascade' })
+    .notNull(),
+  organizationId: varchar('organizationId', { length: 128 })
+    .references(() => Orgs.id, { onDelete: 'cascade' })
+    .notNull(),
+  role: userRoleEnum('role').default('member').notNull(),
+  status: invitationStatusEnum('status').default('pending').notNull(),
+});
+
+export type InvitationType = typeof Invitations.$inferSelect;
+
+export const InvitationsRelations = relations(Invitations, ({ one }) => ({
+  inviter: one(Users, {
+    fields: [Invitations.inviterId],
+    references: [Users.id],
+  }),
+  organization: one(Orgs, {
+    fields: [Invitations.organizationId],
+    references: [Orgs.id],
+  }),
+}));
+
+// ============================================================================
+// APPLICATION-SPECIFIC TABLES
+// ============================================================================
+
+// Auth Codes table (for CLI authentication)
 export const AuthCodes = pgTable('authCodes', {
   createdAt: timestamp('createdAt', {
     mode: 'date',
     withTimezone: true,
   })
-    .notNull()
-    .defaultNow(),
+    .defaultNow()
+    .notNull(),
   expiresAt: timestamp('expiresAt', {
     mode: 'date',
     withTimezone: true,
@@ -197,12 +363,9 @@ export const AuthCodes = pgTable('authCodes', {
     .$defaultFn(() => createId({ prefix: 'ac' }))
     .notNull()
     .primaryKey(),
-  orgId: varchar('orgId')
-    .references(() => Orgs.id, {
-      onDelete: 'cascade',
-    })
-    .notNull()
-    .default(requestingOrgId()),
+  organizationId: varchar('organizationId', { length: 128 })
+    .references(() => Orgs.id, { onDelete: 'cascade' })
+    .notNull(),
   sessionId: text('sessionId').notNull(),
   updatedAt: timestamp('updatedAt', {
     mode: 'date',
@@ -212,19 +375,16 @@ export const AuthCodes = pgTable('authCodes', {
     mode: 'date',
     withTimezone: true,
   }),
-  userId: varchar('userId')
-    .references(() => Users.id, {
-      onDelete: 'cascade',
-    })
-    .notNull()
-    .default(requestingUserId()),
+  userId: varchar('userId', { length: 128 })
+    .references(() => Users.id, { onDelete: 'cascade' })
+    .notNull(),
 });
 
 export type AuthCodeType = typeof AuthCodes.$inferSelect;
 
 export const AuthCodesRelations = relations(AuthCodes, ({ one }) => ({
-  org: one(Orgs, {
-    fields: [AuthCodes.orgId],
+  organization: one(Orgs, {
+    fields: [AuthCodes.organizationId],
     references: [Orgs.id],
   }),
   user: one(Users, {
@@ -239,8 +399,8 @@ export const ApiKeys = pgTable('apiKeys', {
     mode: 'date',
     withTimezone: true,
   })
-    .notNull()
-    .defaultNow(),
+    .defaultNow()
+    .notNull(),
   expiresAt: timestamp('expiresAt', {
     mode: 'date',
     withTimezone: true,
@@ -259,22 +419,16 @@ export const ApiKeys = pgTable('apiKeys', {
     withTimezone: true,
   }),
   name: text('name').notNull(),
-  orgId: varchar('orgId')
-    .references(() => Orgs.id, {
-      onDelete: 'cascade',
-    })
-    .notNull()
-    .default(requestingOrgId()),
+  organizationId: varchar('organizationId', { length: 128 })
+    .references(() => Orgs.id, { onDelete: 'cascade' })
+    .notNull(),
   updatedAt: timestamp('updatedAt', {
     mode: 'date',
     withTimezone: true,
   }).$onUpdateFn(() => new Date()),
-  userId: varchar('userId')
-    .references(() => Users.id, {
-      onDelete: 'cascade',
-    })
-    .notNull()
-    .default(requestingUserId()),
+  userId: varchar('userId', { length: 128 })
+    .references(() => Users.id, { onDelete: 'cascade' })
+    .notNull(),
 });
 
 export type ApiKeyType = typeof ApiKeys.$inferSelect;
@@ -283,7 +437,7 @@ export const CreateApiKeySchema = createInsertSchema(ApiKeys).omit({
   createdAt: true,
   id: true,
   lastUsedAt: true,
-  orgId: true,
+  organizationId: true,
   updatedAt: true,
   userId: true,
 });
@@ -291,14 +445,14 @@ export const CreateApiKeySchema = createInsertSchema(ApiKeys).omit({
 export const UpdateApiKeySchema = createUpdateSchema(ApiKeys).omit({
   createdAt: true,
   id: true,
-  orgId: true,
+  organizationId: true,
   updatedAt: true,
   userId: true,
 });
 
 export const ApiKeysRelations = relations(ApiKeys, ({ one, many }) => ({
-  org: one(Orgs, {
-    fields: [ApiKeys.orgId],
+  organization: one(Orgs, {
+    fields: [ApiKeys.organizationId],
     references: [Orgs.id],
   }),
   usage: many(ApiKeyUsage),
@@ -311,39 +465,30 @@ export const ApiKeysRelations = relations(ApiKeys, ({ one, many }) => ({
 // API Key Usage Table
 export const ApiKeyUsage = pgTable('apiKeyUsage', {
   apiKeyId: varchar('apiKeyId', { length: 128 })
-    .references(() => ApiKeys.id, {
-      onDelete: 'cascade',
-    })
+    .references(() => ApiKeys.id, { onDelete: 'cascade' })
     .notNull(),
   createdAt: timestamp('createdAt', {
     mode: 'date',
     withTimezone: true,
   })
-    .notNull()
-    .defaultNow(),
+    .defaultNow()
+    .notNull(),
   id: varchar('id', { length: 128 })
     .$defaultFn(() => createId({ prefix: 'aku' }))
     .notNull()
     .primaryKey(),
-  // Generic metadata for different usage types
   metadata: json('metadata').$type<Record<string, unknown>>(),
-  orgId: varchar('orgId')
-    .references(() => Orgs.id, {
-      onDelete: 'cascade',
-    })
-    .notNull()
-    .default(requestingOrgId()),
+  organizationId: varchar('organizationId', { length: 128 })
+    .references(() => Orgs.id, { onDelete: 'cascade' })
+    .notNull(),
   type: apiKeyUsageTypeEnum('type').notNull(),
   updatedAt: timestamp('updatedAt', {
     mode: 'date',
     withTimezone: true,
   }).$onUpdateFn(() => new Date()),
-  userId: varchar('userId')
-    .references(() => Users.id, {
-      onDelete: 'cascade',
-    })
-    .notNull()
-    .default(requestingUserId()),
+  userId: varchar('userId', { length: 128 })
+    .references(() => Users.id, { onDelete: 'cascade' })
+    .notNull(),
 });
 
 export type ApiKeyUsageType = typeof ApiKeyUsage.$inferSelect;
@@ -351,7 +496,7 @@ export type ApiKeyUsageType = typeof ApiKeyUsage.$inferSelect;
 export const CreateApiKeyUsageSchema = createInsertSchema(ApiKeyUsage).omit({
   createdAt: true,
   id: true,
-  orgId: true,
+  organizationId: true,
   updatedAt: true,
   userId: true,
 });
@@ -361,8 +506,8 @@ export const ApiKeyUsageRelations = relations(ApiKeyUsage, ({ one }) => ({
     fields: [ApiKeyUsage.apiKeyId],
     references: [ApiKeys.id],
   }),
-  org: one(Orgs, {
-    fields: [ApiKeyUsage.orgId],
+  organization: one(Orgs, {
+    fields: [ApiKeyUsage.organizationId],
     references: [Orgs.id],
   }),
   user: one(Users, {
@@ -371,12 +516,15 @@ export const ApiKeyUsageRelations = relations(ApiKeyUsage, ({ one }) => ({
   }),
 }));
 
+// Short URLs Table
 export const ShortUrls = pgTable('shortUrls', {
   code: varchar('code', { length: 128 }).notNull(),
   createdAt: timestamp('createdAt', {
     mode: 'date',
     withTimezone: true,
-  }).defaultNow(),
+  })
+    .defaultNow()
+    .notNull(),
   expiresAt: timestamp('expiresAt', {
     mode: 'date',
     withTimezone: true,
@@ -386,23 +534,17 @@ export const ShortUrls = pgTable('shortUrls', {
     .notNull()
     .primaryKey(),
   isActive: boolean('isActive').notNull().default(true),
-  orgId: varchar('orgId')
-    .references(() => Orgs.id, {
-      onDelete: 'cascade',
-    })
-    .notNull()
-    .default(requestingOrgId()),
+  organizationId: varchar('organizationId', { length: 128 })
+    .references(() => Orgs.id, { onDelete: 'cascade' })
+    .notNull(),
   redirectUrl: text('redirectUrl').notNull(),
   updatedAt: timestamp('updatedAt', {
     mode: 'date',
     withTimezone: true,
   }).$onUpdateFn(() => new Date()),
-  userId: varchar('userId')
-    .references(() => Users.id, {
-      onDelete: 'cascade',
-    })
-    .notNull()
-    .default(requestingUserId()),
+  userId: varchar('userId', { length: 128 })
+    .references(() => Users.id, { onDelete: 'cascade' })
+    .notNull(),
 });
 
 export type ShortUrlType = typeof ShortUrls.$inferSelect;
@@ -410,7 +552,7 @@ export type ShortUrlType = typeof ShortUrls.$inferSelect;
 export const CreateShortUrlSchema = createInsertSchema(ShortUrls).omit({
   createdAt: true,
   id: true,
-  orgId: true,
+  organizationId: true,
   updatedAt: true,
   userId: true,
 });
@@ -418,14 +560,14 @@ export const CreateShortUrlSchema = createInsertSchema(ShortUrls).omit({
 export const UpdateShortUrlSchema = createUpdateSchema(ShortUrls).omit({
   createdAt: true,
   id: true,
-  orgId: true,
+  organizationId: true,
   updatedAt: true,
   userId: true,
 });
 
 export const ShortUrlsRelations = relations(ShortUrls, ({ one }) => ({
-  org: one(Orgs, {
-    fields: [ShortUrls.orgId],
+  organization: one(Orgs, {
+    fields: [ShortUrls.organizationId],
     references: [Orgs.id],
   }),
   user: one(Users, {

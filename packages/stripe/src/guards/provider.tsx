@@ -1,6 +1,6 @@
 'use client';
 
-import { useOrganization } from '@clerk/nextjs';
+import { useActiveOrganization } from '@seawatts/auth/client';
 import {
   createContext,
   type ReactNode,
@@ -41,7 +41,7 @@ interface StripeProviderProps {
 }
 
 export function StripeProvider({ children }: StripeProviderProps) {
-  const { organization } = useOrganization();
+  const { data: organization } = useActiveOrganization();
   const [subscriptionInfo, setSubscriptionInfo] = useState<
     StripeContextType['subscriptionInfo']
   >({

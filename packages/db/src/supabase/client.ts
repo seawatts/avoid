@@ -1,4 +1,3 @@
-import { useSession } from '@clerk/nextjs';
 import { debug } from '@seawatts/logger';
 import { createBrowserClient } from '@supabase/ssr';
 import { useEffect, useMemo } from 'react';
@@ -7,8 +6,12 @@ import type { Database } from './types';
 
 const log = debug('seawatts:lib:supabase:client');
 
-export const useClient = () => {
-  const { session } = useSession();
+export interface UseClientOptions {
+  sessionToken?: string | null;
+}
+
+export const useClient = (options: UseClientOptions = {}) => {
+  const { sessionToken } = options;
 
   const client = useMemo(
     () =>
@@ -17,7 +20,7 @@ export const useClient = () => {
         env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
         {
           async accessToken() {
-            return session?.getToken({ template: 'supabase' }) ?? null;
+            return sessionToken ?? null;
           },
           realtime: {
             params: {
@@ -26,7 +29,7 @@ export const useClient = () => {
           },
         },
       ),
-    [session],
+    [sessionToken],
   );
 
   useEffect(() => {

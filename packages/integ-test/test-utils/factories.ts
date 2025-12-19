@@ -10,14 +10,12 @@ export class TestFactories {
     overrides?: Partial<schema.UserType>,
   ): Promise<schema.UserType> {
     const user = {
-      avatarUrl: faker.image.avatar(),
-      clerkId: `clerk_${faker.string.alphanumeric(20)}`,
       createdAt: new Date(),
       email: faker.internet.email(),
-      firstName: faker.person.firstName(),
+      emailVerified: false,
       id: createId({ prefix: 'user' }),
-      lastName: faker.person.lastName(),
-      online: false,
+      image: faker.image.avatar(),
+      name: `${faker.person.firstName()} ${faker.person.lastName()}`,
       ...overrides,
     };
 
@@ -34,14 +32,11 @@ export class TestFactories {
   async createOrg(
     overrides?: Partial<schema.OrgType>,
   ): Promise<schema.OrgType> {
-    const user = await this.createUser();
-
     const org = {
-      clerkOrgId: `org_${faker.string.alphanumeric(20)}`,
       createdAt: new Date(),
-      createdByUserId: user.id,
       id: createId({ prefix: 'org' }),
       name: faker.company.name(),
+      slug: faker.helpers.slugify(faker.company.name()).toLowerCase(),
       stripeCustomerId: faker.string.alphanumeric(20),
       stripeSubscriptionId: faker.string.alphanumeric(20),
       stripeSubscriptionStatus: 'active' as const,
@@ -57,13 +52,13 @@ export class TestFactories {
 
   async createOrgMember(
     userId: string,
-    orgId: string,
-    role: 'user' | 'admin' | 'superAdmin' = 'user',
+    organizationId: string,
+    role: 'member' | 'admin' | 'owner' = 'member',
   ): Promise<schema.OrgMembersType> {
     const member = {
       createdAt: new Date(),
       id: createId({ prefix: 'member' }),
-      orgId,
+      organizationId,
       role,
       userId,
     };
@@ -80,7 +75,7 @@ export class TestFactories {
 
   async createApiKey(
     userId: string,
-    orgId: string,
+    organizationId: string,
     overrides?: Partial<schema.ApiKeyType>,
   ): Promise<schema.ApiKeyType> {
     const apiKey = {
@@ -89,7 +84,7 @@ export class TestFactories {
       isActive: true,
       key: faker.string.alphanumeric(64),
       name: faker.lorem.words(2),
-      orgId,
+      organizationId,
       userId,
       ...overrides,
     };
@@ -112,12 +107,9 @@ export class TestFactories {
     const user = await this.createUser(overrides?.user);
 
     // Create org
-    const org = await this.createOrg({
-      createdByUserId: user.id,
-      ...overrides?.org,
-    });
+    const org = await this.createOrg(overrides?.org);
 
-    // Add user as org member
+    // Add user as org member with admin role
     await this.createOrgMember(user.id, org.id, 'admin');
 
     return { org, user };
