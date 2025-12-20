@@ -1,12 +1,9 @@
 {
   "dependencies": {
-    "@react-email/components": "1.0.2",
     "@react-email/render": "2.0.0",
-    "@t3-oss/env-core": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",
-    "resend": "6.6.0",
-    "zod": "catalog:"
+    "resend": "6.6.0"
   },
   "devDependencies": {
     "@seawatts/tsconfig": "workspace:*",

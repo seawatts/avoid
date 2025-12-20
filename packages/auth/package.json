@@ -3,7 +3,6 @@
     "@seawatts/db": "workspace:*",
     "@t3-oss/env-nextjs": "catalog:",
     "better-auth": "catalog:",
-    "drizzle-orm": "catalog:",
     "next": "catalog:",
     "react": "catalog:",
     "zod": "catalog:"
