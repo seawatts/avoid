@@ -1,24 +1,31 @@
-import { createEnv } from '@t3-oss/env-core';
+import { createEnv } from '@t3-oss/env-nextjs';
+import { vercel } from '@t3-oss/env-nextjs/presets-zod';
 import { z } from 'zod';
 
 export const env = createEnv({
-  /**
-   * You can't destructure `process.env` as a regular object in Next.js, so we have to do
-   * it manually here.
-   */
+  client: {
+    NEXT_PUBLIC_API_URL: z.string().url().optional(),
+  },
+  extends: [vercel()],
+
   runtimeEnv: {
     EMAIL_FROM: process.env.EMAIL_FROM,
     EMAIL_REPLY_TO: process.env.EMAIL_REPLY_TO,
+    NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
+    NODE_ENV: process.env.NODE_ENV,
     RESEND_API_KEY: process.env.RESEND_API_KEY,
   },
-  /**
-   * Specify your server-side environment variables schema here.
-   * This way you can ensure the app isn't built with invalid env vars.
-   */
+
   server: {
     EMAIL_FROM: z.string().default('noreply@seawatts.sh'),
     EMAIL_REPLY_TO: z.string().default('noreply@seawatts.sh'),
     RESEND_API_KEY: z.string(),
+  },
+
+  shared: {
+    NODE_ENV: z
+      .enum(['development', 'production', 'test'])
+      .default('development'),
   },
 
   skipValidation:

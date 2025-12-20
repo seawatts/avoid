@@ -1,7 +1,7 @@
 import { debug } from '@seawatts/logger';
 import { createBrowserClient } from '@supabase/ssr';
 import { useEffect, useMemo } from 'react';
-import { env } from '../env.client';
+import { env } from '../env';
 import type { Database } from './types';
 
 const log = debug('seawatts:lib:supabase:client');

@@ -1,7 +1,7 @@
 import { createServerClient } from '@supabase/ssr';
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
-import { env } from '../env.client';
+import { env } from '../env';
 
 export interface SessionInfo {
   token?: string | null;

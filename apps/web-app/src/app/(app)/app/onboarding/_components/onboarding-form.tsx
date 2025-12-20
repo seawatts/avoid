@@ -29,7 +29,7 @@ import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { env } from '~/env.client';
+import { env } from '~/env';
 
 // Constants
 const VALIDATION_REGEX = /^[a-z0-9-_]+$/;

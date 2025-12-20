@@ -19,7 +19,7 @@ import { Textarea } from '@seawatts/ui/textarea';
 import { BookOpen, FileText, HelpCircle, Terminal } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { env } from '~/env.client';
+import { env } from '~/env';
 
 interface LocalDevelopmentSetupProps {
   orgName: string;

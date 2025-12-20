@@ -11,7 +11,7 @@ import {
 import { CopyButton } from '@seawatts/ui/custom/copy-button';
 import { Skeleton } from '@seawatts/ui/skeleton';
 import { useQuery } from '@tanstack/react-query';
-import { env } from '~/env.client';
+import { env } from '~/env';
 import { maskApiKey } from '~/lib/mask-api-key';
 
 export function SectionCards() {

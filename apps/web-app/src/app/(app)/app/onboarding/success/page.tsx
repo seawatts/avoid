@@ -14,7 +14,7 @@ import { cn } from '@seawatts/ui/lib/utils';
 import { motion } from 'framer-motion';
 import { useSearchParams } from 'next/navigation';
 import { useState } from 'react';
-import { env } from '~/env.client';
+import { env } from '~/env';
 
 // TODO: Re-enable when webhook wizard is re-implemented
 // import { RealTimeEventStream } from '../../_components/webhook-wizzard/real-time-event-stream';

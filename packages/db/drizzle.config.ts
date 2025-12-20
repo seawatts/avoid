@@ -1,6 +1,6 @@
 import type { Config } from 'drizzle-kit';
 
-import { env } from './src/env.server';
+import { env } from './src/env';
 
 const nonPoolingUrl = (env.POSTGRES_URL ?? '').replace(':6543', ':5432');
 

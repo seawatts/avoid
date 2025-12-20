@@ -13,7 +13,7 @@ import { AnalyticsProviders } from '@seawatts/analytics/providers';
 import { TRPCReactProvider } from '@seawatts/api/react';
 import { StripeProvider } from '@seawatts/stripe/guards/client';
 import { Suspense } from 'react';
-import { env } from '~/env.server';
+import { env } from '~/env';
 
 export const metadata: Metadata = {
   description: 'Seawatts is a tool for developers to manage their webhooks',

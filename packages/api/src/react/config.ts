@@ -1,6 +1,6 @@
 import { httpBatchStreamLink, loggerLink } from '@trpc/client';
 import SuperJSON from 'superjson';
-import { env } from '../env.client';
+import { env } from '../env';
 
 export const getBaseUrl = (baseUrl?: string) => {
   if (baseUrl) return baseUrl;

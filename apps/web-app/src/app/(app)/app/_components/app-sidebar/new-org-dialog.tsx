@@ -24,7 +24,7 @@ import { IconLoader2 } from '@tabler/icons-react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { env } from '~/env.client';
+import { env } from '~/env';
 
 interface NewOrgDialogProps {
   open: boolean;

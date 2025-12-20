@@ -1,7 +1,7 @@
 import { createServerClient } from '@supabase/ssr';
 import { cookies } from 'next/headers';
 import { cache } from 'react';
-import { env } from '../env.client';
+import { env } from '../env';
 import type { Database } from './types';
 
 export interface SessionInfo {
