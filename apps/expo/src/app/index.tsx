@@ -60,20 +60,30 @@ function CreateUser() {
         placeholder="Name"
         value={firstName}
       />
-      {error?.data?.zodError?.fieldErrors.title && (
-        <Text className="text-destructive mb-2">
-          {error.data.zodError.fieldErrors.title}
-        </Text>
-      )}
+      {error?.data?.zodError?.fieldErrors &&
+        (
+          error.data.zodError.fieldErrors as Record<
+            string,
+            string[] | undefined
+          >
+        ).name && (
+          <Text className="text-destructive mb-2">
+            {
+              (
+                error.data.zodError.fieldErrors as Record<
+                  string,
+                  string[] | undefined
+                >
+              ).name?.[0]
+            }
+          </Text>
+        )}
       <Pressable
         className="bg-primary flex items-center rounded-sm p-2"
         onPress={() => {
           mutate({
-            clerkId: 'test',
             email: 'test@test.com',
-            firstName,
-            lastName: 'test',
-            online: true,
+            name: firstName || 'Test User',
           });
         }}
       >

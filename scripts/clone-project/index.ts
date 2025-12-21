@@ -15,7 +15,9 @@ import { buildLocalDevOverrides, buildSupabaseCredentials } from './builders';
 import {
   readInfisicalConfig,
   readSupabaseConfig,
+  sanitizeSchemaName,
   updateInfisicalConfig,
+  updateProjectConfigs,
 } from './config';
 import {
   createRepoFromTemplate,
@@ -613,6 +615,7 @@ async function createVercelResources(
 async function cloneSecrets(
   sourceProjectId: string,
   targetProjectId: string,
+  projectName: string,
   resources: CreatedResources,
   options: CliOptions,
 ): Promise<void> {
@@ -702,6 +705,23 @@ async function cloneSecrets(
   } else {
     await updateInfisicalConfig(targetProjectId);
     p.log.success('Updated .infisical.json');
+  }
+
+  // Update supabase config.toml and drizzle schema with project name
+  const dbSchemaName = sanitizeSchemaName(projectName);
+  if (options.dryRun) {
+    p.log.info(
+      `Would update supabase config.toml project_id to: ${projectName}`,
+    );
+    p.log.info(
+      `Would update drizzle schema to use PostgreSQL schema: ${dbSchemaName}`,
+    );
+  } else {
+    await updateProjectConfigs(projectName);
+    p.log.success(`Updated supabase config.toml (project_id: ${projectName})`);
+    p.log.success(
+      `Updated drizzle schema (PostgreSQL schema: ${dbSchemaName})`,
+    );
   }
 }
 
@@ -963,6 +983,7 @@ async function main() {
       await cloneSecrets(
         setup.sourceProjectId,
         resources.infisicalProjectId,
+        projectName,
         resources,
         options,
       );
