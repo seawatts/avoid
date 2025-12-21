@@ -77,9 +77,6 @@ await seed(db, {
   },
   Orgs: {
     columns: {
-      clerkOrgId: funcs.default({
-        defaultValue: orgId,
-      }),
       id: funcs.default({ defaultValue: orgId }),
       name: funcs.default({ defaultValue: orgName }),
       stripeCustomerId: funcs.default({ defaultValue: stripeCustomerId }),
@@ -94,9 +91,6 @@ await seed(db, {
   },
   Users: {
     columns: {
-      clerkId: funcs.default({
-        defaultValue: userId,
-      }),
       email: funcs.default({ defaultValue: 'chris.watts.t@gmail.com' }),
       firstName: funcs.default({ defaultValue: 'Chris' }),
       id: funcs.default({ defaultValue: userId }),

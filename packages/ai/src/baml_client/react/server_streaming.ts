@@ -49,10 +49,10 @@ export const SuggestImprovements = async (
   accessibility: string,
   structure: string,
 ): Promise<ReadableStream<Uint8Array>> => {
-  const stream = b.stream.SuggestImprovements(
+  const __stream__ = b.stream.SuggestImprovements(
     seo,
     accessibility,
     structure,
   );
-  return Promise.resolve(stream.toStreamable());
+  return Promise.resolve(__stream__.toStreamable());
 };

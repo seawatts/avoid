@@ -35,7 +35,7 @@ export function NewOrgDialog({ open, onOpenChange }: NewOrgDialogProps) {
   const api = useTRPC();
   const [name, setName] = useState('');
   const [webhookName, setWebhookName] = useState('');
-  const { refetch: refetchOrganizations } = useListOrganizations();
+  const organizationsQuery = useListOrganizations();
   const router = useRouter();
 
   const [errors, setErrors] = useState<string[]>([]);
@@ -63,7 +63,7 @@ export function NewOrgDialog({ open, onOpenChange }: NewOrgDialogProps) {
   const webhookUrl = (() => {
     const baseUrl =
       env.NEXT_PUBLIC_WEBHOOK_BASE_URL ||
-      env.NEXT_PUBLIC_API_URL ||
+      env.NEXT_PUBLIC_APP_URL ||
       'https://seawatts.sh';
     if (!name) return `${baseUrl}/{org-name}/{webhook-name}`;
     if (!webhookName) return `${baseUrl}/${name}/{webhook-name}`;
@@ -156,7 +156,9 @@ export function NewOrgDialog({ open, onOpenChange }: NewOrgDialogProps) {
 
       // Invalidate queries to refresh data
       queryClient.invalidateQueries(api.pathFilter());
-      refetchOrganizations();
+      if ('refetch' in organizationsQuery) {
+        organizationsQuery.refetch();
+      }
       router.refresh();
     } catch (error) {
       console.error('Failed to complete setup:', error);

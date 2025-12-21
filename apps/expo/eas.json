@@ -4,7 +4,7 @@
       "ios": {
         "resourceClass": "m-medium"
       },
-      "node": "18.16.1"
+      "node": "22.12.0"
     },
     "development": {
       "developmentClient": true,
@@ -23,6 +23,7 @@
     }
   },
   "cli": {
+    "appVersionSource": "remote",
     "version": ">= 4.1.2"
   },
   "submit": {

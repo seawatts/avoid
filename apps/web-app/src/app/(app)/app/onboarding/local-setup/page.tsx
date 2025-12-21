@@ -3,6 +3,8 @@ import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { LocalDevelopmentSetup } from './_components/local-development-setup';
 
+export const dynamic = 'force-dynamic';
+
 export default async function LocalSetupPage(props: {
   searchParams: Promise<{
     orgName?: string;

@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "mint": "4.2.248"
+    "mint": "4.2.249"
   },
   "name": "@seawatts/docs",
   "private": true,

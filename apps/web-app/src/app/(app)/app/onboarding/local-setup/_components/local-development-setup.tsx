@@ -37,7 +37,7 @@ export function LocalDevelopmentSetup({
   const router = useRouter();
   const [selectedTab, setSelectedTab] = useState('cli');
 
-  const webhookUrl = `${env.NEXT_PUBLIC_WEBHOOK_BASE_URL || env.NEXT_PUBLIC_API_URL || 'https://seawatts.sh'}/${orgName}/${webhookName}`;
+  const webhookUrl = `${env.NEXT_PUBLIC_WEBHOOK_BASE_URL || env.NEXT_PUBLIC_APP_URL || 'https://seawatts.sh'}/${orgName}/${webhookName}`;
 
   // Generate the seawatts.yml content
   const generateseawattsYml = () => {

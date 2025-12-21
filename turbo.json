@@ -25,6 +25,8 @@
         "NEXT_PUBLIC_*",
         "CLERK_*",
         "SUPABASE_*",
+        "BETTER_AUTH_*",
+        "GOOGLE_*",
         "POSTGRES_*",
         "POSTHOG_*",
         "OPENAI_API_KEY",
@@ -43,6 +45,8 @@
         "SUPABASE_*",
         "POSTGRES_*",
         "POSTHOG_*",
+        "BETTER_AUTH_*",
+        "GOOGLE_*",
         "OPENAI_API_KEY",
         "STRIPE_*",
         "RESEND_*"
@@ -70,6 +74,8 @@
         "NEXT_PUBLIC_*",
         "CLERK_*",
         "SUPABASE_*",
+        "BETTER_AUTH_*",
+        "GOOGLE_*",
         "POSTGRES_*",
         "POSTHOG_*",
         "OPENAI_API_KEY",
@@ -91,7 +97,7 @@
         "DATABASE_*",
         "POSTGRES_*",
         "SUPABASE_*",
-        "CLERK_*",
+        "BETTER_AUTH_*",
         "STRIPE_*",
         "NODE_ENV"
       ],
@@ -103,7 +109,7 @@
         "DATABASE_*",
         "POSTGRES_*",
         "SUPABASE_*",
-        "CLERK_*",
+        "BETTER_AUTH_*",
         "STRIPE_*",
         "NODE_ENV"
       ],
@@ -115,7 +121,7 @@
         "DATABASE_*",
         "POSTGRES_*",
         "SUPABASE_*",
-        "CLERK_*",
+        "BETTER_AUTH_*",
         "STRIPE_*",
         "NODE_ENV"
       ],
@@ -135,7 +141,7 @@
         "DATABASE_*",
         "POSTGRES_*",
         "SUPABASE_*",
-        "CLERK_*",
+        "BETTER_AUTH_*",
         "STRIPE_*",
         "NODE_ENV"
       ],
@@ -147,7 +153,7 @@
         "DATABASE_*",
         "POSTGRES_*",
         "SUPABASE_*",
-        "CLERK_*",
+        "BETTER_AUTH_*",
         "STRIPE_*",
         "NODE_ENV"
       ],

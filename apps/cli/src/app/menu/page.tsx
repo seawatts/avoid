@@ -36,7 +36,7 @@ export const MenuPage: FC<RouteProps> = () => {
 
   useInput((input) => {
     if (input === 'c') {
-      clipboard.writeSync(env.NEXT_PUBLIC_API_URL);
+      clipboard.writeSync(env.NEXT_PUBLIC_APP_URL);
       setCopiedToClipboard(true);
       setTimeout(() => {
         setCopiedToClipboard(false);
@@ -50,7 +50,7 @@ export const MenuPage: FC<RouteProps> = () => {
         <Ascii color="gray" font="ANSI Shadow" text="Seawatts" />
       </Box>
       <Box flexDirection="column" marginBottom={1}>
-        <Text bold>{env.NEXT_PUBLIC_API_URL}</Text>
+        <Text bold>{env.NEXT_PUBLIC_APP_URL}</Text>
         {!copiedToClipboard && (
           <Text dimColor>Press 'c' to copy to clipboard</Text>
         )}

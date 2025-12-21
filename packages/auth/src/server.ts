@@ -8,6 +8,7 @@ import {
   Users,
   Verifications,
 } from '@seawatts/db/schema';
+import { createId } from '@seawatts/id';
 import { betterAuth } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
 import { organization } from 'better-auth/plugins';
@@ -16,7 +17,21 @@ import { env } from './env';
 
 export const auth = betterAuth({
   advanced: {
-    generateId: false, // Use database-generated IDs
+    database: {
+      generateId: ({ model }) => {
+        const prefixMap: Record<string, string> = {
+          account: 'acc',
+          invitation: 'inv',
+          member: 'member',
+          organization: 'org',
+          session: 'session',
+          user: 'user',
+          verification: 'ver',
+        };
+        const prefix = prefixMap[model] ?? model.slice(0, 3);
+        return createId({ prefix });
+      },
+    },
   },
   baseURL: env.BETTER_AUTH_URL,
   database: drizzleAdapter(db, {

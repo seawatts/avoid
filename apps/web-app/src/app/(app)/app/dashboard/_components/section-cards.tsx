@@ -26,7 +26,7 @@ export function SectionCards() {
   const webhook: { id: string; name: string } | null = null;
   const apiKey = apiKeys.data?.[0];
   const maskedApiKey = apiKey ? maskApiKey(apiKey.key) : '';
-  const webhookUrl = `${env.NEXT_PUBLIC_WEBHOOK_BASE_URL || env.NEXT_PUBLIC_API_URL || 'https://seawatts.sh'}/${org.data?.name}/webhook-name`;
+  const webhookUrl = `${env.NEXT_PUBLIC_WEBHOOK_BASE_URL || env.NEXT_PUBLIC_APP_URL || 'https://seawatts.sh'}/${org.data?.name}/webhook-name`;
   const webhookConfigComments = `
 # seawatts Webhook Configuration
 # For more information, visit: https://docs.seawatts.sh/configuration

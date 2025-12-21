@@ -1,12 +1,12 @@
+import { useQuery } from '@tanstack/react-query';
 import { Stack, useGlobalSearchParams } from 'expo-router';
 import { SafeAreaView, Text, View } from 'react-native';
 
-import { api } from '~/utils/api';
+import { trpc } from '~/utils/api';
 
 export default function User() {
-  const { id } = useGlobalSearchParams();
-  if (!id || typeof id !== 'string') throw new Error('unreachable');
-  const { data } = api.user.byId.useQuery({ id });
+  const { id } = useGlobalSearchParams<{ id: string }>();
+  const { data } = useQuery(trpc.user.byId.queryOptions({ id }));
 
   if (!data) return null;
 
@@ -14,7 +14,7 @@ export default function User() {
     <SafeAreaView className="bg-background">
       <Stack.Screen options={{ title: data.id }} />
       <View className="h-full w-full p-4">
-        <Text className="py-2 text-3xl font-bold text-primary">{data.id}</Text>
+        <Text className="text-primary py-2 text-3xl font-bold">{data.id}</Text>
       </View>
     </SafeAreaView>
   );

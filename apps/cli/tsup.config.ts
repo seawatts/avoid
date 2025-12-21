@@ -10,14 +10,14 @@ const isDevBuild =
 
 // Environment variables to inject at build time
 const envDefines = {
-  'process.env.NEXT_PUBLIC_API_URL': JSON.stringify(
-    process.env.NEXT_PUBLIC_API_URL || 'https://api.seawatts.sh',
-  ),
   'process.env.NEXT_PUBLIC_APP_ENV': JSON.stringify(
     process.env.NEXT_PUBLIC_APP_ENV || 'production',
   ),
   'process.env.NEXT_PUBLIC_APP_TYPE': JSON.stringify(
     process.env.NEXT_PUBLIC_APP_TYPE || 'cli',
+  ),
+  'process.env.NEXT_PUBLIC_APP_URL': JSON.stringify(
+    process.env.NEXT_PUBLIC_APP_URL || 'https://api.seawatts.sh',
   ),
   'process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY': JSON.stringify(
     process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY || '',

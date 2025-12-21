@@ -5,8 +5,9 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   android: {
     adaptiveIcon: {
       backgroundColor: '#1F104A',
-      foregroundImage: './assets/icon.png',
+      foregroundImage: './assets/icon-light.png',
     },
+    edgeToEdgeEnabled: true,
     package: 'your.bundle.identifier',
   },
   assetBundlePatterns: ['**/*'],
@@ -16,24 +17,41 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   //   },
   // },
   experiments: {
+    reactCanary: true,
+    reactCompiler: true,
     tsconfigPaths: true,
     typedRoutes: true,
   },
-  icon: './assets/icon.png',
+  icon: './assets/icon-light.png',
   ios: {
     bundleIdentifier: 'your.bundle.identifier',
+    icon: {
+      dark: './assets/icon-dark.png',
+      light: './assets/icon-light.png',
+    },
     supportsTablet: true,
   },
   name: 'expo',
+  newArchEnabled: true,
   orientation: 'portrait',
-  plugins: ['expo-router'],
+  plugins: [
+    'expo-router',
+    'expo-secure-store',
+    'expo-web-browser',
+    [
+      'expo-splash-screen',
+      {
+        backgroundColor: '#E4E4E7',
+        dark: {
+          backgroundColor: '#18181B',
+          image: './assets/icon-dark.png',
+        },
+        image: './assets/icon-light.png',
+      },
+    ],
+  ],
   scheme: 'expo',
   slug: 'expo',
-  splash: {
-    backgroundColor: '#1F104A',
-    image: './assets/icon.png',
-    resizeMode: 'contain',
-  },
   updates: {
     fallbackToCacheTimeout: 0,
   },

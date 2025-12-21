@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "@clerk/chrome-extension": "2.8.13",
+    "@clerk/chrome-extension": "2.8.14",
     "@seawatts/logger": "workspace:*",
     "@t3-oss/env-nextjs": "catalog:",
     "@vercel/analytics": "1.6.1",
@@ -13,6 +13,7 @@
   },
   "devDependencies": {
     "@seawatts/tsconfig": "workspace:*",
+    "@types/aws-lambda": "8.10.159",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
     "typescript": "catalog:"

@@ -239,7 +239,7 @@ export function OnboardingForm({
   const webhookUrl = (() => {
     const baseUrl =
       env.NEXT_PUBLIC_WEBHOOK_BASE_URL ||
-      env.NEXT_PUBLIC_API_URL ||
+      env.NEXT_PUBLIC_APP_URL ||
       'https://seawatts.sh';
     if (!orgName) return `${baseUrl}/{org-name}/{webhook-name}`;
     if (!webhookName) return `${baseUrl}/${orgName}/{webhook-name}`;

@@ -3,6 +3,8 @@ import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { OnboardingForm } from './_components/onboarding-form';
 
+export const dynamic = 'force-dynamic';
+
 export default async function Page(props: {
   searchParams: Promise<{
     redirectTo?: string;

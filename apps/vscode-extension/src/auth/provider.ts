@@ -80,7 +80,7 @@ export class SeawattsAuthProvider implements AuthenticationProvider {
   async createSession(scopes: string[]): Promise<vscode.AuthenticationSession> {
     try {
       // Open browser for auth
-      const authUrl = new URL('/cli-token', env.NEXT_PUBLIC_API_URL);
+      const authUrl = new URL('/cli-token', env.NEXT_PUBLIC_APP_URL);
       const editorScheme = this.getEditorUriScheme();
       authUrl.searchParams.set(
         'redirect_uri',
