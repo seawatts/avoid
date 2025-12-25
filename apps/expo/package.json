@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "@better-auth/expo": "catalog:",
-    "@legendapp/list": "^2.0.14",
+    "@legendapp/list": "^2.0.19",
     "@seawatts/api": "workspace:*",
     "@tanstack/react-query": "catalog:",
     "@trpc/client": "catalog:",

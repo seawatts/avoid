@@ -26,7 +26,7 @@
     "@types/react-dom": "catalog:",
     "chokidar": "5.0.0",
     "drizzle-kit": "0.31.8",
-    "supabase": "2.67.3",
+    "supabase": "2.70.5",
     "tsx": "4.21.0",
     "typescript": "catalog:",
     "zx": "^8.8.5"
@@ -34,7 +34,7 @@
   "exports": {
     ".": "./src/index.ts",
     "./client": "./src/client.ts",
-    "./schema": "./src/schema.ts",
+    "./schema": "./src/schema/index.ts",
     "./supabase/cli": "./src/supabase/cli.ts",
     "./supabase/client": "./src/supabase/client-exports.ts",
     "./supabase/create-channel": "./src/supabase/create-channel.ts",

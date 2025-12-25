@@ -11,7 +11,7 @@ import {
 import { createId } from '@seawatts/id';
 import { betterAuth } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
-import { organization } from 'better-auth/plugins';
+import { lastLoginMethod, organization } from 'better-auth/plugins';
 
 import { env } from './env';
 
@@ -50,8 +50,14 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: false, // Only using Google OAuth
   },
+  // experimental: {
+  //   joins: true,
+  // },
 
   plugins: [
+    lastLoginMethod({
+      storeInDatabase: true,
+    }),
     organization({
       allowUserToCreateOrganization: true,
       invitationExpiresIn: 60 * 60 * 24 * 7, // 7 days

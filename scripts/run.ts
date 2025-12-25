@@ -106,6 +106,7 @@ async function main() {
     await $`bun ${scriptPath} ${args}`;
   } catch (error) {
     // Script already printed its output, just exit with error code
+    p.log.error(error);
     process.exit(1);
   }
 }
