@@ -6,24 +6,24 @@
   },
   "dialect": "postgresql",
   "enums": {
-    "public.apiKeyUsageType": {
+    "startup_template.apiKeyUsageType": {
       "name": "apiKeyUsageType",
-      "schema": "public",
+      "schema": "startup_template",
       "values": ["mcp-server"]
     },
-    "public.invitationStatus": {
+    "startup_template.invitationStatus": {
       "name": "invitationStatus",
-      "schema": "public",
+      "schema": "startup_template",
       "values": ["pending", "accepted", "rejected", "canceled"]
     },
-    "public.localConnectionStatus": {
+    "startup_template.localConnectionStatus": {
       "name": "localConnectionStatus",
-      "schema": "public",
+      "schema": "startup_template",
       "values": ["connected", "disconnected"]
     },
-    "public.stripeSubscriptionStatus": {
+    "startup_template.stripeSubscriptionStatus": {
       "name": "stripeSubscriptionStatus",
-      "schema": "public",
+      "schema": "startup_template",
       "values": [
         "active",
         "canceled",
@@ -35,20 +35,22 @@
         "unpaid"
       ]
     },
-    "public.userRole": {
+    "startup_template.userRole": {
       "name": "userRole",
-      "schema": "public",
+      "schema": "startup_template",
       "values": ["admin", "owner", "member"]
     }
   },
-  "id": "a18d1621-073e-4126-a74f-2be15e6e8d5c",
+  "id": "e0e2ec17-e442-413f-9bb6-b29d8a2a3edd",
   "policies": {},
   "prevId": "00000000-0000-0000-0000-000000000000",
   "roles": {},
-  "schemas": {},
+  "schemas": {
+    "startup_template": "startup_template"
+  },
   "sequences": {},
   "tables": {
-    "public.account": {
+    "startup_template.account": {
       "checkConstraints": {},
       "columns": {
         "accessToken": {
@@ -139,6 +141,7 @@
           "name": "account_userId_user_id_fk",
           "onDelete": "cascade",
           "onUpdate": "no action",
+          "schemaTo": "startup_template",
           "tableFrom": "account",
           "tableTo": "user"
         }
@@ -147,10 +150,10 @@
       "isRLSEnabled": false,
       "name": "account",
       "policies": {},
-      "schema": "",
+      "schema": "startup_template",
       "uniqueConstraints": {}
     },
-    "public.apiKeys": {
+    "startup_template.apiKeys": {
       "checkConstraints": {},
       "columns": {
         "createdAt": {
@@ -224,6 +227,7 @@
           "name": "apiKeys_organizationId_organization_id_fk",
           "onDelete": "cascade",
           "onUpdate": "no action",
+          "schemaTo": "startup_template",
           "tableFrom": "apiKeys",
           "tableTo": "organization"
         },
@@ -233,6 +237,7 @@
           "name": "apiKeys_userId_user_id_fk",
           "onDelete": "cascade",
           "onUpdate": "no action",
+          "schemaTo": "startup_template",
           "tableFrom": "apiKeys",
           "tableTo": "user"
         }
@@ -241,7 +246,7 @@
       "isRLSEnabled": false,
       "name": "apiKeys",
       "policies": {},
-      "schema": "",
+      "schema": "startup_template",
       "uniqueConstraints": {
         "apiKeys_key_unique": {
           "columns": ["key"],
@@ -250,7 +255,7 @@
         }
       }
     },
-    "public.apiKeyUsage": {
+    "startup_template.apiKeyUsage": {
       "checkConstraints": {},
       "columns": {
         "apiKeyId": {
@@ -289,7 +294,7 @@
           "notNull": true,
           "primaryKey": false,
           "type": "apiKeyUsageType",
-          "typeSchema": "public"
+          "typeSchema": "startup_template"
         },
         "updatedAt": {
           "name": "updatedAt",
@@ -312,6 +317,7 @@
           "name": "apiKeyUsage_apiKeyId_apiKeys_id_fk",
           "onDelete": "cascade",
           "onUpdate": "no action",
+          "schemaTo": "startup_template",
           "tableFrom": "apiKeyUsage",
           "tableTo": "apiKeys"
         },
@@ -321,6 +327,7 @@
           "name": "apiKeyUsage_organizationId_organization_id_fk",
           "onDelete": "cascade",
           "onUpdate": "no action",
+          "schemaTo": "startup_template",
           "tableFrom": "apiKeyUsage",
           "tableTo": "organization"
         },
@@ -330,6 +337,7 @@
           "name": "apiKeyUsage_userId_user_id_fk",
           "onDelete": "cascade",
           "onUpdate": "no action",
+          "schemaTo": "startup_template",
           "tableFrom": "apiKeyUsage",
           "tableTo": "user"
         }
@@ -338,10 +346,10 @@
       "isRLSEnabled": false,
       "name": "apiKeyUsage",
       "policies": {},
-      "schema": "",
+      "schema": "startup_template",
       "uniqueConstraints": {}
     },
-    "public.authCodes": {
+    "startup_template.authCodes": {
       "checkConstraints": {},
       "columns": {
         "createdAt": {
@@ -402,6 +410,7 @@
           "name": "authCodes_organizationId_organization_id_fk",
           "onDelete": "cascade",
           "onUpdate": "no action",
+          "schemaTo": "startup_template",
           "tableFrom": "authCodes",
           "tableTo": "organization"
         },
@@ -411,6 +420,7 @@
           "name": "authCodes_userId_user_id_fk",
           "onDelete": "cascade",
           "onUpdate": "no action",
+          "schemaTo": "startup_template",
           "tableFrom": "authCodes",
           "tableTo": "user"
         }
@@ -419,10 +429,10 @@
       "isRLSEnabled": false,
       "name": "authCodes",
       "policies": {},
-      "schema": "",
+      "schema": "startup_template",
       "uniqueConstraints": {}
     },
-    "public.invitation": {
+    "startup_template.invitation": {
       "checkConstraints": {},
       "columns": {
         "createdAt": {
@@ -468,7 +478,7 @@
           "notNull": true,
           "primaryKey": false,
           "type": "userRole",
-          "typeSchema": "public"
+          "typeSchema": "startup_template"
         },
         "status": {
           "default": "'pending'",
@@ -476,7 +486,7 @@
           "notNull": true,
           "primaryKey": false,
           "type": "invitationStatus",
-          "typeSchema": "public"
+          "typeSchema": "startup_template"
         }
       },
       "compositePrimaryKeys": {},
@@ -487,6 +497,7 @@
           "name": "invitation_inviterId_user_id_fk",
           "onDelete": "cascade",
           "onUpdate": "no action",
+          "schemaTo": "startup_template",
           "tableFrom": "invitation",
           "tableTo": "user"
         },
@@ -496,6 +507,7 @@
           "name": "invitation_organizationId_organization_id_fk",
           "onDelete": "cascade",
           "onUpdate": "no action",
+          "schemaTo": "startup_template",
           "tableFrom": "invitation",
           "tableTo": "organization"
         }
@@ -504,10 +516,10 @@
       "isRLSEnabled": false,
       "name": "invitation",
       "policies": {},
-      "schema": "",
+      "schema": "startup_template",
       "uniqueConstraints": {}
     },
-    "public.member": {
+    "startup_template.member": {
       "checkConstraints": {},
       "columns": {
         "createdAt": {
@@ -535,7 +547,7 @@
           "notNull": true,
           "primaryKey": false,
           "type": "userRole",
-          "typeSchema": "public"
+          "typeSchema": "startup_template"
         },
         "userId": {
           "name": "userId",
@@ -552,6 +564,7 @@
           "name": "member_organizationId_organization_id_fk",
           "onDelete": "cascade",
           "onUpdate": "no action",
+          "schemaTo": "startup_template",
           "tableFrom": "member",
           "tableTo": "organization"
         },
@@ -561,6 +574,7 @@
           "name": "member_userId_user_id_fk",
           "onDelete": "cascade",
           "onUpdate": "no action",
+          "schemaTo": "startup_template",
           "tableFrom": "member",
           "tableTo": "user"
         }
@@ -569,7 +583,7 @@
       "isRLSEnabled": false,
       "name": "member",
       "policies": {},
-      "schema": "",
+      "schema": "startup_template",
       "uniqueConstraints": {
         "member_userId_organizationId_unique": {
           "columns": ["userId", "organizationId"],
@@ -578,7 +592,7 @@
         }
       }
     },
-    "public.organization": {
+    "startup_template.organization": {
       "checkConstraints": {},
       "columns": {
         "createdAt": {
@@ -635,7 +649,7 @@
           "notNull": false,
           "primaryKey": false,
           "type": "stripeSubscriptionStatus",
-          "typeSchema": "public"
+          "typeSchema": "startup_template"
         },
         "updatedAt": {
           "name": "updatedAt",
@@ -650,7 +664,7 @@
       "isRLSEnabled": false,
       "name": "organization",
       "policies": {},
-      "schema": "",
+      "schema": "startup_template",
       "uniqueConstraints": {
         "organization_slug_unique": {
           "columns": ["slug"],
@@ -659,7 +673,7 @@
         }
       }
     },
-    "public.session": {
+    "startup_template.session": {
       "checkConstraints": {},
       "columns": {
         "activeOrganizationId": {
@@ -726,6 +740,7 @@
           "name": "session_activeOrganizationId_organization_id_fk",
           "onDelete": "set null",
           "onUpdate": "no action",
+          "schemaTo": "startup_template",
           "tableFrom": "session",
           "tableTo": "organization"
         },
@@ -735,6 +750,7 @@
           "name": "session_userId_user_id_fk",
           "onDelete": "cascade",
           "onUpdate": "no action",
+          "schemaTo": "startup_template",
           "tableFrom": "session",
           "tableTo": "user"
         }
@@ -743,7 +759,7 @@
       "isRLSEnabled": false,
       "name": "session",
       "policies": {},
-      "schema": "",
+      "schema": "startup_template",
       "uniqueConstraints": {
         "session_token_unique": {
           "columns": ["token"],
@@ -752,7 +768,7 @@
         }
       }
     },
-    "public.shortUrls": {
+    "startup_template.shortUrls": {
       "checkConstraints": {},
       "columns": {
         "code": {
@@ -820,6 +836,7 @@
           "name": "shortUrls_organizationId_organization_id_fk",
           "onDelete": "cascade",
           "onUpdate": "no action",
+          "schemaTo": "startup_template",
           "tableFrom": "shortUrls",
           "tableTo": "organization"
         },
@@ -829,6 +846,7 @@
           "name": "shortUrls_userId_user_id_fk",
           "onDelete": "cascade",
           "onUpdate": "no action",
+          "schemaTo": "startup_template",
           "tableFrom": "shortUrls",
           "tableTo": "user"
         }
@@ -837,10 +855,10 @@
       "isRLSEnabled": false,
       "name": "shortUrls",
       "policies": {},
-      "schema": "",
+      "schema": "startup_template",
       "uniqueConstraints": {}
     },
-    "public.user": {
+    "startup_template.user": {
       "checkConstraints": {},
       "columns": {
         "createdAt": {
@@ -875,6 +893,12 @@
           "primaryKey": false,
           "type": "text"
         },
+        "lastLoginMethod": {
+          "name": "lastLoginMethod",
+          "notNull": false,
+          "primaryKey": false,
+          "type": "text"
+        },
         "name": {
           "name": "name",
           "notNull": true,
@@ -894,7 +918,7 @@
       "isRLSEnabled": false,
       "name": "user",
       "policies": {},
-      "schema": "",
+      "schema": "startup_template",
       "uniqueConstraints": {
         "user_email_unique": {
           "columns": ["email"],
@@ -903,7 +927,7 @@
         }
       }
     },
-    "public.verification": {
+    "startup_template.verification": {
       "checkConstraints": {},
       "columns": {
         "createdAt": {
@@ -950,7 +974,7 @@
       "isRLSEnabled": false,
       "name": "verification",
       "policies": {},
-      "schema": "",
+      "schema": "startup_template",
       "uniqueConstraints": {}
     }
   },

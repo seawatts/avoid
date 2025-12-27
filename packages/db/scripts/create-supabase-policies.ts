@@ -100,13 +100,13 @@ const createPolicy = async (tableName: string, policy: Policy) => {
 
   // First drop the policy if it exists
   await db.execute(sql`
-    DROP POLICY IF EXISTS ${sql.raw(`"${name}"`)} ON "public"."${sql.raw(tableName)}";
+    DROP POLICY IF EXISTS ${sql.raw(`"${name}"`)} ON "startup_template"."${sql.raw(tableName)}";
   `);
 
   // Then create the new policy
   const policySql = sql`
     CREATE POLICY ${sql.raw(`"${name}"`)}
-    ON "public"."${sql.raw(tableName)}"
+    ON "startup_template"."${sql.raw(tableName)}"
     ${operation === 'ALL' ? sql`FOR ALL` : sql`FOR ${sql.raw(operation)}`}
     TO authenticated
     ${using ? sql`USING (${sql.raw(using)})` : sql``}
@@ -118,14 +118,31 @@ const createPolicy = async (tableName: string, policy: Policy) => {
 
 const dropPolicy = async (tableName: string, policyName: string) => {
   await db.execute(sql`
-    DROP POLICY IF EXISTS ${sql.raw(`"${policyName}"`)} ON "public"."${sql.raw(tableName)}";
+    DROP POLICY IF EXISTS ${sql.raw(`"${policyName}"`)} ON "startup_template"."${sql.raw(tableName)}";
   `);
 };
 
+const tableExists = async (tableName: string): Promise<boolean> => {
+  const result = await db.execute<{ exists: boolean }>(sql`
+    SELECT EXISTS (
+      SELECT FROM information_schema.tables
+      WHERE table_schema = 'startup_template'
+      AND table_name = ${tableName}
+    ) as exists;
+  `);
+  const rows = Array.isArray(result) ? result : [];
+  return rows[0]?.exists ?? false;
+};
+
 const enableRLS = async (tableName: string) => {
+  const exists = await tableExists(tableName);
+  if (!exists) {
+    console.log(`Skipping RLS for table: ${tableName} (table does not exist)`);
+    return;
+  }
   console.log(`Enabling RLS for table: ${tableName}`);
   await db.execute(sql`
-    ALTER TABLE "public"."${sql.raw(tableName)}" ENABLE ROW LEVEL SECURITY;
+    ALTER TABLE "startup_template"."${sql.raw(tableName)}" ENABLE ROW LEVEL SECURITY;
   `);
   console.log(`RLS enabled for table: ${tableName}`);
 };
@@ -134,110 +151,54 @@ const policyConfigs: Record<string, PolicyConfig> = {
   apiKeys: {
     policies: [
       createUserOwnershipPolicy('ALL', 'userId'),
-      createOrgOwnershipPolicy('ALL', 'orgId'),
+      createOrgOwnershipPolicy('ALL', 'organizationId'),
     ],
     tableName: 'apiKeys',
   },
   apiKeyUsage: {
     policies: [
       createUserOwnershipPolicy('ALL', 'userId'),
-      createOrgOwnershipPolicy('ALL', 'orgId'),
+      createOrgOwnershipPolicy('ALL', 'organizationId'),
     ],
     tableName: 'apiKeyUsage',
   },
   authCodes: {
     policies: [
       createUserOwnershipPolicy('ALL', 'userId'),
-      createOrgOwnershipPolicy('ALL', 'orgId'),
+      createOrgOwnershipPolicy('ALL', 'organizationId'),
     ],
     tableName: 'authCodes',
   },
-  connections: {
+  member: {
     policies: [
       createUserOwnershipPolicy('ALL', 'userId'),
-      createOrgOwnershipPolicy('ALL', 'orgId'),
+      createOrgOwnershipPolicy('ALL', 'organizationId'),
     ],
-    tableName: 'connections',
+    tableName: 'member',
   },
-  events: {
+  organization: {
     policies: [
-      createUserOwnershipPolicy('ALL', 'userId'),
-      createOrgOwnershipPolicy('ALL', 'orgId'),
-    ],
-    tableName: 'events',
-  },
-  forwardingDestinations: {
-    policies: [
-      createUserOwnershipPolicy('ALL', 'userId'),
-      createUserOwnershipPolicy('DELETE', 'userId'),
-      createOrgOwnershipPolicy('ALL', 'orgId'),
-    ],
-    tableName: 'forwardingDestinations',
-  },
-  forwardingExecutions: {
-    policies: [
-      createUserOwnershipPolicy('ALL', 'userId'),
-      createOrgOwnershipPolicy('ALL', 'orgId'),
-    ],
-    tableName: 'forwardingExecutions',
-  },
-  forwardingRules: {
-    policies: [
-      createUserOwnershipPolicy('ALL', 'userId'),
-      createOrgOwnershipPolicy('ALL', 'orgId'),
-    ],
-    tableName: 'forwardingRules',
-  },
-  orgMembers: {
-    policies: [
-      createUserOwnershipPolicy('ALL', 'userId'),
-      createOrgOwnershipPolicy('ALL', 'orgId'),
-    ],
-    tableName: 'orgMembers',
-  },
-  orgs: {
-    policies: [
-      // Users can access orgs they created
+      // Allow all authenticated users to select organizations
       {
-        name: 'Users can select orgs they created',
+        name: 'Users can select organizations',
         operation: 'SELECT',
-        using: policyConditions.userOwnership('createdByUserId'),
+        using: 'true',
       },
+      // Allow all authenticated users to insert organizations
       {
-        name: 'Users can insert orgs',
+        name: 'Users can insert organizations',
         operation: 'INSERT',
-        withCheck: policyConditions.userOwnership('createdByUserId'),
+        withCheck: 'true',
       },
+      // Allow all authenticated users to update organizations
       {
-        name: 'Users can update orgs they created',
+        name: 'Users can update organizations',
         operation: 'UPDATE',
-        using: policyConditions.userOwnership('createdByUserId'),
-        withCheck: policyConditions.userOwnership('createdByUserId'),
+        using: 'true',
+        withCheck: 'true',
       },
     ],
-    tableName: 'orgs',
-  },
-  requests: {
-    policies: [
-      createUserOwnershipPolicy('ALL', 'userId'),
-      createOrgOwnershipPolicy('ALL', 'orgId'),
-      {
-        name: 'Users can access requests for their webhooks',
-        operation: 'SELECT',
-        using: policyConditions.webhookOwnership,
-      },
-      {
-        name: 'Users can delete requests for their webhooks',
-        operation: 'DELETE',
-        using: policyConditions.webhookOwnership,
-      },
-      {
-        name: 'Users can update requests for their webhooks',
-        operation: 'UPDATE',
-        using: policyConditions.webhookOwnership,
-      },
-    ],
-    tableName: 'requests',
+    tableName: 'organization',
   },
   user: {
     policies: [
@@ -245,43 +206,6 @@ const policyConfigs: Record<string, PolicyConfig> = {
       createUserOwnershipPolicy('UPDATE', 'id'),
     ],
     tableName: 'user',
-  },
-  webhookAccessRequests: {
-    policies: [
-      // Users can access requests they made (as requester)
-      {
-        name: 'Users can select their own access requests',
-        operation: 'SELECT',
-        using: policyConditions.userOwnership('requesterId'),
-      },
-      {
-        name: 'Users can insert their own access requests',
-        operation: 'INSERT',
-        withCheck: policyConditions.userOwnership('requesterId'),
-      },
-      {
-        name: 'Users can update their own access requests',
-        operation: 'UPDATE',
-        using: policyConditions.userOwnership('requesterId'),
-        withCheck: policyConditions.userOwnership('requesterId'),
-      },
-      // Users can respond to requests (as responder)
-      {
-        name: 'Users can update requests they are responding to',
-        operation: 'UPDATE',
-        using: policyConditions.userOwnership('responderId'),
-        withCheck: policyConditions.userOwnership('responderId'),
-      },
-      createOrgOwnershipPolicy('ALL', 'orgId'),
-    ],
-    tableName: 'webhookAccessRequests',
-  },
-  webhooks: {
-    policies: [
-      createUserOwnershipPolicy('ALL', 'userId'),
-      createOrgOwnershipPolicy('ALL', 'orgId'),
-    ],
-    tableName: 'webhooks',
   },
 };
 
@@ -303,6 +227,13 @@ async function withErrorHandling<T>(
 async function setupTablePolicies(config: PolicyConfig) {
   return withErrorHandling(
     async () => {
+      const exists = await tableExists(config.tableName);
+      if (!exists) {
+        console.log(
+          `Skipping policies for table: ${config.tableName} (table does not exist)`,
+        );
+        return;
+      }
       await enableRLS(config.tableName);
       await Promise.all(
         config.policies.map((policy) => createPolicy(config.tableName, policy)),

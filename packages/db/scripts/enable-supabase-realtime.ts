@@ -2,10 +2,7 @@ import { sql } from 'drizzle-orm';
 import { db } from '../src/client';
 
 const tablesToEnableRealtime = [
-  'events',
-  'requests',
-  'webhooks',
-  'connections',
+  // Add tables here as they are created in the schema
 ] as const;
 
 // RLS policies for realtime authorization
@@ -72,22 +69,42 @@ const realtimePolicies = [
   },
 ];
 
+async function tableExists(tableName: string): Promise<boolean> {
+  const result = await db.execute<{ exists: boolean }>(sql`
+    SELECT EXISTS (
+      SELECT FROM information_schema.tables
+      WHERE table_schema = 'startup_template'
+      AND table_name = ${tableName}
+    ) as exists;
+  `);
+  const rows = Array.isArray(result) ? result : [];
+  return rows[0]?.exists ?? false;
+}
+
 async function isTableInPublication(tableName: string): Promise<boolean> {
   const result = await db.execute<{ exists: boolean }>(sql`
     SELECT EXISTS (
       SELECT 1
       FROM pg_publication_tables
       WHERE pubname = 'supabase_realtime'
+      AND schemaname = 'startup_template'
       AND tablename = ${tableName}
     ) as exists;
   `);
-  return Array.isArray(result)
-    ? (result[0]?.exists ?? false)
-    : (result.rows[0]?.exists ?? false);
+  const rows = Array.isArray(result) ? result : [];
+  return rows[0]?.exists ?? false;
 }
 
 async function enableRealtimeForTable(tableName: string) {
   console.log(`Checking realtime status for table: ${tableName}`);
+
+  const exists = await tableExists(tableName);
+  if (!exists) {
+    console.log(
+      `Skipping realtime for table: ${tableName} (table does not exist)`,
+    );
+    return;
+  }
 
   const isAlreadyEnabled = await isTableInPublication(tableName);
   if (isAlreadyEnabled) {
@@ -97,7 +114,7 @@ async function enableRealtimeForTable(tableName: string) {
 
   console.log(`Enabling realtime for table: ${tableName}`);
   await db.execute(sql`
-    ALTER PUBLICATION supabase_realtime ADD TABLE "public"."${sql.raw(tableName)}";
+    ALTER PUBLICATION supabase_realtime ADD TABLE "startup_template"."${sql.raw(tableName)}";
   `);
   console.log(`Realtime enabled for table: ${tableName}`);
 }
