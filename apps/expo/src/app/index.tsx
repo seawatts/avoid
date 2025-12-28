@@ -1,3 +1,5 @@
+import * as Linking from 'expo-linking';
+import * as WebBrowser from 'expo-web-browser';
 import {
   Pressable,
   ScrollView,
@@ -9,6 +11,9 @@ import {
 
 import { authClient } from '~/utils/auth';
 
+// Required for expo-web-browser to work properly
+WebBrowser.maybeCompleteAuthSession();
+
 function MobileAuth({ theme }: { theme: (typeof colors)['light'] }) {
   const { data: session } = authClient.useSession();
 
@@ -18,14 +23,51 @@ function MobileAuth({ theme }: { theme: (typeof colors)['light'] }) {
         {session?.user.name ? `Hello, ${session.user.name}` : 'Not logged in'}
       </Text>
       <Pressable
-        onPress={() =>
-          session
-            ? authClient.signOut()
-            : authClient.signIn.social({
-                callbackURL: '/',
-                provider: 'google',
-              })
-        }
+        onPress={async () => {
+          if (session) {
+            await authClient.signOut();
+          } else {
+            console.log('[SIGN IN] Starting...');
+            const result = await authClient.signIn.social({
+              callbackURL: '/',
+              provider: 'google',
+            });
+            console.log('[SIGN IN] Result:', JSON.stringify(result, null, 2));
+
+            // If we get a redirect URL, open the browser manually
+            if (result.data?.url && result.data?.redirect) {
+              const callbackUrl = Linking.createURL('/');
+              console.log('[SIGN IN] Opening browser, callback:', callbackUrl);
+
+              const browserResult = await WebBrowser.openAuthSessionAsync(
+                result.data.url,
+                callbackUrl,
+              );
+              console.log('[SIGN IN] Browser result:', browserResult.type);
+
+              // Always check for session after browser closes (auth might have worked)
+              console.log('[SIGN IN] Browser closed, checking session...');
+              const sessionCheck = await authClient.getSession();
+              console.log(
+                '[SIGN IN] Session check result:',
+                JSON.stringify(sessionCheck, null, 2),
+              );
+
+              if (sessionCheck.data?.user) {
+                console.log(
+                  '[SIGN IN] ✅ Session found! User:',
+                  sessionCheck.data.user.email,
+                );
+              } else {
+                console.log('[SIGN IN] ❌ No session found');
+              }
+            }
+
+            if (result.error) {
+              console.error('[SIGN IN] Error:', result.error.message);
+            }
+          }
+        }}
         style={[styles.authButton, { backgroundColor: theme.destructive }]}
       >
         <Text

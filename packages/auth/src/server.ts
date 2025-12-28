@@ -119,7 +119,14 @@ export const auth = betterAuth({
     },
   },
 
-  trustedOrigins: ['expo://'],
+  trustedOrigins: (request) => {
+    const origin = request?.headers.get('origin');
+    // Allow expo schemes and dynamic exp:// origins from Expo Go
+    if (origin?.startsWith('exp://') || origin?.startsWith('expo://')) {
+      return [origin];
+    }
+    return ['expo://', 'exp://'];
+  },
 });
 
 export type Auth = typeof auth;
