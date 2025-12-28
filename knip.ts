@@ -9,6 +9,7 @@ const config: KnipConfig = {
   ],
   ignoreDependencies: [
     '@vercel/analytics',
+    'tw-animate-css',
     '@vercel/config',
     'lefthook',
     'expo-network',
