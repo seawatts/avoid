@@ -1,32 +1,33 @@
 import { QueryClientProvider } from '@tanstack/react-query';
-import { Stack } from 'expo-router';
+import { Icon, Label, NativeTabs } from 'expo-router/unstable-native-tabs';
 import { StatusBar } from 'expo-status-bar';
-import { useColorScheme } from 'react-native';
+import { Platform } from 'react-native';
 
 import { queryClient } from '~/utils/api';
 
-import '../styles.css';
-
-// This is the main layout of the app
-// It wraps your pages with the providers they need
+// This is the main layout of the app using Native Tabs for liquid glass effect
+// See: https://docs.expo.dev/router/advanced/native-tabs/
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
   return (
     <QueryClientProvider client={queryClient}>
-      {/*
-          The Stack component displays the current page.
-          It also allows you to configure your screens
-        */}
-      <Stack
-        screenOptions={{
-          contentStyle: {
-            backgroundColor: colorScheme === 'dark' ? '#09090B' : '#FFFFFF',
-          },
-          headerStyle: {
-            backgroundColor: '#f472b6',
-          },
-        }}
-      />
+      <NativeTabs>
+        <NativeTabs.Trigger name="index">
+          <Label>Home</Label>
+          <Icon
+            drawable={Platform.OS === 'android' ? 'ic_menu_home' : undefined}
+            sf={{ default: 'house', selected: 'house.fill' }}
+          />
+        </NativeTabs.Trigger>
+        <NativeTabs.Trigger name="settings">
+          <Label>Settings</Label>
+          <Icon
+            drawable={
+              Platform.OS === 'android' ? 'ic_menu_preferences' : undefined
+            }
+            sf={{ default: 'gear', selected: 'gear' }}
+          />
+        </NativeTabs.Trigger>
+      </NativeTabs>
       <StatusBar />
     </QueryClientProvider>
   );

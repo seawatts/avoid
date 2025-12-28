@@ -57,8 +57,8 @@
     "migrate": "drizzle-kit migrate && bun gen-supabase-types && bun create-supabase-policies && bun enable-supabase-realtime",
     "push": "drizzle-kit push && bun gen-supabase-types && bun create-supabase-policies && bun enable-supabase-realtime",
     "seed": "tsx src/seed.ts",
+    "start": "supabase start",
     "studio": "drizzle-kit studio",
-    "supabase:local": "supabase start",
     "test:integ": "bun test --test=integ",
     "test:unit": "bun test --test=unit",
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"

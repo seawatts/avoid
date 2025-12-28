@@ -11,6 +11,7 @@ const config: KnipConfig = {
     '@vercel/analytics',
     '@vercel/config',
     'lefthook',
+    'expo-network',
     '@vercel/speed-insights',
     'react-dom',
     '@better-auth/expo',

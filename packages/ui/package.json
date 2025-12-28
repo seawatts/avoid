@@ -69,6 +69,7 @@
   },
   "exports": {
     "./*": "./src/components/*.tsx",
+    "./animations.web.css": "./src/styles/animations.web.css",
     "./custom/*": "./src/custom/*.tsx",
     "./diceui/*": "./src/diceui/*.tsx",
     "./globals.css": "./src/styles/globals.css",

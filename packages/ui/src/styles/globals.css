@@ -1,7 +1,13 @@
 @import 'tailwindcss';
+@import 'tw-animate-css';
+
 @import './theme';
+@import './animations.web';
 
 @custom-variant dark (&:is(.dark *));
+@custom-variant light (&:where(.light, .light *));
+@custom-variant auto (&:where(.auto, .auto *));
+
 @source '../../../apps/**/*.{ts,tsx}';
 @source '../**/*.{ts,tsx}';
 
@@ -17,20 +23,4 @@
   body {
     @apply bg-background text-foreground;
   }
-}
-
-/* Celebration card animations */
-@keyframes gradient {
-  0%,
-  100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-}
-
-.animate-gradient {
-  background-size: 200% 200%;
-  animation: gradient 3s ease infinite;
 }
