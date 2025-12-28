@@ -18,14 +18,22 @@ function MobileAuth({ theme }: { theme: (typeof colors)['light'] }) {
         {session?.user.name ? `Hello, ${session.user.name}` : 'Not logged in'}
       </Text>
       <Pressable
-        onPress={() =>
-          session
-            ? authClient.signOut()
-            : authClient.signIn.social({
+        onPress={async () => {
+          try {
+            if (session) {
+              await authClient.signOut();
+            } else {
+              console.log('Starting Google sign in...');
+              const result = await authClient.signIn.social({
                 callbackURL: '/',
                 provider: 'google',
-              })
-        }
+              });
+              console.log('Sign in result:', result);
+            }
+          } catch (error) {
+            console.error('Sign in error:', error);
+          }
+        }}
         style={[styles.authButton, { backgroundColor: theme.destructive }]}
       >
         <Text

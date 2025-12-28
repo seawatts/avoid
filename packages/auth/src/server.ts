@@ -120,12 +120,24 @@ export const auth = betterAuth({
     },
   },
 
-  trustedOrigins: [
-    baseUrl,
-    productionUrl,
-    'http://localhost:3000',
-    'expo://',
-  ].filter(Boolean) as string[],
+  // Allow Expo app origins dynamically
+  trustedOrigins: (request) => {
+    const origin = request?.headers.get('origin');
+
+    // Base allowed origins
+    const allowedOrigins = [
+      baseUrl,
+      productionUrl,
+      'http://localhost:3000',
+    ].filter(Boolean) as string[];
+
+    // Dynamically add Expo origins (exp:// for Expo Go, expo:// for production)
+    if (origin?.startsWith('exp://') || origin?.startsWith('expo://')) {
+      return [...allowedOrigins, origin];
+    }
+
+    return allowedOrigins;
+  },
 });
 
 export type Auth = typeof auth;
