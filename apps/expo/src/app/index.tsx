@@ -9,6 +9,38 @@ import {
 
 import { authClient } from '~/utils/auth';
 
+function MobileAuth({ theme }: { theme: (typeof colors)['light'] }) {
+  const { data: session } = authClient.useSession();
+
+  return (
+    <View style={styles.authContainer}>
+      <Text style={[styles.authStatus, { color: theme.foreground }]}>
+        {session?.user.name ? `Hello, ${session.user.name}` : 'Not logged in'}
+      </Text>
+      <Pressable
+        onPress={() =>
+          session
+            ? authClient.signOut()
+            : authClient.signIn.social({
+                callbackURL: '/',
+                provider: 'google',
+              })
+        }
+        style={[styles.authButton, { backgroundColor: theme.destructive }]}
+      >
+        <Text
+          style={[
+            styles.authButtonText,
+            { color: theme.destructiveForeground },
+          ]}
+        >
+          {session ? 'Sign Out' : 'Sign In with Google'}
+        </Text>
+      </Pressable>
+    </View>
+  );
+}
+
 const colors = {
   dark: {
     background: '#09090B',
@@ -61,20 +93,8 @@ export default function Index() {
           with React Native & Expo.
         </Text>
 
-        {/* CTA Button */}
-        <Pressable
-          onPress={() =>
-            authClient.signIn.social({
-              callbackURL: '/',
-              provider: 'google',
-            })
-          }
-          style={[styles.ctaButton, { backgroundColor: theme.foreground }]}
-        >
-          <Text style={[styles.ctaButtonText, { color: theme.background }]}>
-            Get Started Free
-          </Text>
-        </Pressable>
+        {/* Auth Section */}
+        <MobileAuth theme={theme} />
       </View>
 
       {/* Stats Section */}
@@ -162,7 +182,7 @@ export default function Index() {
         </View>
       </View>
 
-      {/* Sign In CTA */}
+      {/* CTA Section */}
       <View style={styles.ctaSection}>
         <Text style={[styles.sectionTitle, { color: theme.foreground }]}>
           Ready to Build?
@@ -170,24 +190,7 @@ export default function Index() {
         <Text style={[styles.ctaDescription, { color: theme.mutedForeground }]}>
           Join thousands of developers who ship faster.
         </Text>
-        <Pressable
-          onPress={() =>
-            authClient.signIn.social({
-              callbackURL: '/',
-              provider: 'google',
-            })
-          }
-          style={[styles.signInButton, { backgroundColor: theme.destructive }]}
-        >
-          <Text
-            style={[
-              styles.signInButtonText,
-              { color: theme.destructiveForeground },
-            ]}
-          >
-            Sign In with Google
-          </Text>
-        </Pressable>
+        <MobileAuth theme={theme} />
       </View>
 
       {/* Footer */}
@@ -253,29 +256,38 @@ function FeatureCard({
 }
 
 const styles = StyleSheet.create({
+  authButton: {
+    alignItems: 'center',
+    borderRadius: 16,
+    height: 56,
+    justifyContent: 'center',
+    width: '100%',
+  },
+  authButtonText: {
+    fontSize: 18,
+    fontWeight: '600',
+  },
+  authContainer: {
+    alignItems: 'center',
+    gap: 12,
+    width: '100%',
+  },
   authorName: {
     fontWeight: '600',
   },
   authorTitle: {
     fontSize: 14,
   },
+  authStatus: {
+    fontSize: 16,
+    fontWeight: '600',
+    textAlign: 'center',
+  },
   container: {
     flex: 1,
   },
   copyright: {
     fontSize: 12,
-  },
-  ctaButton: {
-    alignItems: 'center',
-    borderRadius: 16,
-    height: 56,
-    justifyContent: 'center',
-    marginTop: 8,
-    width: '100%',
-  },
-  ctaButtonText: {
-    fontSize: 18,
-    fontWeight: '600',
   },
   ctaDescription: {
     textAlign: 'center',
@@ -364,17 +376,6 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: '700',
     textAlign: 'center',
-  },
-  signInButton: {
-    alignItems: 'center',
-    borderRadius: 16,
-    height: 56,
-    justifyContent: 'center',
-    width: '100%',
-  },
-  signInButtonText: {
-    fontSize: 18,
-    fontWeight: '600',
   },
   star: {
     fontSize: 20,

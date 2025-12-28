@@ -1,3 +1,4 @@
+import { expo } from '@better-auth/expo';
 import { db } from '@seawatts/db/client';
 import {
   Accounts,
@@ -11,9 +12,26 @@ import {
 import { createId } from '@seawatts/id';
 import { betterAuth } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
-import { lastLoginMethod, organization } from 'better-auth/plugins';
+import { lastLoginMethod, oAuthProxy, organization } from 'better-auth/plugins';
 
 import { env } from './env';
+
+// Fallback production URL for OAuth proxy (used when Vercel env vars not available)
+const FALLBACK_PRODUCTION_URL = 'https://startup-template-mu.vercel.app';
+
+// Determine the base URL based on environment
+const baseUrl =
+  env.VERCEL_ENV === 'production'
+    ? `https://${env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : env.VERCEL_ENV === 'preview'
+      ? `https://${env.VERCEL_URL}`
+      : 'http://localhost:3000';
+
+// Production URL for OAuth proxy - always use the production deployment
+// This allows OAuth to work from mobile devices even during local development
+const productionUrl = env.VERCEL_PROJECT_PRODUCTION_URL
+  ? `https://${env.VERCEL_PROJECT_PRODUCTION_URL}`
+  : FALLBACK_PRODUCTION_URL;
 
 export const auth = betterAuth({
   advanced: {
@@ -33,7 +51,7 @@ export const auth = betterAuth({
       },
     },
   },
-  baseURL: env.BETTER_AUTH_URL,
+  baseURL: baseUrl,
   database: drizzleAdapter(db, {
     provider: 'pg',
     schema: {
@@ -55,6 +73,11 @@ export const auth = betterAuth({
   // },
 
   plugins: [
+    oAuthProxy({
+      currentURL: baseUrl,
+      productionURL: productionUrl,
+    }),
+    expo(),
     lastLoginMethod({
       storeInDatabase: true,
     }),
@@ -92,10 +115,17 @@ export const auth = betterAuth({
     google: {
       clientId: env.GOOGLE_CLIENT_ID,
       clientSecret: env.GOOGLE_CLIENT_SECRET,
+      // Required for OAuth proxy to work - must match what's registered in Google Cloud Console
+      redirectURI: `${productionUrl}/api/auth/callback/google`,
     },
   },
 
-  trustedOrigins: [env.BETTER_AUTH_URL, 'http://localhost:3000'],
+  trustedOrigins: [
+    baseUrl,
+    productionUrl,
+    'http://localhost:3000',
+    'expo://',
+  ].filter(Boolean) as string[],
 });
 
 export type Auth = typeof auth;

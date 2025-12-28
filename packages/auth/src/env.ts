@@ -27,11 +27,14 @@ export const env = createEnv({
    */
   server: {
     BETTER_AUTH_SECRET: z.string().min(32),
-    BETTER_AUTH_URL: z.url(),
     GOOGLE_CLIENT_ID: z.string(),
     GOOGLE_CLIENT_SECRET: z.string(),
     NODE_ENV: z
       .enum(['development', 'production', 'test'])
       .default('development'),
+    // Vercel environment variables (automatically injected on Vercel)
+    VERCEL_ENV: z.enum(['development', 'preview', 'production']).optional(),
+    VERCEL_PROJECT_PRODUCTION_URL: z.string().optional(),
+    VERCEL_URL: z.string().optional(),
   },
 });

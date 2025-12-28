@@ -91,7 +91,12 @@ export function initAuth<
         clientSecret: env.GOOGLE_CLIENT_SECRET,
       },
     },
-    trustedOrigins: [env.BETTER_AUTH_URL, 'http://localhost:3000', 'expo://'],
+    trustedOrigins: [
+      options.baseUrl,
+      options.productionUrl,
+      'http://localhost:3000',
+      'expo://',
+    ].filter(Boolean) as string[],
   } satisfies BetterAuthOptions;
 
   return betterAuth(config);
