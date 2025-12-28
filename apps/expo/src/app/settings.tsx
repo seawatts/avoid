@@ -36,6 +36,7 @@ export default function Settings() {
 
   return (
     <ScrollView
+      showsVerticalScrollIndicator={false}
       style={[styles.container, { backgroundColor: theme.background }]}
     >
       {/* Profile Section */}

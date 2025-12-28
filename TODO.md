@@ -1,2 +1,4 @@
 TODO:
-https://github.com/bycedric/semantic-release-expo
+
+- get supabase in prod
+- get expo login working

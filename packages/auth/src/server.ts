@@ -74,7 +74,6 @@ export const auth = betterAuth({
 
   plugins: [
     oAuthProxy({
-      currentURL: baseUrl,
       productionURL: productionUrl,
     }),
     expo(),
@@ -120,7 +119,7 @@ export const auth = betterAuth({
     },
   },
 
-  trustedOrigins: ['expo://', 'exp://'],
+  trustedOrigins: ['expo://'],
 });
 
 export type Auth = typeof auth;
