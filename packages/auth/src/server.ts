@@ -68,6 +68,12 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: false, // Only using Google OAuth
   },
+  // Debug: log API errors
+  onAPIError: {
+    onError(error) {
+      console.error('[BETTER AUTH ERROR]', error);
+    },
+  },
   // experimental: {
   //   joins: true,
   // },
@@ -119,17 +125,20 @@ export const auth = betterAuth({
     },
   },
 
-  // Allow any exp:// or expo:// origin for mobile apps
-  trustedOrigins: async (request) => {
-    const origin = request?.headers?.get('origin') ?? '';
-    // Always allow expo schemes
-    const allowed = ['expo://', 'exp://'];
-    // If origin starts with exp:// or expo://, add it to allowed list
-    if (origin.startsWith('exp://') || origin.startsWith('expo://')) {
-      allowed.push(origin);
-    }
-    return allowed;
-  },
+  // Trusted origins for CORS and deep linking
+  // The expo:// scheme is used by the Expo client to redirect back after OAuth
+  trustedOrigins: [
+    'startup-template://',
+
+    // Development mode - Expo's exp:// scheme with local IP ranges
+    ...(process.env.NODE_ENV === 'development'
+      ? [
+          'exp://', // Trust all Expo URLs (prefix matching)
+          'exp://**', // Trust all Expo URLs (wildcard matching)
+          'exp://192.168.*.*:*/**', // Trust 192.168.x.x IP range with any port and path
+        ]
+      : []),
+  ],
 });
 
 export type Auth = typeof auth;
