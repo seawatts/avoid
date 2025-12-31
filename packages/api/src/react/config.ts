@@ -49,10 +49,15 @@ export const createDefaultLinks = ({
         headers.set('Authorization', `Bearer ${authToken}`);
       }
 
-      // Support dynamic cookie getter (for Expo) or static cookie
-      const cookie = cookieGetter?.() ?? sessionCookie;
-      if (cookie) {
-        headers.set('Cookie', cookie);
+      // Support dynamic cookie getter (for Expo) - returns full cookie string
+      // Or static sessionCookie value - gets wrapped with __session=
+      if (cookieGetter) {
+        const cookie = cookieGetter();
+        if (cookie) {
+          headers.set('Cookie', cookie);
+        }
+      } else if (sessionCookie) {
+        headers.set('Cookie', `__session=${sessionCookie}`);
       }
 
       return headers;
