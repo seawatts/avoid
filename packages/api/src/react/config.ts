@@ -50,12 +50,10 @@ export const createDefaultLinks = ({
       }
 
       // Support dynamic cookie getter (for Expo) - returns full cookie string
-      // Or static sessionCookie value - gets wrapped with __session=
-      if (cookieGetter) {
-        const cookie = cookieGetter();
-        if (cookie) {
-          headers.set('Cookie', cookie);
-        }
+      // Falls back to static sessionCookie if cookieGetter returns undefined
+      const dynamicCookie = cookieGetter?.();
+      if (dynamicCookie) {
+        headers.set('Cookie', dynamicCookie);
       } else if (sessionCookie) {
         headers.set('Cookie', `__session=${sessionCookie}`);
       }
