@@ -20,7 +20,7 @@ export interface ExpoReleaseOptions {
  */
 export async function publishExpoApp(
   pkg: PackageInfo,
-  version: string,
+  _version: string,
   dryRun: boolean,
   options: ExpoReleaseOptions = {},
 ): Promise<void> {
