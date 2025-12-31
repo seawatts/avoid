@@ -34,4 +34,7 @@ type RouterOutputs = inferRouterOutputs<AppRouter>;
 export { createCaller };
 export type { RouterInputs, RouterOutputs };
 
+// Export vanilla client factory for non-React usage (CLI, Expo, etc.)
+export { type ApiClient, createClient } from './client';
+export type { ClientConfig } from './react/config';
 export { type AppRouter, appRouter } from './root';

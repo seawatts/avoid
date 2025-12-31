@@ -1,4 +1,3 @@
-import Constants from 'expo-constants';
 import * as WebBrowser from 'expo-web-browser';
 import {
   Pressable,
@@ -9,6 +8,7 @@ import {
   View,
 } from 'react-native';
 
+import { api } from '~/utils/api';
 import { authClient } from '~/utils/auth';
 
 // Required for expo-web-browser to properly dismiss the browser after OAuth redirect
@@ -16,6 +16,41 @@ WebBrowser.maybeCompleteAuthSession();
 
 function MobileAuth({ theme }: { theme: (typeof colors)['light'] }) {
   const { data: session } = authClient.useSession();
+
+  const handleSignIn = async () => {
+    console.log('[AUTH] Starting sign in...');
+
+    // Let the expo plugin handle URL construction by passing a path starting with "/"
+    // The plugin will convert "/" to the proper deep link like "startuptemplate-development://"
+    await authClient.signIn.social({
+      callbackURL: '/',
+      provider: 'google',
+    });
+
+    // After OAuth completes, get the session to sync user data
+    const newSession = await authClient.getSession();
+
+    // In development, sync the user to local database for local API calls
+    if (__DEV__ && newSession?.data?.user) {
+      try {
+        console.log('[DEV SYNC] Syncing user to local database...');
+        const user = newSession.data.user;
+        await api.auth.syncFromProduction.mutate({
+          user: {
+            email: user.email,
+            emailVerified: user.emailVerified,
+            id: user.id,
+            image: user.image,
+            name: user.name,
+          },
+        });
+        console.log('[DEV SYNC] User synced successfully');
+      } catch (error) {
+        // Don't fail the sign-in if sync fails - just log it
+        console.warn('[DEV SYNC] Failed to sync user to local DB:', error);
+      }
+    }
+  };
 
   return (
     <View style={styles.authContainer}>
@@ -27,18 +62,7 @@ function MobileAuth({ theme }: { theme: (typeof colors)['light'] }) {
           if (session) {
             await authClient.signOut();
           } else {
-            console.log('[AUTH] Starting sign in...');
-            console.log('[AUTH] Using scheme:', Constants.expoConfig?.scheme);
-            // Let the expo plugin handle URL construction by passing a path starting with "/"
-            // The plugin will convert "/" to the proper deep link like "startuptemplate-development://"
-            const result = await authClient.signIn.social({
-              callbackURL: '/',
-              provider: 'google',
-            });
-            console.log(
-              '[AUTH] Sign in result:',
-              JSON.stringify(result, null, 2),
-            );
+            await handleSignIn();
           }
         }}
         style={[styles.authButton, { backgroundColor: theme.destructive }]}

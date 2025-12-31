@@ -1,5 +1,12 @@
 import { db } from '@seawatts/db/client';
-import { AuthCodes, Orgs, Users } from '@seawatts/db/schema';
+import {
+  Accounts,
+  AuthCodes,
+  Orgs,
+  Sessions,
+  Users,
+} from '@seawatts/db/schema';
+import { createId } from '@seawatts/id';
 import { TRPCError } from '@trpc/server';
 import { and, eq, gte, isNull } from 'drizzle-orm';
 import { z } from 'zod';
@@ -146,6 +153,114 @@ export const authRouter = {
           code: 'INTERNAL_SERVER_ERROR',
           message:
             'An unexpected error occurred while processing authentication',
+        });
+      }
+    }),
+
+  /**
+   * Sync user data from production OAuth to local database.
+   * This is used during mobile development when OAuth happens on production
+   * but we want the user record in the local database.
+   *
+   * Only works in development mode for security.
+   */
+  syncFromProduction: publicProcedure
+    .input(
+      z.object({
+        account: z
+          .object({
+            accessToken: z.string().optional(),
+            accountId: z.string(),
+            providerId: z.string(),
+            refreshToken: z.string().optional(),
+          })
+          .optional(),
+        user: z.object({
+          email: z.string().email(),
+          emailVerified: z.boolean().default(false),
+          id: z.string(),
+          image: z.string().nullable().optional(),
+          name: z.string(),
+        }),
+      }),
+    )
+    .mutation(async ({ input }) => {
+      // Only allow in development
+      if (process.env.NODE_ENV !== 'development') {
+        throw new TRPCError({
+          code: 'FORBIDDEN',
+          message: 'This endpoint is only available in development mode',
+        });
+      }
+
+      const { user, account } = input;
+
+      try {
+        // Upsert user
+        const [upsertedUser] = await db
+          .insert(Users)
+          .values({
+            email: user.email,
+            emailVerified: user.emailVerified,
+            id: user.id,
+            image: user.image,
+            name: user.name,
+          })
+          .onConflictDoUpdate({
+            set: {
+              email: user.email,
+              emailVerified: user.emailVerified,
+              image: user.image,
+              name: user.name,
+              updatedAt: new Date(),
+            },
+            target: Users.id,
+          })
+          .returning();
+
+        // Upsert account if provided
+        if (account) {
+          await db
+            .insert(Accounts)
+            .values({
+              accessToken: account.accessToken,
+              accountId: account.accountId,
+              id: createId({ prefix: 'acc' }),
+              providerId: account.providerId,
+              refreshToken: account.refreshToken,
+              userId: user.id,
+            })
+            .onConflictDoNothing();
+        }
+
+        // Create a local session
+        const sessionToken = createId({ prefix: 'session' });
+        const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // 7 days
+
+        await db
+          .insert(Sessions)
+          .values({
+            expiresAt,
+            id: createId({ prefix: 'session' }),
+            token: sessionToken,
+            userId: user.id,
+          })
+          .onConflictDoNothing();
+
+        console.log(
+          `[DEV SYNC] Synced user ${user.email} (${user.id}) to local database`,
+        );
+
+        return {
+          success: true,
+          user: upsertedUser,
+        };
+      } catch (error) {
+        console.error('[DEV SYNC] Failed to sync user:', error);
+        throw new TRPCError({
+          cause: error instanceof Error ? error : undefined,
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Failed to sync user to local database',
         });
       }
     }),
