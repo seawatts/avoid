@@ -259,6 +259,7 @@
     "@vscode/test-cli": "0.0.12",
     "@vscode/test-electron": "2.5.2",
     "concurrently": "9.2.1",
+    "glob": "11.0.0",
     "mocha": "11.7.5",
     "typescript": "catalog:",
     "vite": "7.3.0"

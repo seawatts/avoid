@@ -5,6 +5,21 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'apps/expo/**'
+      - 'packages/api/**'
+      - 'packages/auth/**'
+      - 'packages/db/**'
+      - 'packages/id/**'
+      - 'packages/logger/**'
+      - 'packages/stripe/**'
+      - 'packages/analytics/**'
+      - 'packages/zustand/**'
+      - 'packages/ui/**'
+      - 'tooling/typescript/**'
+      - 'package.json'
+      - 'turbo.json'
+      - 'bun.lock'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}

@@ -11,6 +11,7 @@ const config: KnipConfig = {
     // Used via postcss config, not direct imports
     'tailwindcss',
     '@tailwindcss/postcss',
+    'react-native-worklets',
   ],
   ignoreExportsUsedInFile: true,
   ignoreWorkspaces: [
