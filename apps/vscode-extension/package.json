@@ -240,13 +240,20 @@
   "dependencies": {
     "@seawatts/api": "workspace:*",
     "@seawatts/logger": "workspace:*",
-    "@t3-oss/env-core": "catalog:"
+    "@seawatts/ui": "workspace:*",
+    "@t3-oss/env-core": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "zod": "catalog:"
   },
   "description": "Webhook Development",
   "devDependencies": {
     "@seawatts/tsconfig": "workspace:*",
     "@types/bun": "catalog:",
+    "@types/mocha": "10.0.10",
     "@types/node": "25.0.3",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
     "@types/vscode": "1.107.0",
     "@vitejs/plugin-react": "5.1.2",
     "@vscode/test-cli": "0.0.12",

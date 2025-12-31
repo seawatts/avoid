@@ -28,7 +28,6 @@ function MobileAuth({ theme }: { theme: (typeof colors)['light'] }) {
           } else {
             console.log('[AUTH] Starting sign in...');
             const result = await authClient.signIn.social({
-              callbackURL: '/',
               provider: 'google',
             });
             console.log(

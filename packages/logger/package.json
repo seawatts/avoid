@@ -3,6 +3,7 @@
     "node-inspect-extracted": "3.3.0"
   },
   "devDependencies": {
+    "@seawatts/tsconfig": "workspace:*",
     "@types/bun": "catalog:",
     "@types/vscode": "1.107.0",
     "typescript": "catalog:"

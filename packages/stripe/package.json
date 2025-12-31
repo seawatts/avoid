@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@seawatts/analytics": "workspace:*",
     "@seawatts/auth": "workspace:*",
     "@seawatts/db": "workspace:*",
     "@t3-oss/env-core": "catalog:",
