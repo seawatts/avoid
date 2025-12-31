@@ -33,7 +33,6 @@
   },
   "devDependencies": {
     "@biomejs/biome": "2.3.10",
-    "@clack/prompts": "^0.11.0",
     "@commitlint/cli": "20.2.0",
     "@seawatts/commitlint-config": "workspace:*",
     "@testing-library/react": "16.3.1",
@@ -44,8 +43,7 @@
     "lefthook": "2.0.13",
     "turbo": "^2.7.2",
     "typescript": "5.9.3",
-    "vitest": "4.0.16",
-    "zx": "^8.8.5"
+    "vitest": "4.0.16"
   },
   "engines": {
     "node": ">=20.12.0"
@@ -61,12 +59,6 @@
     "build": "turbo run build",
     "clean": "git clean -xdf node_modules .turbo",
     "clean:ws": "turbo run clean",
-    "cleanup:all": "bun run scripts/cleanup-all-resources.ts",
-    "cleanup:all:dry-run": "bun run scripts/cleanup-all-resources.ts --dry-run",
-    "cleanup:orgs": "bun run scripts/cleanup-orgs.ts",
-    "cleanup:orgs:dry-run": "bun run scripts/cleanup-orgs.ts --dry-run",
-    "cleanup:webhooks": "bun run scripts/cleanup-webhooks.ts",
-    "cleanup:webhooks:dry-run": "bun run scripts/cleanup-webhooks.ts --dry-run",
     "clone-project": "bun run scripts/clone-project.ts",
     "db:gen-migration": "turbo -F @seawatts/db gen-migration",
     "db:migrate": "turbo -F @seawatts/db migrate",
@@ -87,7 +79,6 @@
     "release:ci": "bun scripts/release/index.ts --ci",
     "release:dry-run": "bun scripts/release/index.ts --dry-run",
     "scripts": "bun run scripts/run.ts",
-    "sync-secrets": "bun run scripts/sync-secrets.ts",
     "test": "bun test",
     "test:integ": "turbo run test --filter=@seawatts/integ-test",
     "test:integ:ci": "turbo run test:ci --filter=@seawatts/integ-test",
@@ -122,7 +113,8 @@
       "packages/*",
       "apps/*",
       "tooling/*",
-      "docs"
+      "docs",
+      "scripts"
     ]
   }
 }

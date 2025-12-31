@@ -77,13 +77,14 @@ export async function getOrSelectSupabaseOrg(
 
   // Non-interactive mode - use first org
   if (noInteractive) {
-    if (orgs.length === 0) {
+    const org = orgs[0];
+    if (!org) {
       throw new Error(
         'No Supabase organizations found. Create one first or provide --supabase-org-id',
       );
     }
-    p.log.success(`Using Supabase org: ${orgs[0].name} (${orgs[0].id})`);
-    return orgs[0];
+    p.log.success(`Using Supabase org: ${org.name} (${org.id})`);
+    return org;
   }
 
   // Build select options
@@ -267,10 +268,11 @@ export async function selectSupabaseProject(
 
   // Non-interactive or single project - auto-select
   if (noInteractive || projects.length === 1) {
-    p.log.success(
-      `Using Supabase project: ${projects[0].name} (${projects[0].id})`,
-    );
-    return projects[0];
+    const project = projects[0];
+    if (project) {
+      p.log.success(`Using Supabase project: ${project.name} (${project.id})`);
+      return project;
+    }
   }
 
   // Interactive selection

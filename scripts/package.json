@@ -1,0 +1,21 @@
+{
+  "dependencies": {
+    "@clack/prompts": "0.11.0",
+    "picocolors": "1.1.1"
+  },
+  "devDependencies": {
+    "@seawatts/tsconfig": "workspace:*",
+    "@types/bun": "catalog:",
+    "@types/node": "25.0.3",
+    "typescript": "catalog:"
+  },
+  "license": "MIT",
+  "name": "@seawatts/scripts",
+  "private": true,
+  "scripts": {
+    "clean": "git clean -xdf .turbo node_modules",
+    "typecheck": "tsc --noEmit --emitDeclarationOnly false"
+  },
+  "type": "module",
+  "version": "0.1.0"
+}

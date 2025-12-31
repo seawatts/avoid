@@ -31,7 +31,7 @@ export async function getGitRepoFromRemote(): Promise<string> {
 
   const url = stdout.trim();
   const match = url.match(/github\.com[/:]([\w.-]+\/[\w.-]+?)(?:\.git)?$/);
-  if (match) {
+  if (match?.[1]) {
     return match[1];
   }
 
@@ -127,14 +127,20 @@ export async function getOrSelectVercelTeam(
 
   // Single team - auto-select
   if (teams.length === 1) {
-    p.log.success(`Using Vercel team: ${teams[0].name} (${teams[0].slug})`);
-    return teams[0].id;
+    const team = teams[0];
+    if (team) {
+      p.log.success(`Using Vercel team: ${team.name} (${team.slug})`);
+      return team.id;
+    }
   }
 
   // Non-interactive - use first team
   if (noInteractive) {
-    p.log.success(`Using Vercel team: ${teams[0].name} (${teams[0].slug})`);
-    return teams[0].id;
+    const team = teams[0];
+    if (team) {
+      p.log.success(`Using Vercel team: ${team.name} (${team.slug})`);
+      return team.id;
+    }
   }
 
   // Interactive selection (includes personal account option)

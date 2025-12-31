@@ -41,9 +41,10 @@ export async function commitVersionChanges(
 ): Promise<void> {
   await $`git add -A`;
 
+  const firstRelease = releases[0];
   const commitMessage =
-    releases.length === 1
-      ? `chore: release ${PACKAGES[releases[0]?.pkg]?.name}@${releases[0]?.version}`
+    releases.length === 1 && firstRelease
+      ? `chore: release ${PACKAGES[firstRelease.pkg]?.name}@${firstRelease.version}`
       : `chore: release ${releases.map((r) => `${PACKAGES[r.pkg]?.name}@${r.version}`).join(' ')}`;
 
   if (dryRun) {

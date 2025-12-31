@@ -1,24 +1,19 @@
 import { randomBytes } from 'node:crypto';
 
 import * as p from '@clack/prompts';
-import { $ } from 'zx';
-
-// Configure zx to be quiet by default
-$.quiet = true;
 
 // Global verbose flag
 let verboseMode = false;
 
 export function setVerbose(verbose: boolean) {
   verboseMode = verbose;
-  $.quiet = !verbose;
 }
 
 export function isVerbose(): boolean {
   return verboseMode;
 }
 
-export { $, p };
+export { p };
 
 // ============================================================================
 // Password Generation
@@ -45,42 +40,38 @@ export async function runCommand(
     p.log.step(`Running: ${command.join(' ')}`);
   }
 
-  try {
-    const result = await $`${command}`;
+  const proc = Bun.spawn(command, {
+    stderr: 'pipe',
+    stdout: 'pipe',
+  });
 
-    if (verboseMode) {
-      if (result.stdout.trim()) {
-        p.log.info(`stdout: ${result.stdout.trim()}`);
-      }
-      if (result.stderr.trim()) {
-        p.log.warn(`stderr: ${result.stderr.trim()}`);
-      }
+  const [stdout, stderr] = await Promise.all([
+    new Response(proc.stdout).text(),
+    new Response(proc.stderr).text(),
+  ]);
+
+  const exitCode = await proc.exited;
+
+  if (verboseMode) {
+    if (stdout.trim()) {
+      p.log.info(`stdout: ${stdout.trim()}`);
     }
-
-    return {
-      exitCode: result.exitCode ?? 0,
-      stderr: result.stderr,
-      stdout: result.stdout,
-    };
-  } catch (error) {
-    const err = error as {
-      exitCode?: number;
-      stderr?: string;
-      stdout?: string;
-    };
-
-    if (verboseMode || !options.silent) {
-      p.log.error(`Command failed: ${command.join(' ')}`);
-      if (err.stdout) p.log.info(`stdout: ${err.stdout}`);
-      if (err.stderr) p.log.warn(`stderr: ${err.stderr}`);
+    if (stderr.trim()) {
+      p.log.warn(`stderr: ${stderr.trim()}`);
     }
-
-    return {
-      exitCode: err.exitCode ?? 1,
-      stderr: err.stderr ?? '',
-      stdout: err.stdout ?? '',
-    };
   }
+
+  if (exitCode !== 0 && (verboseMode || !options.silent)) {
+    p.log.error(`Command failed: ${command.join(' ')}`);
+    if (stdout) p.log.info(`stdout: ${stdout}`);
+    if (stderr) p.log.warn(`stderr: ${stderr}`);
+  }
+
+  return {
+    exitCode,
+    stderr,
+    stdout,
+  };
 }
 
 export async function sleep(ms: number): Promise<void> {
@@ -218,10 +209,13 @@ export async function selectOrCreate<T, TCreate = T>(
 
   // Single item - auto-select
   if (items.length === 1 && !onCreate) {
-    if (autoSelectMessage) {
-      p.log.success(autoSelectMessage(items[0]));
+    const item = items[0];
+    if (item) {
+      if (autoSelectMessage) {
+        p.log.success(autoSelectMessage(item));
+      }
+      return item;
     }
-    return items[0];
   }
 
   // Non-interactive mode - use first or fail
@@ -231,11 +225,12 @@ export async function selectOrCreate<T, TCreate = T>(
         'No items found and cannot create in non-interactive mode',
       );
     }
-    if (items.length > 0) {
+    const item = items[0];
+    if (item) {
       if (autoSelectMessage) {
-        p.log.success(autoSelectMessage(items[0]));
+        p.log.success(autoSelectMessage(item));
       }
-      return items[0];
+      return item;
     }
   }
 

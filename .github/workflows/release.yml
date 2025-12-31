@@ -1,4 +1,4 @@
-name: NPM Release
+name: Release
 
 on:
   workflow_dispatch:
@@ -21,6 +21,7 @@ on:
           - cli
           - client
           - vscode
+          - expo
       include_commits:
         description: 'Include detailed commit list in changelog'
         required: false
@@ -42,7 +43,7 @@ env:
 
 jobs:
   release:
-    name: NPM Release
+    name: Release
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
@@ -65,6 +66,13 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
+      - name: Setup Expo and EAS
+        if: inputs.packages == 'expo' || inputs.packages == 'all'
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
       - name: Run Release Script
         run: |
           INCLUDE_COMMITS_FLAG=""
@@ -83,6 +91,8 @@ jobs:
           # VSCode extension publishing
           VSCE_PAT: ${{ secrets.VSCE_PAT }}
           OVSX_PAT: ${{ secrets.OVSX_PAT }}
+          # Expo/EAS publishing
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
           # Build environment
           NODE_ENV: production
           NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}

@@ -38,6 +38,10 @@ const config: KnipConfig = {
       entry: ['**/*.ts?(x)'],
       project: ['**/*.ts?(x)'],
     },
+    'scripts/*': {
+      entry: ['**/*.ts?(x)'],
+      project: ['**/*.ts?(x)'],
+    },
     'tooling/testing': {
       entry: ['**/*.ts?(x)'],
       project: ['**/*.ts?(x)'],

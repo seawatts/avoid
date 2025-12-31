@@ -12,7 +12,6 @@ import { readdirSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 
 import * as p from '@clack/prompts';
-import { $ } from 'zx';
 
 // Script metadata for display
 const SCRIPT_INFO: Record<string, { description: string; icon: string }> = {
@@ -102,11 +101,15 @@ async function main() {
   const args = process.argv.slice(2);
 
   try {
-    $.verbose = true;
-    await $`bun ${scriptPath} ${args}`;
+    const result = Bun.spawnSync(['bun', scriptPath, ...args], {
+      stdio: ['inherit', 'inherit', 'inherit'],
+    });
+    if (result.exitCode !== 0) {
+      process.exit(result.exitCode);
+    }
   } catch (error) {
     // Script already printed its output, just exit with error code
-    p.log.error(error);
+    p.log.error(error instanceof Error ? error.message : String(error));
     process.exit(1);
   }
 }

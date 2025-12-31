@@ -138,14 +138,21 @@ export async function getOrCreatePostHogOrg(
 
   // Single org - auto-select
   if (orgs.length === 1) {
-    p.log.success(`Using PostHog org: ${orgs[0].name} (${orgs[0].id})`);
-    return orgs[0];
+    const org = orgs[0];
+    if (org) {
+      p.log.success(`Using PostHog org: ${org.name} (${org.id})`);
+      return org;
+    }
   }
 
   // Non-interactive - use first
   if (noInteractive) {
-    p.log.success(`Using PostHog org: ${orgs[0].name} (${orgs[0].id})`);
-    return orgs[0];
+    const org = orgs[0];
+    if (org) {
+      p.log.success(`Using PostHog org: ${org.name} (${org.id})`);
+      return org;
+    }
+    throw new Error('No PostHog organizations available');
   }
 
   // Interactive selection
@@ -208,8 +215,11 @@ export async function selectPostHogProject(
 
   // Non-interactive or single project - auto-select
   if (noInteractive || projects.length === 1) {
-    p.log.success(`Using PostHog project: ${projects[0].name}`);
-    return { org, project: projects[0] };
+    const project = projects[0];
+    if (project) {
+      p.log.success(`Using PostHog project: ${project.name}`);
+      return { org, project };
+    }
   }
 
   // Interactive selection

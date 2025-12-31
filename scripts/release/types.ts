@@ -6,7 +6,7 @@ export interface PackageJson {
 
 export interface ReleaseConfig {
   bumpType: 'patch' | 'minor' | 'major';
-  packages: 'all' | 'cli' | 'client' | 'vscode';
+  packages: 'all' | 'cli' | 'client' | 'vscode' | 'expo';
   dryRun: boolean;
   interactive: boolean;
   includeCommitList: boolean;
@@ -47,6 +47,15 @@ export const PACKAGES: Record<string, PackageInfo> = {
     packageJsonPath: 'packages/client/package.json',
     path: 'packages/client',
     tagPrefix: 'client-v',
+  },
+  expo: {
+    changelogEnvVar: 'EXPO_CHANGELOG',
+    changelogPath: 'apps/expo/CHANGELOG.md',
+    name: '@seawatts/expo',
+    packageJsonPath: 'apps/expo/package.json',
+    path: 'apps/expo',
+    skipNpmPublish: true, // Expo app publishes via EAS
+    tagPrefix: 'expo-v',
   },
   vscode: {
     changelogEnvVar: 'VSCODE_CHANGELOG',

@@ -800,6 +800,9 @@ async function setupVercelSync(
       }
 
       const connection = connections[0];
+      if (!connection) {
+        return false;
+      }
       for (const env of ENVIRONMENTS) {
         await createVercelSync(infisicalToken, {
           connectionId: connection.id,

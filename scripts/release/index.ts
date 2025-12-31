@@ -1,6 +1,6 @@
 #!/usr/bin/env bun
 /**
- * Release script for @unhook/cli, @unhook/client, and unhook-vscode
+ * Release script for @unhook/cli, @unhook/client, unhook-vscode, and @seawatts/expo
  *
  * Interactive mode (default):
  *   bun scripts/release
@@ -9,6 +9,7 @@
  *   bun scripts/release --bump patch --packages all --ci
  *   bun scripts/release --bump minor --packages cli --dry-run
  *   bun scripts/release --bump patch --packages vscode --ci
+ *   bun scripts/release --bump patch --packages expo --ci
  *   bun scripts/release --bump patch --packages all --include-commits
  *
  * Environment variables:
@@ -17,8 +18,10 @@
  *   CLI_CHANGELOG - Pre-generated changelog for CLI (from GitHub Action)
  *   CLIENT_CHANGELOG - Pre-generated changelog for client (from GitHub Action)
  *   VSCODE_CHANGELOG - Pre-generated changelog for VSCode extension (from GitHub Action)
+ *   EXPO_CHANGELOG - Pre-generated changelog for Expo app (from GitHub Action)
  *   VSCE_PAT - Personal Access Token for VS Marketplace (required for VSCode)
  *   OVSX_PAT - Personal Access Token for Open VSX Registry (required for VSCode)
+ *   EXPO_TOKEN - Expo access token for EAS (required for Expo)
  *   CI - If set, defaults to non-interactive mode
  */
 
@@ -27,6 +30,7 @@ import { parseArgs } from 'node:util';
 import * as p from '@clack/prompts';
 import pc from 'picocolors';
 import { generateChangelog, updateChangelogFile } from './changelog';
+import { publishExpoApp, updateExpoVersion } from './expo';
 import {
   commitVersionChanges,
   createGitHubRelease,
@@ -50,7 +54,7 @@ async function runInteractive(): Promise<ReleaseConfig> {
     message: 'Which packages do you want to release?',
     options: [
       {
-        hint: '@unhook/cli + @unhook/client + vscode',
+        hint: '@unhook/cli + @unhook/client + vscode + expo',
         label: 'All packages',
         value: 'all',
       },
@@ -60,6 +64,11 @@ async function runInteractive(): Promise<ReleaseConfig> {
         hint: 'unhook-vscode',
         label: 'VSCode Extension only',
         value: 'vscode',
+      },
+      {
+        hint: '@seawatts/expo (EAS Build + App Store)',
+        label: 'Expo App only',
+        value: 'expo',
       },
     ],
   });
@@ -71,7 +80,9 @@ async function runInteractive(): Promise<ReleaseConfig> {
 
   // Show current versions
   const packagesToRelease =
-    packages === 'all' ? ['cli', 'client', 'vscode'] : [packages as string];
+    packages === 'all'
+      ? ['cli', 'client', 'vscode', 'expo']
+      : [packages as string];
   for (const pkgKey of packagesToRelease) {
     const pkg = PACKAGES[pkgKey];
     if (pkg) {
@@ -146,7 +157,7 @@ async function runInteractive(): Promise<ReleaseConfig> {
     dryRun: dryRun as boolean,
     includeCommitList: includeCommitList as boolean,
     interactive: true,
-    packages: packages as 'all' | 'cli' | 'client' | 'vscode',
+    packages: packages as 'all' | 'cli' | 'client' | 'vscode' | 'expo',
   };
 }
 
@@ -191,10 +202,10 @@ function parseCliArgs(): ReleaseConfig {
 
   return {
     bumpType: values.bump as 'patch' | 'minor' | 'major',
-    dryRun: values['dry-run'] || process.env.DRY_RUN === 'true',
+    dryRun: (values['dry-run'] as boolean) || process.env.DRY_RUN === 'true',
     includeCommitList: values['include-commits'] as boolean,
     interactive: isInteractive,
-    packages: values.packages as 'all' | 'cli' | 'client' | 'vscode',
+    packages: values.packages as 'all' | 'cli' | 'client' | 'vscode' | 'expo',
   };
 }
 
@@ -261,8 +272,8 @@ async function main() {
       process.exit(1);
     }
 
-    if (!['all', 'cli', 'client', 'vscode'].includes(config.packages)) {
-      console.error('Invalid packages. Use: all, cli, client, or vscode');
+    if (!['all', 'cli', 'client', 'vscode', 'expo'].includes(config.packages)) {
+      console.error('Invalid packages. Use: all, cli, client, vscode, or expo');
       process.exit(1);
     }
 
@@ -274,7 +285,9 @@ async function main() {
   }
 
   const packagesToRelease =
-    config.packages === 'all' ? ['cli', 'client', 'vscode'] : [config.packages];
+    config.packages === 'all'
+      ? ['cli', 'client', 'vscode', 'expo']
+      : [config.packages];
   const releases: ReleaseResult[] = [];
 
   // Release each package
@@ -388,6 +401,42 @@ async function main() {
       );
     } catch (error) {
       vscodeSpinner.stop('Failed to publish VSCode extension');
+      throw error;
+    }
+  }
+
+  // Publish Expo app via EAS Build and Submit
+  const expoReleases = releases.filter((r) => r.pkg === 'expo');
+
+  if (expoReleases.length > 0) {
+    const expoSpinner = p.spinner();
+    expoSpinner.start('Publishing Expo app...');
+    try {
+      for (const release of expoReleases) {
+        const pkg = PACKAGES[release.pkg];
+        if (pkg) {
+          // Update app.config.ts version
+          expoSpinner.message(
+            `Updating ${pkg.name} version in app.config.ts...`,
+          );
+          await updateExpoVersion(pkg, release.version);
+
+          // Build and submit via EAS
+          expoSpinner.message(`Building ${pkg.name} via EAS...`);
+          await publishExpoApp(pkg, release.version, config.dryRun, {
+            platform: 'ios',
+            submit: true,
+            wait: false,
+          });
+        }
+      }
+      expoSpinner.stop(
+        config.dryRun
+          ? '🏃 [DRY RUN] Would build and submit to App Store via EAS'
+          : '📤 EAS Build started and submission queued',
+      );
+    } catch (error) {
+      expoSpinner.stop('Failed to publish Expo app');
       throw error;
     }
   }
