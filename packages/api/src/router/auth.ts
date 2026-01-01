@@ -8,7 +8,7 @@ import {
 } from '@seawatts/db/schema';
 import { createId } from '@seawatts/id';
 import { TRPCError } from '@trpc/server';
-import { and, eq, gte, isNull } from 'drizzle-orm';
+import { and, desc, eq, gte, isNull } from 'drizzle-orm';
 import { z } from 'zod';
 import { upsertOrg } from '../services';
 import { protectedProcedure, publicProcedure } from '../trpc';
@@ -214,44 +214,90 @@ export const authRouter = {
               name: user.name,
               updatedAt: new Date(),
             },
-            target: Users.id,
+            target: [Users.id],
           })
           .returning();
 
         // Upsert account if provided
+        // Better Auth uses composite unique key on (accountId, providerId, userId)
         if (account) {
-          await db
-            .insert(Accounts)
-            .values({
+          // First, try to find existing account
+          const existingAccount = await db.query.Accounts.findFirst({
+            where: and(
+              eq(Accounts.accountId, account.accountId),
+              eq(Accounts.providerId, account.providerId),
+              eq(Accounts.userId, user.id),
+            ),
+          });
+
+          if (existingAccount) {
+            // Update existing account
+            await db
+              .update(Accounts)
+              .set({
+                accessToken: account.accessToken,
+                refreshToken: account.refreshToken,
+                updatedAt: new Date(),
+              })
+              .where(eq(Accounts.id, existingAccount.id));
+          } else {
+            // Insert new account
+            await db.insert(Accounts).values({
               accessToken: account.accessToken,
               accountId: account.accountId,
               id: createId({ prefix: 'acc' }),
               providerId: account.providerId,
               refreshToken: account.refreshToken,
               userId: user.id,
-            })
-            .onConflictDoNothing();
+            });
+          }
         }
 
-        // Create a local session
-        const sessionToken = createId({ prefix: 'session' });
+        // Upsert session - find existing valid session or create new one
         const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // 7 days
 
-        await db
-          .insert(Sessions)
-          .values({
+        // Check for existing valid session for this user
+        const existingSession = await db.query.Sessions.findFirst({
+          orderBy: [desc(Sessions.createdAt)],
+          where: and(
+            eq(Sessions.userId, user.id),
+            gte(Sessions.expiresAt, new Date()),
+          ),
+        });
+
+        let sessionId: string;
+        let sessionToken: string;
+
+        if (existingSession) {
+          // Extend existing session
+          sessionId = existingSession.id;
+          sessionToken = existingSession.token;
+          await db
+            .update(Sessions)
+            .set({
+              expiresAt,
+              updatedAt: new Date(),
+            })
+            .where(eq(Sessions.id, sessionId));
+        } else {
+          // Create new session
+          sessionToken = createId({ prefix: 'session' });
+          sessionId = createId({ prefix: 'sess' });
+          await db.insert(Sessions).values({
             expiresAt,
-            id: createId({ prefix: 'session' }),
+            id: sessionId,
             token: sessionToken,
             userId: user.id,
-          })
-          .onConflictDoNothing();
+          });
+        }
 
         console.log(
-          `[DEV SYNC] Synced user ${user.email} (${user.id}) to local database`,
+          `[DEV SYNC] Synced user ${user.email} (${user.id}) to local database with session ${sessionId}`,
         );
 
         return {
+          sessionId,
+          sessionToken,
           success: true,
           user: upsertedUser,
         };
