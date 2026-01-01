@@ -28,7 +28,8 @@
     "type-fest": "4.41.0",
     "yargs": "18.0.0",
     "zod": "catalog:",
-    "zustand": "catalog:"
+    "zustand": "catalog:",
+    "zx": "8.8.5"
   },
   "description": "A CLI tool for testing webhooks locally with team collaboration features.",
   "devDependencies": {

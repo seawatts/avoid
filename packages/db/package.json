@@ -32,7 +32,7 @@
     "supabase": "2.70.5",
     "tsx": "4.21.0",
     "typescript": "catalog:",
-    "zx": "^8.8.5"
+    "zx": "8.8.5"
   },
   "exports": {
     ".": "./src/index.ts",
