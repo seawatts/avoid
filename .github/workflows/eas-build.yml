@@ -47,9 +47,9 @@ jobs:
           eas-version: latest
           token: ${{ secrets.EXPO_TOKEN }}
 
-      # Use preview profile for TestFlight/internal builds
+      # Build and auto-submit to TestFlight for internal testing
       # Production releases are handled by the release.yml workflow
-      - name: Build on EAS (Preview/TestFlight)
-        run: eas build --platform ios --profile preview --non-interactive --no-wait
+      - name: Build on EAS and Submit to TestFlight
+        run: eas build --platform ios --profile preview --non-interactive --auto-submit
         working-directory: apps/expo
 

@@ -1,4 +1,8 @@
 {
+  "dependencies": {
+    "@clack/prompts": "0.11.0",
+    "picocolors": "1.1.1"
+  },
   "devDependencies": {
     "@seawatts/tsconfig": "workspace:*",
     "@types/bun": "catalog:",
