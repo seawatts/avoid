@@ -1,3 +1,4 @@
+import { useRouter } from 'expo-router';
 import * as WebBrowser from 'expo-web-browser';
 import {
   Pressable,
@@ -104,6 +105,7 @@ const colors = {
 export default function Index() {
   const colorScheme = useColorScheme();
   const theme = colors[colorScheme === 'dark' ? 'dark' : 'light'];
+  const router = useRouter();
 
   return (
     <ScrollView
@@ -135,6 +137,17 @@ export default function Index() {
 
         {/* Auth Section */}
         <MobileAuth theme={theme} />
+
+        {/* Piano Button */}
+        <Pressable
+          onPress={() => router.push('/piano')}
+          style={[styles.pianoButton, { backgroundColor: theme.muted }]}
+        >
+          <Text style={styles.pianoButtonEmoji}>🎹</Text>
+          <Text style={[styles.pianoButtonText, { color: theme.foreground }]}>
+            Open Piano
+          </Text>
+        </Pressable>
       </View>
 
       {/* Stats Section */}
@@ -411,6 +424,23 @@ const styles = StyleSheet.create({
   },
   logoEmoji: {
     fontSize: 48,
+  },
+  pianoButton: {
+    alignItems: 'center',
+    borderRadius: 16,
+    flexDirection: 'row',
+    gap: 12,
+    justifyContent: 'center',
+    paddingHorizontal: 24,
+    paddingVertical: 16,
+    width: '100%',
+  },
+  pianoButtonEmoji: {
+    fontSize: 24,
+  },
+  pianoButtonText: {
+    fontSize: 18,
+    fontWeight: '600',
   },
   sectionTitle: {
     fontSize: 24,

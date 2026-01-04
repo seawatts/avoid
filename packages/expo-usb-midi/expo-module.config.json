@@ -1,0 +1,6 @@
+{
+  "ios": {
+    "modules": ["ExpoUsbMidiModule"]
+  },
+  "platforms": ["ios"]
+}

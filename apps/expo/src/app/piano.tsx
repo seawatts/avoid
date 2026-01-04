@@ -1,4 +1,4 @@
-import { useFocusEffect } from 'expo-router';
+import { useFocusEffect, useRouter } from 'expo-router';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
@@ -12,6 +12,7 @@ import {
   useWindowDimensions,
   View,
 } from 'react-native';
+import { useSharedValue } from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {
   CONTROLS_BAR_HEIGHT,
@@ -39,6 +40,7 @@ import { usePianoStore } from '../stores/piano-store';
 export default function PianoScreen() {
   const { width, height } = useWindowDimensions();
   const isLandscape = width > height;
+  const router = useRouter();
 
   // Zustand store state
   const isRecording = usePianoStore((state) => state.isRecording);
@@ -54,6 +56,18 @@ export default function PianoScreen() {
   );
   const [showSaveModal, setShowSaveModal] = useState(false);
   const [recordingName, setRecordingName] = useState('');
+
+  // Preview mode state - keep note data in regular refs (not touched by Reanimated)
+  const previewActiveNotes = useRef<Map<number, number>>(new Map());
+  const previewCompletedNotes = useRef<Array<PianoNote & { id: string }>>([]);
+  const previewNoteStartTimes = useRef<Map<number, number>>(new Map());
+  const previewStartTime = useRef<number>(0);
+  const previewNoteIdCounter = useRef<number>(0);
+  // Shared values for Reanimated (animation runs on UI thread)
+  const previewTimeShared = useSharedValue(0);
+  const isPreviewAnimating = useSharedValue(false);
+  // State to trigger re-renders when note data changes
+  const [previewNoteVersion, setPreviewNoteVersion] = useState(0);
 
   // Store actions
   const startRecording = usePianoStore((state) => state.startRecording);
@@ -354,6 +368,154 @@ export default function PianoScreen() {
     [addNote],
   );
 
+  // Animation loop for preview - updates shared value for smooth animation
+  const previewAnimationId = useRef<number | null>(null);
+
+  const runPreviewAnimation = useCallback(() => {
+    const startTime = previewStartTime.current;
+    if (startTime === 0) return;
+
+    const updateTime = () => {
+      if (!isPreviewAnimating.value) {
+        previewAnimationId.current = null;
+        return;
+      }
+
+      const currentTime = Date.now() - startTime;
+      previewTimeShared.value = currentTime;
+
+      // Clean up old notes periodically (every frame check, but only mutate when needed)
+      const completed = previewCompletedNotes.current;
+      if (completed.length > 0) {
+        const filtered = completed.filter(
+          (note) => currentTime - (note.timestamp + note.duration) < 10000,
+        );
+        if (filtered.length !== completed.length) {
+          previewCompletedNotes.current = filtered;
+          setPreviewNoteVersion((v) => v + 1);
+        }
+      }
+
+      // Stop if no notes left
+      if (
+        previewActiveNotes.current.size === 0 &&
+        previewCompletedNotes.current.length === 0
+      ) {
+        isPreviewAnimating.value = false;
+        previewStartTime.current = 0;
+        previewTimeShared.value = 0;
+        previewAnimationId.current = null;
+        return;
+      }
+
+      previewAnimationId.current = requestAnimationFrame(updateTime);
+    };
+
+    previewAnimationId.current = requestAnimationFrame(updateTime);
+  }, [isPreviewAnimating, previewTimeShared]);
+
+  const startPreviewAnimation = useCallback(() => {
+    if (previewAnimationId.current !== null) return; // Already running
+    isPreviewAnimating.value = true;
+    runPreviewAnimation();
+  }, [isPreviewAnimating, runPreviewAnimation]);
+
+  const stopPreviewAnimation = useCallback(() => {
+    // Cancel animation
+    if (previewAnimationId.current !== null) {
+      cancelAnimationFrame(previewAnimationId.current);
+      previewAnimationId.current = null;
+    }
+    // Reset data
+    previewActiveNotes.current = new Map();
+    previewCompletedNotes.current = [];
+    previewNoteStartTimes.current = new Map();
+    previewStartTime.current = 0;
+    previewNoteIdCounter.current = 0;
+    isPreviewAnimating.value = false;
+    previewTimeShared.value = 0;
+    setPreviewNoteVersion(0);
+  }, [isPreviewAnimating, previewTimeShared]);
+
+  // Preview mode handlers (for when not recording)
+  const handlePreviewNoteStart = useCallback(
+    (midiNumber: number) => {
+      // Only activate preview mode when not recording or playing
+      if (isRecording || isPlaying) return;
+
+      const now = Date.now();
+
+      // Initialize if this is the first note
+      if (previewStartTime.current === 0) {
+        previewStartTime.current = now;
+        previewNoteIdCounter.current = 0;
+        previewActiveNotes.current.clear();
+        previewCompletedNotes.current = [];
+        previewNoteStartTimes.current.clear();
+      }
+
+      // Track start time
+      const noteTimestamp = now - previewStartTime.current;
+      previewNoteStartTimes.current.set(midiNumber, noteTimestamp);
+      previewActiveNotes.current.set(midiNumber, noteTimestamp);
+
+      // Start animation and trigger re-render for new active note
+      startPreviewAnimation();
+      setPreviewNoteVersion((v) => v + 1);
+    },
+    [isRecording, isPlaying, startPreviewAnimation],
+  );
+
+  const handlePreviewNoteEnd = useCallback(
+    (midiNumber: number) => {
+      // Only handle preview mode when not recording or playing
+      if (isRecording || isPlaying) return;
+
+      const startTimestamp = previewNoteStartTimes.current.get(midiNumber);
+
+      if (startTimestamp !== undefined) {
+        const now = Date.now();
+        const currentTime = now - previewStartTime.current;
+        const duration = Math.max(currentTime - startTimestamp, 50); // Minimum 50ms
+
+        // Find key info for the note
+        const keyInfo = PIANO_KEYS.find((k) => k.midiNumber === midiNumber);
+        if (keyInfo) {
+          previewNoteIdCounter.current += 1;
+
+          // Limit max completed notes to prevent memory issues
+          if (previewCompletedNotes.current.length >= 100) {
+            previewCompletedNotes.current.shift(); // Remove oldest note
+          }
+
+          previewCompletedNotes.current.push({
+            duration,
+            id: `${midiNumber}-${previewNoteIdCounter.current}`,
+            midiNumber,
+            note: keyInfo.note,
+            noteOffTime: now,
+            noteOnTime: now - duration,
+            timestamp: startTimestamp,
+          });
+        }
+
+        previewNoteStartTimes.current.delete(midiNumber);
+      }
+
+      previewActiveNotes.current.delete(midiNumber);
+      // Trigger re-render for note changes
+      setPreviewNoteVersion((v) => v + 1);
+    },
+    [isRecording, isPlaying],
+  );
+
+  // Stop preview animation when recording or playing starts
+  useEffect(() => {
+    if (isRecording || isPlaying) {
+      stopPreviewAnimation();
+    }
+  }, [isRecording, isPlaying, stopPreviewAnimation]);
+
   // Calculate falling notes display height
   const keyboardHeight = isLandscape
     ? WHITE_KEY_HEIGHT * 0.8
@@ -361,7 +523,7 @@ export default function PianoScreen() {
   const fallingNotesHeight = height - CONTROLS_BAR_HEIGHT - keyboardHeight - 40; // 40 for safe area padding
 
   return (
-    <SafeAreaView edges={['top']} style={styles.container}>
+    <SafeAreaView edges={['bottom']} style={styles.container}>
       {/* Top Controls Bar */}
       <SynthesiaControls
         currentTime={currentTime}
@@ -369,6 +531,7 @@ export default function PianoScreen() {
         isPlaying={isPlaying}
         isRecording={isRecording}
         onClear={handleClearRecording}
+        onClose={() => router.back()}
         onSave={handleSavePress}
         onStartPlayback={handleStartPlayback}
         onStartRecording={handleStartRecording}
@@ -398,8 +561,16 @@ export default function PianoScreen() {
                 currentTime={currentTime}
                 displayHeight={fallingNotesHeight}
                 isPlaying={isPlaying}
+                isPreviewing={
+                  previewActiveNotes.current.size > 0 ||
+                  previewCompletedNotes.current.length > 0
+                }
                 isRecording={isRecording}
                 notes={recordedNotes}
+                previewActiveNotes={previewActiveNotes.current}
+                previewCompletedNotes={previewCompletedNotes.current}
+                previewDataVersion={previewNoteVersion}
+                previewTimeShared={previewTimeShared}
               />
             </View>
 
@@ -414,7 +585,9 @@ export default function PianoScreen() {
                 externalPressedKeys={combinedPressedKeys}
                 isRecording={isRecording}
                 landingNotes={landingNotes}
+                onNoteEnd={handlePreviewNoteEnd}
                 onNotePlay={handleNotePlay}
+                onNoteStart={handlePreviewNoteStart}
                 showKeyNames={showKeyNames}
               />
             </View>

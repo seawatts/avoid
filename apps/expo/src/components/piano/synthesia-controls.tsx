@@ -1,4 +1,3 @@
-import { useRouter } from 'expo-router';
 import { useCallback, useEffect, useMemo } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import Animated, {
@@ -7,6 +6,7 @@ import Animated, {
   withRepeat,
   withTiming,
 } from 'react-native-reanimated';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { CONTROLS_BAR_HEIGHT } from './constants';
 
@@ -21,6 +21,7 @@ interface SynthesiaControlsProps {
   onStopPlayback: () => void;
   onSave: () => void;
   onClear: () => void;
+  onClose: () => void;
 }
 
 export function SynthesiaControls({
@@ -34,8 +35,9 @@ export function SynthesiaControls({
   onStopPlayback,
   onSave,
   onClear,
+  onClose,
 }: SynthesiaControlsProps) {
-  const router = useRouter();
+  const insets = useSafeAreaInsets();
 
   // Format time as MM:SS
   const formattedTime = useMemo(() => {
@@ -80,12 +82,13 @@ export function SynthesiaControls({
     }
   }, [isPlaying, onStartPlayback, onStopPlayback]);
 
-  const handleSettingsPress = useCallback(() => {
-    router.push('/settings');
-  }, [router]);
-
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        { height: CONTROLS_BAR_HEIGHT + insets.top, paddingTop: insets.top },
+      ]}
+    >
       {/* Left section: Recording indicator and timer */}
       <View style={styles.leftSection}>
         {isRecording && (
@@ -153,14 +156,10 @@ export function SynthesiaControls({
         </Pressable>
       </View>
 
-      {/* Right section: Settings */}
+      {/* Right section: Close button */}
       <View style={styles.rightSection}>
-        <Pressable
-          disabled={isRecording || isPlaying}
-          onPress={handleSettingsPress}
-          style={styles.settingsButton}
-        >
-          <Text style={styles.settingsIcon}>⚙</Text>
+        <Pressable onPress={onClose} style={styles.closeButton}>
+          <Text style={styles.closeIcon}>✕</Text>
         </Pressable>
       </View>
     </View>
@@ -185,14 +184,27 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: '600',
   },
-  container: {
+  closeButton: {
     alignItems: 'center',
+    backgroundColor: '#3A3A3C',
+    borderRadius: 20,
+    height: 40,
+    justifyContent: 'center',
+    width: 40,
+  },
+  closeIcon: {
+    color: '#FAFAFA',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  container: {
+    alignItems: 'flex-end',
     backgroundColor: '#1C1C1E',
     borderBottomColor: '#2C2C2E',
     borderBottomWidth: 1,
     flexDirection: 'row',
-    height: CONTROLS_BAR_HEIGHT,
     justifyContent: 'space-between',
+    paddingBottom: 8,
     paddingHorizontal: 16,
   },
   controlButton: {
@@ -244,16 +256,6 @@ const styles = StyleSheet.create({
     color: '#4ADE80',
     fontSize: 18,
     fontWeight: '600',
-  },
-  settingsButton: {
-    alignItems: 'center',
-    height: 40,
-    justifyContent: 'center',
-    width: 40,
-  },
-  settingsIcon: {
-    color: '#A1A1AA',
-    fontSize: 20,
   },
   stopIcon: {
     backgroundColor: '#FFFFFF',

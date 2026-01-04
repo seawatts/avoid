@@ -14,6 +14,8 @@ import { PianoKey } from './piano-key';
 interface PianoKeysProps {
   isRecording: boolean;
   onNotePlay?: (note: PianoNote) => void;
+  onNoteStart?: (midiNumber: number) => void; // Called when a key is pressed
+  onNoteEnd?: (midiNumber: number) => void; // Called when a key is released
   externalPressedKeys?: Set<number>; // Keys pressed from MIDI input
   showKeyNames?: boolean; // Whether to show note names on keys
   landingNotes?: Set<number>; // Notes currently "landing" (for visual effect)
@@ -22,6 +24,8 @@ interface PianoKeysProps {
 export const PianoKeys = React.memo(function PianoKeys({
   isRecording,
   onNotePlay,
+  onNoteStart,
+  onNoteEnd,
   externalPressedKeys,
   showKeyNames = false,
   landingNotes,
@@ -100,15 +104,21 @@ export const PianoKeys = React.memo(function PianoKeys({
     [whiteKeyIndices],
   );
 
-  const handlePressIn = useCallback((midiNumber: number) => {
-    setTouchPressedKeys((prev) => new Set(prev).add(midiNumber));
+  const handlePressIn = useCallback(
+    (midiNumber: number) => {
+      setTouchPressedKeys((prev) => new Set(prev).add(midiNumber));
 
-    // Play the note
-    pianoAudio.playNote(midiNumber);
+      // Play the note
+      pianoAudio.playNote(midiNumber);
 
-    // Track note start time for recording
-    noteStartTimes.current.set(midiNumber, Date.now());
-  }, []);
+      // Track note start time for recording
+      noteStartTimes.current.set(midiNumber, Date.now());
+
+      // Notify parent of note start (for preview mode)
+      onNoteStart?.(midiNumber);
+    },
+    [onNoteStart],
+  );
 
   const handlePressOut = useCallback(
     (midiNumber: number) => {
@@ -120,6 +130,9 @@ export const PianoKeys = React.memo(function PianoKeys({
 
       // Stop the note
       pianoAudio.stopNote(midiNumber);
+
+      // Notify parent of note end (for preview mode)
+      onNoteEnd?.(midiNumber);
 
       // Record the note if recording is active
       if (isRecording && onNotePlay) {
@@ -142,7 +155,7 @@ export const PianoKeys = React.memo(function PianoKeys({
         }
       }
     },
-    [isRecording, onNotePlay],
+    [isRecording, onNotePlay, onNoteEnd],
   );
 
   // Calculate total keyboard width
