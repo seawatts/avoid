@@ -59,7 +59,8 @@ function runMigrations(sqlite: Database): void {
       importance REAL DEFAULT 1.0,
       access_count INTEGER DEFAULT 0,
       last_accessed_at TEXT,
-      tags TEXT DEFAULT '[]'
+      tags TEXT DEFAULT '[]',
+      embedding BLOB
     );
 
     CREATE TABLE IF NOT EXISTS pattern_summaries (
@@ -73,5 +74,13 @@ function runMigrations(sqlite: Database): void {
     CREATE INDEX IF NOT EXISTS idx_memories_session ON memories(session_id);
     CREATE INDEX IF NOT EXISTS idx_memories_type ON memories(type);
     CREATE INDEX IF NOT EXISTS idx_memories_created ON memories(created_at);
+    CREATE INDEX IF NOT EXISTS idx_memories_avoidance ON memories(avoidance_type);
   `);
+
+  // Migration: add embedding column if missing (for existing databases)
+  try {
+    sqlite.exec("ALTER TABLE memories ADD COLUMN embedding BLOB");
+  } catch {
+    // Column already exists
+  }
 }

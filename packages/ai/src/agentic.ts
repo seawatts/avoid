@@ -1,10 +1,10 @@
 import { generateObject } from "ai";
 import { openai } from "@ai-sdk/openai";
 import type { DbClient, AgenticTurn } from "@seawatts/db";
+import { buildMemoryContext } from "@seawatts/memory";
 import { AgentActionSchema } from "./schemas";
 import type { AgentActionResult, AvoidanceResult } from "./schemas";
 import { buildAgenticPrompt } from "./prompts";
-import { buildMemoryContext } from "./context";
 
 export interface AgentStepInput {
   task: string;
@@ -17,7 +17,11 @@ export interface AgentStepInput {
 export async function agentStep(input: AgentStepInput): Promise<AgentActionResult> {
   const { task, spousePerspective, classification, conversationLog, db } = input;
 
-  const memoryContext = buildMemoryContext(db);
+  const memoryContext = await buildMemoryContext(db, {
+    taskText: task,
+    matchAvoidanceType: classification.type,
+    matchTags: [classification.type.toLowerCase()],
+  });
 
   const classificationSummary = [
     `Type: ${classification.type}`,

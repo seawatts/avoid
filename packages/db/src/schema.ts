@@ -1,4 +1,4 @@
-import { sqliteTable, text, integer, real, index } from "drizzle-orm/sqlite-core";
+import { sqliteTable, text, integer, real, blob, index } from "drizzle-orm/sqlite-core";
 
 export const sessions = sqliteTable(
   "sessions",
@@ -38,11 +38,13 @@ export const memories = sqliteTable(
     accessCount: integer("access_count").default(0),
     lastAccessedAt: text("last_accessed_at"),
     tags: text("tags", { mode: "json" }).$type<string[]>().default([]),
+    embedding: blob("embedding", { mode: "buffer" }),
   },
   (table) => [
     index("idx_memories_session").on(table.sessionId),
     index("idx_memories_type").on(table.type),
     index("idx_memories_created").on(table.createdAt),
+    index("idx_memories_avoidance").on(table.avoidanceType),
   ],
 );
 

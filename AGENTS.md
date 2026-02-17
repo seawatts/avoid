@@ -1,15 +1,16 @@
-# CLAUDE.md
+# AGENTS.md
 
 ## Project Overview
 
-This is **avoid** -- a local CLI tool that helps identify and overcome task avoidance using AI-powered behavioral analysis. Built with OpenTUI (terminal UI), Vercel AI SDK, Drizzle ORM with bun:sqlite for local persistence.
+This is **avoid** -- a local CLI tool that helps identify and overcome task avoidance using AI-powered behavioral analysis. Built with OpenTUI (terminal UI), Vercel AI SDK, Drizzle ORM with bun:sqlite for local persistence, and OpenAI embeddings for semantic memory.
 
 ## Architecture
 
 - **Monorepo**: Bun workspaces + Turborepo
 - **CLI app**: `apps/cli/` -- OpenTUI React terminal interface
 - **AI package**: `packages/ai/` -- AI SDK integration, avoidance analysis, agentic loop
-- **DB package**: `packages/db/` -- Drizzle ORM + bun:sqlite, memory system with decay
+- **Memory package**: `packages/memory/` -- Memory system with embeddings, decay scoring, pattern analysis, context building
+- **DB package**: `packages/db/` -- Drizzle ORM + bun:sqlite schema, client, queries
 - **ID package**: `packages/id/` -- cuid2 and nanoid ID generation
 - **Analytics**: `packages/analytics/` -- local analytics tracking
 - **Tooling**: `tooling/typescript`, `tooling/commitlint`, `tooling/npm`, `tooling/testing`
@@ -19,10 +20,22 @@ This is **avoid** -- a local CLI tool that helps identify and overcome task avoi
 
 - OpenTUI React components for terminal UI (`@opentui/react`)
 - AI SDK `generateObject` with Zod schemas for structured AI output
+- AI SDK `embed` with `text-embedding-3-small` for memory embeddings
 - Drizzle ORM with bun:sqlite for local persistence in `~/.avoid/avoid.db`
-- Exponential decay scoring for AI memory retrieval
+- Enhanced decay scoring (time decay + access bonus + keyword/tag/type matching)
+- Cosine similarity vector search over embedded memories
 - Semi-agentic conversation loop where AI decides next action via structured output
-- Workspace packages imported as `@seawatts/db`, `@seawatts/ai`, `@seawatts/id`, etc.
+- Workspace packages imported as `@seawatts/db`, `@seawatts/ai`, `@seawatts/memory`, `@seawatts/id`, etc.
+
+## Package Dependencies
+
+```
+apps/cli -> @seawatts/ai, @seawatts/memory, @seawatts/db, @seawatts/analytics
+packages/ai -> @seawatts/db, @seawatts/memory
+packages/memory -> @seawatts/db
+packages/db -> @seawatts/id
+packages/analytics -> @seawatts/db
+```
 
 ## Commands
 

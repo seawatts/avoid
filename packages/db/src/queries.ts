@@ -138,6 +138,7 @@ export function createMemory(
     avoidanceType: AvoidanceType | null;
     importance: number;
     tags: string[];
+    embedding?: Buffer | null;
   },
 ): Memory {
   const id = createId();
@@ -154,11 +155,28 @@ export function createMemory(
       avoidanceType: data.avoidanceType,
       importance: data.importance,
       tags: data.tags,
+      embedding: data.embedding ?? null,
     })
     .returning()
     .all();
 
   return rows[0]!;
+}
+
+export function updateMemoryEmbedding(db: DbClient, id: string, embedding: Buffer): void {
+  db.update(memories)
+    .set({ embedding })
+    .where(eq(memories.id, id))
+    .run();
+}
+
+export function getMemoriesWithEmbeddings(db: DbClient): Memory[] {
+  return db
+    .select()
+    .from(memories)
+    .where(sql`${memories.embedding} IS NOT NULL`)
+    .orderBy(desc(memories.createdAt))
+    .all();
 }
 
 export function getAllMemories(db: DbClient): Memory[] {

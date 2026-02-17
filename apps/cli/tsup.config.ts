@@ -47,6 +47,7 @@ export default defineConfig({
     "@seawatts/analytics",
     "@seawatts/db",
     "@seawatts/id",
+    "@seawatts/memory",
   ],
   onSuccess: async () => {
     const outFile = "./bin/cli.js";

@@ -1,5 +1,4 @@
-import type { DbClient } from "../client";
-import type { AvoidanceType } from "../schema";
+import type { DbClient, AvoidanceType } from "@seawatts/db";
 import {
   getAvoidanceTypeStats,
   getSessionCount,
@@ -8,7 +7,7 @@ import {
   getAllMemories,
   createPatternSummary,
   reduceMemoryImportance,
-} from "../queries";
+} from "@seawatts/db";
 
 export interface PatternAnalysis {
   totalSessions: number;

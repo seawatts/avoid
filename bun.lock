@@ -29,6 +29,7 @@
         "@seawatts/analytics": "workspace:*",
         "@seawatts/db": "workspace:*",
         "@seawatts/id": "workspace:*",
+        "@seawatts/memory": "workspace:*",
         "@t3-oss/env-core": "catalog:",
         "react": "catalog:",
         "zod": "catalog:",
@@ -47,6 +48,7 @@
       "dependencies": {
         "@ai-sdk/openai": "^1.3.0",
         "@seawatts/db": "workspace:*",
+        "@seawatts/memory": "workspace:*",
         "ai": "^4.3.0",
         "zod": "catalog:",
       },
@@ -91,6 +93,20 @@
       },
       "devDependencies": {
         "@seawatts/tsconfig": "workspace:*",
+        "typescript": "catalog:",
+      },
+    },
+    "packages/memory": {
+      "name": "@seawatts/memory",
+      "version": "0.1.0",
+      "dependencies": {
+        "@ai-sdk/openai": "^1.3.0",
+        "@seawatts/db": "workspace:*",
+        "ai": "^4.3.0",
+      },
+      "devDependencies": {
+        "@seawatts/tsconfig": "workspace:*",
+        "@types/bun": "catalog:",
         "typescript": "catalog:",
       },
     },
@@ -464,6 +480,8 @@
     "@seawatts/db": ["@seawatts/db@workspace:packages/db"],
 
     "@seawatts/id": ["@seawatts/id@workspace:packages/id"],
+
+    "@seawatts/memory": ["@seawatts/memory@workspace:packages/memory"],
 
     "@seawatts/npm": ["@seawatts/npm@workspace:tooling/npm"],
 

@@ -7,8 +7,7 @@
     ".": "./src/index.ts",
     "./schemas": "./src/schemas.ts",
     "./analyze": "./src/analyze.ts",
-    "./agentic": "./src/agentic.ts",
-    "./context": "./src/context.ts"
+    "./agentic": "./src/agentic.ts"
   },
   "scripts": {
     "clean": "git clean -xdf .turbo node_modules dist",
@@ -18,6 +17,7 @@
   "dependencies": {
     "@ai-sdk/openai": "^1.3.0",
     "@seawatts/db": "workspace:*",
+    "@seawatts/memory": "workspace:*",
     "ai": "^4.3.0",
     "zod": "catalog:"
   },

@@ -1,8 +1,9 @@
 import { useState, useEffect, useCallback } from "react";
-import { getDb, createSession, updateSession, getInProgressSession, createMemory } from "@seawatts/db";
+import { getDb, createSession, updateSession, getInProgressSession } from "@seawatts/db";
+import type { AgenticTurn } from "@seawatts/db";
 import { analyzeAvoidance, agentStep } from "@seawatts/ai";
 import type { AvoidanceResult, AgentActionResult } from "@seawatts/ai";
-import type { AgenticTurn } from "@seawatts/db";
+import { storeMemory } from "@seawatts/memory";
 import { trackEvent } from "@seawatts/analytics";
 import { SessionResume } from "./components/session-resume";
 import { PromptInput } from "./components/prompt-input";
@@ -107,7 +108,7 @@ export function App() {
           uglyFirstDraft: analysisResult.uglyFirstDraft,
         });
 
-        createMemory(db, {
+        await storeMemory(db, {
           sessionId,
           type: "observation",
           content: `Avoided task "${task}" due to ${analysisResult.type}: ${analysisResult.explanation}`,
@@ -149,7 +150,7 @@ export function App() {
         setCurrentAiMessage(action);
 
         if (action.memoryToStore) {
-          createMemory(db, {
+          await storeMemory(db, {
             sessionId,
             type: "insight",
             content: action.memoryToStore,
@@ -248,7 +249,7 @@ export function App() {
           ? `Completed 10-minute timer for task "${task}"`
           : `Session ended without timer for task "${task}"`;
 
-        createMemory(db, {
+        storeMemory(db, {
           sessionId,
           type: "observation",
           content: outcome,

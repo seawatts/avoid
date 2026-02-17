@@ -1,13 +1,15 @@
 {
-  "name": "@seawatts/db",
+  "name": "@seawatts/memory",
   "version": "0.1.0",
   "type": "module",
   "private": true,
   "exports": {
     ".": "./src/index.ts",
-    "./client": "./src/client.ts",
-    "./schema": "./src/schema.ts",
-    "./queries": "./src/queries.ts"
+    "./decay": "./src/decay.ts",
+    "./embeddings": "./src/embeddings.ts",
+    "./patterns": "./src/patterns.ts",
+    "./context": "./src/context.ts",
+    "./store": "./src/store.ts"
   },
   "scripts": {
     "clean": "git clean -xdf .turbo node_modules dist",
@@ -15,9 +17,9 @@
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
-    "@seawatts/id": "workspace:*",
-    "drizzle-orm": "catalog:",
-    "zod": "catalog:"
+    "@ai-sdk/openai": "^1.3.0",
+    "@seawatts/db": "workspace:*",
+    "ai": "^4.3.0"
   },
   "devDependencies": {
     "@seawatts/tsconfig": "workspace:*",

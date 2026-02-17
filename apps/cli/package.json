@@ -31,6 +31,7 @@
     "@seawatts/analytics": "workspace:*",
     "@seawatts/db": "workspace:*",
     "@seawatts/id": "workspace:*",
+    "@seawatts/memory": "workspace:*",
     "@t3-oss/env-core": "catalog:",
     "react": "catalog:",
     "zod": "catalog:"
