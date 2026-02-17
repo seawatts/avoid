@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "composite": true,
+    "declaration": true,
+    "declarationDir": "dist",
+    "emitDeclarationOnly": true,
+    "jsx": "react-jsx",
+    "jsxImportSource": "@opentui/react",
+    "lib": ["DOM", "DOM.Iterable", "ES2022"],
+    "noEmit": false,
+    "outDir": "dist",
+    "paths": {
+      "~/*": ["src/*"]
+    },
+    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json"
+  },
+  "exclude": ["node_modules", "dist", "bin"],
+  "extends": "@seawatts/tsconfig/react-library.json",
+  "include": ["*.ts", "*.tsx", "src"]
+}

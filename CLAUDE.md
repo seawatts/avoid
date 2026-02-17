@@ -1,118 +1,40 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
-
 ## Project Overview
 
-This is the SeaWatts Startup Template - a production-ready full-stack TypeScript monorepo using Turborepo, designed for building scalable applications with multiple frontend and backend services sharing common packages. Optimized for AI code generation workflows.
+This is **avoid** -- a local CLI tool that helps identify and overcome task avoidance using AI-powered behavioral analysis. Built with OpenTUI (terminal UI), Vercel AI SDK, and bun:sqlite for local persistence.
 
-## Essential Commands
+## Architecture
 
-### Development
+- **Monorepo**: Bun workspaces + Turborepo
+- **CLI package**: `packages/avoid/` -- the entire application
+- **Tooling**: `tooling/typescript`, `tooling/commitlint`, `tooling/npm`, `tooling/testing`
+- **Runtime**: Bun (required for OpenTUI and bun:sqlite)
+
+## Key Patterns
+
+- OpenTUI React components for terminal UI (`@opentui/react`)
+- AI SDK `generateObject` with Zod schemas for structured AI output
+- bun:sqlite for local persistence in `~/.avoid/avoid.db`
+- Exponential decay scoring for AI memory retrieval
+- Semi-agentic conversation loop where AI decides next action via structured output
+
+## Commands
+
 ```bash
-# Install dependencies
-bun install
-
-# Start development for all packages
-bun dev
-
-# Start only the web app
-bun dev:next
-
-# Run tests
-bun test
-
-# Type check everything
-bun typecheck
-
-# Format code
-bun format:fix
-
-# Clean all workspaces
-bun clean:ws
+bun install          # Install dependencies
+bun run build        # Build all packages
+bun run cli          # Run the avoid CLI
+bun run dev          # Watch mode
+bun run typecheck    # Type check
+bun run test         # Run tests
+bun run format:fix   # Format code with Biome
 ```
 
-### Database Operations
-```bash
-# Open database studio
-bun db:studio
+## Code Conventions
 
-# Push schema changes
-bun db:push
-
-# Generate migrations
-bun db:gen-migration
-
-# Run migrations
-bun db:migrate
-
-# Seed database
-bun db:seed
-```
-
-### Building & Publishing
-```bash
-# Build all packages
-bun build
-
-# Publish CLI and client packages
-bun publish
-
-# Add UI components
-bun ui-add
-```
-
-## Architecture Overview
-
-### Monorepo Structure
-- `/apps/*` - Applications (web-app, expo, cli, extensions)
-- `/packages/*` - Shared packages (api, db, ui, ai)
-- `/tooling/*` - Build and development tooling
-
-### Key Technologies
-- **Package Manager**: Bun with pnpm workspaces
-- **Build System**: Turborepo
-- **Web Framework**: Next.js 14 (App Router)
-- **Database**: Drizzle ORM + Supabase
-- **API Layer**: tRPC v11
-- **UI Components**: shadcn/ui
-- **Authentication**: Clerk
-- **State Management**: Zustand
-- **Mobile**: React Native with Expo SDK 51
-- **Code Quality**: Biome (formatting/linting), TypeScript
-
-### Important Patterns
-
-1. **Type Safety**: End-to-end type safety with tRPC. API types are automatically inferred from server to client.
-
-2. **Database Access**: All database operations go through the `@seawatts/db` package using Drizzle ORM.
-
-3. **Environment Variables**: Use `bun with-env` to load environment variables from Infisical.
-
-4. **UI Components**: Shared components in `@seawatts/ui` package. Use `bun ui-add` to add new shadcn components.
-
-5. **API Routes**: Define tRPC routers in `packages/api/src/router`. Routes are automatically type-safe across all apps.
-
-6. **Real-time Features**: Supabase real-time subscriptions are available for live data updates.
-
-7. **AI Integration**: BAML templates in `packages/ai` for structured LLM interactions. This enables AI to understand your codebase context and generate consistent, type-safe code across all platforms.
-
-### Testing Approach
-- Unit tests use Bun's built-in test runner
-- Chrome extension uses Vitest
-- VS Code extension uses Mocha
-- Run all tests with `bun test`
-
-### Code Style
-- Biome enforces formatting and linting rules
-- Kebab-case for filenames
-- TypeScript strict mode enabled
-- Import organization enforced
-- Run `bun format:fix` before committing
-
-### Development Tips
-- Always run `bun typecheck` before committing
-- Use Turbo for parallel task execution
-- Database changes require running migrations
-- Environment variables are managed with Infisical
-- Git hooks via Lefthook ensure code quality
+- TypeScript strict mode
+- ESM only (`"type": "module"`)
+- Biome for formatting (single quotes, semicolons, trailing commas)
+- Kebab-case filenames
+- No emojis in user-facing output

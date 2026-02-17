@@ -1,9 +1,0 @@
-{
-  "compilerOptions": {
-    "outDir": "dist",
-    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json"
-  },
-  "exclude": ["node_modules"],
-  "extends": "@seawatts/tsconfig/node.json",
-  "include": ["*.ts", "clone-project", "release"]
-}

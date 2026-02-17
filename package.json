@@ -1,30 +1,11 @@
 {
   "catalog": {
-    "@better-auth/expo": "1.4.10",
-    "@supabase/supabase-js": "2.89.0",
     "@t3-oss/env-core": "0.13.10",
-    "@t3-oss/env-nextjs": "0.13.10",
-    "@tailwindcss/postcss": "4.1.18",
-    "@tanstack/react-query": "5.90.16",
-    "@trpc/client": "11.8.1",
-    "@trpc/server": "11.8.1",
-    "@trpc/tanstack-react-query": "11.8.1",
     "@types/bun": "1.3.5",
     "@types/react": "~19.2.7",
-    "@types/react-dom": "19.2.3",
-    "better-auth": "1.4.10",
-    "date-fns": "4.1.0",
-    "drizzle-orm": "0.45.1",
-    "drizzle-zod": "0.8.3",
-    "next": "16.1.1",
     "react": "19.2.3",
-    "react-dom": "19.2.3",
-    "stripe": "20.1.0",
-    "superjson": "2.2.6",
-    "tailwindcss": "4.1.18",
     "typescript": "5.9.3",
-    "zod": "4.3.5",
-    "zustand": "5.0.9"
+    "zod": "4.3.5"
   },
   "commitlint": {
     "extends": [
@@ -35,10 +16,7 @@
     "@biomejs/biome": "2.3.11",
     "@commitlint/cli": "20.3.0",
     "@seawatts/commitlint-config": "workspace:*",
-    "@testing-library/react": "16.3.1",
     "@types/bun": "1.3.5",
-    "@vercel/config": "0.0.24",
-    "checkly": "6.9.7",
     "knip": "5.79.0",
     "lefthook": "2.0.13",
     "turbo": "^2.7.2",
@@ -48,73 +26,32 @@
   "engines": {
     "node": ">=20.12.0"
   },
-  "name": "@seawatts/root",
-  "overrides": {
-    "@types/vscode": "1.96.0",
-    "lightningcss": "1.30.1"
-  },
+  "name": "@seawatts/avoid-root",
   "packageManager": "bun@1.2.23",
   "private": true,
   "scripts": {
     "build": "turbo run build",
     "clean": "git clean -xdf node_modules .turbo",
     "clean:ws": "turbo run clean",
-    "clone-project": "bun run scripts/clone-project.ts",
-    "db:gen-migration": "turbo -F @seawatts/db gen-migration",
-    "db:migrate": "turbo -F @seawatts/db migrate",
-    "db:push": "turbo -F @seawatts/db push",
-    "db:seed": "turbo -F @seawatts/db seed",
-    "db:studio": "turbo -F @seawatts/db studio",
-    "dev": "turbo watch dev dev:extension dev:webview",
-    "dev:next": "turbo watch dev -F @seawatts/web-app...",
-    "dev:vscode": "turbo watch dev dev:extension dev:webview -F seawatts-vscode... -F @seawatts/web-app...",
-    "docs": "turbo run dev --filter=@seawatts/docs...",
-    "format": "biome check && bun knip",
-    "format:ci": "biome ci && bun knip",
-    "format:fix": "biome check --write && bun knip --fix",
-    "knip": "knip --include dependencies --cache",
+    "cli": "turbo run start --filter=avoid",
+    "dev": "turbo watch dev",
+    "format": "biome check",
+    "format:fix": "biome check --write",
     "lint:ws": "bunx sherif@latest",
     "postinstall": "bun lint:ws",
-    "release": "bun scripts/release/index.ts",
-    "release:ci": "bun scripts/release/index.ts --ci",
-    "release:dry-run": "bun scripts/release/index.ts --dry-run",
-    "scripts": "bun run scripts/run.ts",
     "test": "bun test",
-    "test:integ": "turbo run test --filter=@seawatts/integ-test",
-    "test:integ:ci": "turbo run test:ci --filter=@seawatts/integ-test",
-    "test:integ:watch": "turbo run test:watch --filter=@seawatts/integ-test",
-    "typecheck": "turbo run typecheck",
-    "typecheck:ci": "turbo run build --filter @seawatts/stripe && turbo run typecheck",
-    "ui-add": "turbo run ui-add",
-    "with-env": "infisical run --"
+    "typecheck": "turbo run typecheck"
   },
   "trustedDependencies": [
     "@biomejs/biome",
-    "@clerk/shared",
-    "@scarf/scarf",
-    "@sentry/cli",
-    "@tailwindcss/oxide",
-    "@vercel/speed-insights",
-    "browser-tabs-lock",
-    "bufferutil",
     "bun",
-    "core-js",
-    "electron",
     "esbuild",
-    "keytar",
-    "lefthook",
-    "puppeteer",
-    "sharp",
-    "supabase",
-    "yarn"
+    "lefthook"
   ],
   "workspaces": {
     "packages": [
       "packages/*",
-      "apps/*",
-      "tooling/*",
-      "docs",
-      "scripts"
+      "tooling/*"
     ]
   }
 }

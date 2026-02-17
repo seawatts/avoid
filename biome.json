@@ -10,14 +10,6 @@
       }
     }
   },
-  "css": {
-    "formatter": {
-      "quoteStyle": "single"
-    },
-    "parser": {
-      "tailwindDirectives": true
-    }
-  },
   "files": {
     "ignoreUnknown": false,
     "includes": [
@@ -26,20 +18,13 @@
       "!**/dist",
       "!node_modules",
       "!**/node_modules",
-      "!**/.next",
-      "!**/.react-email",
-      "!**/baml_client",
       "!**/.turbo",
       "!**/*.min.*",
       "!bun.lock",
-      "!**/.vscode-test",
       "!**/build",
       "!**/.git",
       "!**/coverage",
-      "!**/.nyc_output",
-      "!**/packages/ai",
-      "!**/.grit",
-      "!**/apps/chrome-extension/scripts/detect-obfuscation"
+      "!**/bin"
     ]
   },
   "formatter": {
@@ -57,9 +42,6 @@
   "linter": {
     "enabled": true,
     "rules": {
-      "a11y": {
-        "noStaticElementInteractions": "off"
-      },
       "correctness": {
         "noInvalidUseBeforeDeclaration": "off",
         "noUnusedImports": "error",
@@ -68,8 +50,7 @@
           "level": "warn"
         },
         "useExhaustiveDependencies": "warn",
-        "useHookAtTopLevel": "error",
-        "useUniqueElementIds": "off"
+        "useHookAtTopLevel": "error"
       },
       "nursery": {
         "recommended": true
