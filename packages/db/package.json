@@ -1,0 +1,29 @@
+{
+  "name": "@seawatts/db",
+  "version": "0.1.0",
+  "type": "module",
+  "private": true,
+  "exports": {
+    ".": "./src/index.ts",
+    "./client": "./src/client.ts",
+    "./schema": "./src/schema.ts",
+    "./queries": "./src/queries.ts",
+    "./memory": "./src/memory/index.ts"
+  },
+  "scripts": {
+    "clean": "git clean -xdf .turbo node_modules dist",
+    "dev": "tsc --watch",
+    "typecheck": "tsc --noEmit --emitDeclarationOnly false"
+  },
+  "dependencies": {
+    "@seawatts/id": "workspace:*",
+    "drizzle-orm": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@seawatts/tsconfig": "workspace:*",
+    "@types/bun": "catalog:",
+    "typescript": "catalog:"
+  },
+  "license": "MIT"
+}

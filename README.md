@@ -31,7 +31,7 @@ bun run cli
 Or directly:
 
 ```bash
-cd packages/avoid
+cd apps/cli
 bun run start
 ```
 
@@ -45,7 +45,7 @@ bun run start
 
 ## Memory and Persistence
 
-All session data is stored locally in `~/.avoid/avoid.db` (SQLite via `bun:sqlite`). No data leaves your machine except for AI API calls.
+All session data is stored locally in `~/.avoid/avoid.db` (SQLite via Drizzle ORM + `bun:sqlite`). No data leaves your machine except for AI API calls.
 
 The memory system:
 - Stores observations from each session
@@ -61,18 +61,40 @@ Session resume: if you close the CLI mid-session, it will offer to resume where 
 |----------|----------|-------------|
 | `OPENAI_API_KEY` | Yes | Your OpenAI API key |
 
-## Project Structure
+## Architecture
 
 ```
-packages/avoid/
-  src/
-    cli.tsx              # Entry point
-    app.tsx              # Main state machine
-    components/          # OpenTUI React components
-    ai/                  # AI SDK integration (analysis + agentic loop)
-    memory/              # SQLite persistence, decay scoring, pattern analysis
-    types.ts             # Shared types
-    env.ts               # Environment validation
+apps/
+  cli/                     # OpenTUI terminal interface
+    src/
+      cli.tsx              # Entry point
+      app.tsx              # Main state machine
+      components/          # OpenTUI React components
+
+packages/
+  ai/                      # AI SDK integration
+    src/
+      analyze.ts           # Avoidance classification
+      agentic.ts           # Semi-agentic conversation loop
+      context.ts           # Memory context builder for prompts
+      schemas.ts           # Zod schemas for structured output
+      prompts.ts           # System prompt templates
+
+  db/                      # Drizzle ORM + bun:sqlite
+    src/
+      schema.ts            # Drizzle table definitions
+      client.ts            # Database connection
+      queries.ts           # CRUD operations
+      memory/              # Decay scoring, pattern analysis
+
+  id/                      # ID generation (cuid2, nanoid)
+  analytics/               # Local analytics tracking
+
+tooling/
+  typescript/              # Shared tsconfig
+  commitlint/              # Commit conventions
+  npm/                     # Publishing utilities
+  testing/                 # Test configuration
 ```
 
 ## Development
@@ -81,13 +103,13 @@ packages/avoid/
 # Watch mode (rebuild on changes)
 bun run dev
 
-# Type check
+# Type check all packages
 bun run typecheck
 
 # Run tests
 bun run test
 
-# Format
+# Format code
 bun run format:fix
 ```
 

@@ -1,0 +1,50 @@
+{
+  "name": "@seawatts/cli",
+  "version": "0.1.0",
+  "description": "A calm CLI that helps you identify and overcome task avoidance using AI-powered behavioral analysis",
+  "type": "module",
+  "bin": {
+    "avoid": "./bin/cli.js"
+  },
+  "exports": {
+    ".": {
+      "import": "./src/cli.tsx",
+      "types": "./src/cli.tsx"
+    }
+  },
+  "files": [
+    "bin/cli.js",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "clean": "git clean -xdf .turbo node_modules dist bin/cli.js",
+    "dev": "tsup --watch",
+    "start": "bun src/cli.tsx",
+    "typecheck": "bun run tsc --noEmit"
+  },
+  "dependencies": {
+    "@opentui/core": "^0.1.79",
+    "@opentui/react": "^0.1.79",
+    "@seawatts/ai": "workspace:*",
+    "@seawatts/analytics": "workspace:*",
+    "@seawatts/db": "workspace:*",
+    "@seawatts/id": "workspace:*",
+    "@t3-oss/env-core": "catalog:",
+    "react": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@seawatts/tsconfig": "workspace:*",
+    "@types/bun": "catalog:",
+    "@types/react": "catalog:",
+    "tsup": "^8.5.1",
+    "typescript": "catalog:"
+  },
+  "engines": {
+    "bun": ">=1.2.0"
+  },
+  "license": "MIT",
+  "private": false
+}

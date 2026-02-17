@@ -33,7 +33,7 @@ dist/
 .turbo
 
 # build output
-packages/avoid/bin
+apps/cli/bin
 
 # lock file (regenerated on install)
 bun.lock

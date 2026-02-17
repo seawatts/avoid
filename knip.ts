@@ -13,6 +13,10 @@ const config: KnipConfig = {
     enumMembers: 'warn',
   },
   workspaces: {
+    'apps/*': {
+      entry: ['**/*.ts?(x)'],
+      project: ['**/*.ts?(x)'],
+    },
     'packages/*': {
       entry: ['**/*.ts?(x)'],
       project: ['**/*.ts?(x)'],
